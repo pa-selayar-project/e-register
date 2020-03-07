@@ -60,10 +60,14 @@
             <td>{{$d->nama_sk}}</td>
             <td>{{$d->bidang_sk}}</td>
             <td>{{$d->ttd_sk}}</td>
-            <td>
-              <a href="#" class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></a>
-
-              <a href="{{url('register/regsk/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded"><i class="fa fa-edit"></i></a>
+            <td class="d-flex">
+              <form action="/register/regsk/{{$d->id}}" method="post">
+                @csrf
+                @method('delete')
+                <button class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></button>
+              </form>
+              
+              <a href="{{url('register/regsk/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
               
               <a href="{{url('register/regsk/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
             </td>
@@ -120,8 +124,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Tambah</button>
         </div>
       </form>
     </div>
