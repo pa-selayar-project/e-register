@@ -83,7 +83,7 @@
 
 									<form method="POST" action="{{url('logout')}}">
 											@csrf
-											<button class="nav-link"><i class="fa fa-power-off"></i> Logout</button>
+											<button class="nav-link border-0 bg-white"><i class="fa fa-power-off"></i> Logout</button>
 									</form>
 							</div>
 					</div>

@@ -4,7 +4,6 @@
 <head>
 
   <meta charset="utf-8">
-  ]
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Web Kepegawaian">
@@ -18,13 +17,11 @@
 
 <body>
 
-  <!-- Left Panel -->
+<!-- Left Panel -->
 
     @include('layouts.sidebar')
 
-  <!-- Left Panel -->
-
-  <!-- Right Panel -->
+<!-- Right Panel -->
 
     <div id="right-panel" class="right-panel">
 
@@ -62,6 +59,7 @@
   <!-- Right Panel -->
 
   @include('layouts.footer')
+    @include('sweetalert::alert')
 
 </body>
 

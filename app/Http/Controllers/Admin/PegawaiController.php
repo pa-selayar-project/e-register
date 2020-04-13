@@ -27,7 +27,21 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
-        return $request;
+        $request->validate([
+            'name' => 'required',
+            'nip' => 'required|integer|unique:tb_pegawai',
+            'pangkat' => 'required',
+            'jabatan' => 'required'
+        ]);
+
+        Pegawai::create([
+            'nama_pegawai' => $request->name,
+            'nip' => $request->nip,
+            'pangkat_id' => $request->pangkat,
+            'jabatan' => $request->jabatan
+        ]);
+
+        return redirect('/settings/pegawai')->with('message', 'Input Pegawai berhasil');
     }
 
     /**

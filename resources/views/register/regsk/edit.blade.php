@@ -8,6 +8,9 @@
 @endsection
 
 @section('content')
+<?php $obyek = explode(',', $regsk->obyek);?>
+<?php if($regsk->obyek!=""){$obyek;}?>
+
 <form action="/register/regsk/{{$regsk->id}}" method="POST" enctype="multipart/form-data">
 @method("patch")
 @csrf
@@ -45,8 +48,8 @@
 
             <div class="input-group">
               <select name="bidang_sk" class="chosen-select form-control form-control-lg">
-                <option value="Kepaniteraan">Kepaniteraan</option>
-                <option value="Sekretariat">Sekretariat</option>
+                <option value="Kepaniteraan" @if($regsk->bidang_sk == "Kepaniteraan") selected @endif>Kepaniteraan</option>
+                <option value="Sekretariat" @if($regsk->bidang_sk == "Sekretariat") selected @endif>Sekretariat</option>
               </select>
             </div>
           </div>
@@ -87,11 +90,10 @@
 
           <div class="input-group">
             <select name="obyek[]" class="chosen-select form-control form-control-lg" multiple="multiple">
-              <option value="Abdul Rahman Salam">Abdul Rahman Salam</option>
-              <option value="Mustamin">Mustamin</option>
-              <option value="Mawir">Mawir</option>
-              <option value="H. Mustari">H. Mustari</option>
-              <option value="Hj. Asni">Hj. Asni</option>
+        
+              @foreach($pegawai as $p)
+              <option value="{{$p->id}}" @if(in_array($p->id, $obyek)) selected @endif>{{$p->nama_pegawai}}</option>
+              @endforeach
             </select>
           </div>
         </div>
@@ -103,9 +105,9 @@
 
           <div class="input-group">
             <select name="ttd_sk" class="chosen-select form-control form-control-lg">
-              <option value="Ketua">Ketua</option>
-              <option value="Panitera">Panitera</option>
-              <option value="Sekretaris">Sekretaris</option>
+              <option value="Ketua" @if($regsk->ttd_sk == "Ketua") selected @endif >Ketua</option>
+              <option value="Panitera" @if($regsk->ttd_sk == "Panitera") selected @endif>Panitera</option>
+              <option value="Sekretaris" @if($regsk->ttd_sk == "Sekretaris") selected @endif>Sekretaris</option>
             </select>
           </div>
         </div>
@@ -116,7 +118,7 @@
 
         <div class="row my-3">
           <div class="col col-md-2">
-            <i class="fas fa-file-word text-primary fa-3x ml-3"></i>
+            <i class="fas fa-file-word @if($regsk->pdf)text-primary @else text-secondary @endif fa-3x ml-3"></i>
           </div>
           <div class="col col-md-10">
             <div class="custom-file">
@@ -128,7 +130,7 @@
         </div>
         <div class="row">
           <div class="col col-md-2">
-            <i class="fas fa-file-pdf text-danger fa-3x ml-3"></i>
+            <i class="fas fa-file-pdf @if($regsk->pdf)text-danger @else text-secondary @endif fa-3x ml-3"></i>
           </div>
           <div class="col col-md-10">
             <div class="custom-file">

@@ -16,4 +16,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo('App\Regcuti', 'pegawai_id');
     }
+    
+    public function pangkat()
+    {
+        return $this->belongsTo('App\Pangkat', 'pangkat_id');
+    }
 }

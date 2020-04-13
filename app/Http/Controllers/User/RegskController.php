@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Regsk;
+use App\Pegawai;
 use Auth;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -19,13 +21,17 @@ class RegskController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama_sk' => 'required|unique:reg_sk',
             'no_sk' => 'required|unique:reg_sk',
             'tgl_sk' => 'required|date',
             'bidang_sk' => 'required',
             'ttd_sk' => 'required'
         ]);
+
+        if ($validator->fails()) {
+        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
         
         Regsk::create([
             'nama_sk' => $request->nama_sk,
@@ -47,12 +53,13 @@ class RegskController extends Controller
 
     public function edit(Regsk $regsk)
     {
-        return view('register/regsk/edit', compact('regsk'));
+        $pegawai = Pegawai::all();
+        return view('register/regsk/edit', compact('regsk', 'pegawai'));
     }
 
     public function update(Request $request, Regsk $regsk)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'no_sk' => 'required',
             'nama_sk' => 'required',
             'desc_sk' => 'required',
@@ -64,7 +71,19 @@ class RegskController extends Controller
             'pdf' => 'file|nullable|max:3000|mimes:pdf',
         ]);
 
+        if ($validator->fails()) {
+        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+    }
+
         $update = Regsk::where('id', $regsk->id);
+
+        if($request->obyek!=""){
+            $obyek = implode(',', $request->obyek);
+        }
+        else
+        {
+            $obyek = $request->obyek;
+        }
         $update->update([
             'no_sk' => $request->no_sk,
             'nama_sk' => $request->nama_sk,
@@ -72,7 +91,7 @@ class RegskController extends Controller
             'tgl_sk' => strtotime($request->tgl_sk),
             'bidang_sk' => $request->bidang_sk,
             'ttd_sk' => $request->ttd_sk,
-            'obyek' => implode('|', $request->obyek),
+            'obyek' => $obyek,
             'tahun' => date('Y')
             ]);
 
@@ -96,12 +115,12 @@ class RegskController extends Controller
             $update->update(['pdf'=> $pdfname]);
         }
 
-        return redirect('/register/regsk')->with('message', 'Data berhasil di edit');
+        return redirect('/register/regsk')->with('toast_success', 'Data berhasil di edit');
     }
 
     public function destroy(Regsk $regsk)
     {
         Regsk::destroy($regsk->id);
-        return redirect('/register/regsk')->with('message', 'Data berhasil dihapus!');
+        return back()->with('toast_success', 'Data berhasil dihapus!');
     }
 }
