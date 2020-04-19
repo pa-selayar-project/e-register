@@ -43,12 +43,14 @@ class RegskController extends Controller
             'tahun' => date('Y'),
             'created_at' => date_format(date_create(),'Y-m-d H:i:s'),
         ]);
-        return redirect('/register/regsk')->with('message', 'Input data berhasil');
+        return redirect('/register/regsk')->withToastSuccess('Input data berhasil');
     }
 
     public function show(Regsk $regsk)
     {
-        return view('register/regsk/show', compact('regsk'));;
+        $obyek = explode(',' ,$regsk->obyek);
+        $obyek = Pegawai::whereIn('id', $obyek)->get();
+        return view('register/regsk/show', compact('regsk','obyek'));;
     }
 
     public function edit(Regsk $regsk)
@@ -73,7 +75,7 @@ class RegskController extends Controller
 
         if ($validator->fails()) {
         return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-    }
+        }
 
         $update = Regsk::where('id', $regsk->id);
 

@@ -11,4 +11,9 @@ class Regsk extends Model
 
     protected $table = "reg_sk";
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
+
+    public function pegawai()
+    {
+        return $this->belongsTo('App\Pegawai', 'id');
+    }
 }
