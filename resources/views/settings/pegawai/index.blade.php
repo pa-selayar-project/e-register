@@ -44,7 +44,7 @@
             </td>
             <td>{{$d->nama_pegawai}}<br>NIP {{$d->nip}}</td>
             <td>{{$d->pangkat->nama_pangkat}} ({{$d->pangkat->golongan}})</td>
-            <td>{{$d->jabatan}}</td>
+            <td>{{$d->jabatan['nama_jabatan']}}</td>
             <td class="d-flex">
               <a href="#" class="btn btn-danger btn-sm btn-circle mr-1"><i class="fas fa-trash"></i></a>
               <a href="{{url('settings/pegawai/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle"><i class="fas fa-edit"></i></a>

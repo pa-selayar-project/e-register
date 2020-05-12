@@ -20,9 +20,9 @@
               <label for="jabatan" class="col-sm-3 col-form-label">Jabatan</label>
               <div class="col-sm-9">
                 <select name="jabatan" id="jabatan" class="form-control">
-                  <option value="Pramubhakti">Pramubhakti</option>
-                  <option value="Security">Security</option>
-                  <option value="Driver">Driver</option>
+                  @foreach($jabatan as $j)
+                    <option value="{{$j->id}}">{{$j->nama_jabatan}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>

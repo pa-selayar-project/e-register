@@ -19,13 +19,6 @@
 @section('content')
 <div class="card shadow mb-4">
   <div class="card-body">
-
-    @if (session('message'))
-    <div class=" alert alert-success">
-      {{ session('message') }}
-    </div>
-    @endif
-
     <div class="table-responsive">
       <table id="tabel" class="display" style="width:100%">
         <thead>

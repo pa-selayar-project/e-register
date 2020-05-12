@@ -16,5 +16,10 @@ class Honorer extends Model
     {
         return $this->belongsTo('App\Regsk', 'obyek');
     }
+
+    public function jabatan()
+    {
+        return $this->belongsTo('App\Jabatan', 'jabatan_id');
+    }
     
 }

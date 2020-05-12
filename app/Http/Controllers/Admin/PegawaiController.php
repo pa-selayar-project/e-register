@@ -16,7 +16,7 @@ class PegawaiController extends Controller
 {
     public function index()
     {
-        $data = Pegawai::where('status',1)->whereNull('deleted_at')->get();
+        $data = Pegawai::where('status',1)->where('aktif',1)->whereNull('deleted_at')->orderBy('jabatan_id')->get();
         return view('settings/pegawai/index', ['data' => $data]);
     }
 
@@ -32,16 +32,17 @@ class PegawaiController extends Controller
         $request->validate([
             'name' => 'required',
             'nip' => 'required|integer|unique:tb_pegawai',
-            'pangkat' => 'required',
-            'jabatan' => 'required'
+            'pangkat_id' => 'required',
+            'jabatan_id' => 'required'
         ]);
         
         Pegawai::create([
             'nama_pegawai' => $request->name,
             'nip' => $request->nip,
-            'pangkat_id' => $request->pangkat,
-            'jabatan' => $request->jabatan,
-            'status' => 1
+            'pangkat_id' => $request->pangkat_id,
+            'jabatan_id' => $request->jabatan_id,
+            'status' => 1,
+            'aktif' => 1,
         ]);
 
         return redirect('/settings/pegawai')->with('message', 'Input Pegawai berhasil');
@@ -66,7 +67,7 @@ class PegawaiController extends Controller
             'tempat_lahir' => 'required',
             'nip' => 'required|integer',
             'pangkat_id' => 'required',
-            'jabatan' => 'required',
+            'jabatan_id' => 'required',
             'alamat' => 'required',
             'foto'=>'file|nullable|max:1000|mimes:jpg,jpeg,png,bmp'
         ]);
@@ -82,9 +83,14 @@ class PegawaiController extends Controller
             'tempat_lahir' => $request->tempat_lahir,
             'nip' => $request->nip,
             'pangkat_id' => $request->pangkat_id,
-            'jabatan' => $request->jabatan,
-            'alamat' => $request->alamat
+            'jabatan_id' => $request->jabatan_id,
+            'alamat' => $request->alamat,
+            'aktif'=> $request->aktif
             ]);
+        
+        if($request->aktif==null){
+            $update->update(['aktif'=>2]);
+        }
 
         if($request->hasFile('foto')){
             $file     = $request->file('foto');

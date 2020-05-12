@@ -40,10 +40,10 @@
               <div class="form-group row">
                 <label for="jabatan" class="col-sm-3 col-form-label">Jabatan</label>
                 <div class="col-sm-9">
-                  <select name="jabatan" id="jabatan" class="form-control">
-                    <option value="Pramubhakti" @if($data->jabatan=='Pramubhakti')selected @endif>Pramubhakti</option>
-                    <option value="Security" @if($data->jabatan=='Security')selected @endif>Security</option>
-                    <option value="Driver" @if($data->jabatan=='Driver')selected @endif>Driver</option>
+                  <select name="jabatan_id" id="jabatan_id" class="form-control">
+                  @foreach($jabatan as $j)
+                    <option value="{{$j->id}}" @if($j->id==$data->jabatan_id)selected @endif>{{$j->nama_jabatan}}</option>
+                  @endforeach
                   </select>
                 </div>
               </div>

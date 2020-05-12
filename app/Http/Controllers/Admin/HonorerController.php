@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Honorer;
+use App\Jabatan;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -19,7 +20,8 @@ class HonorerController extends Controller
 
     public function create()
     {
-        return view('settings/pramubhakti/create');
+        $jabatan = Jabatan::where('id','>',18)->get();
+        return view('settings/pramubhakti/create', compact('jabatan'));
     }
 
     public function store(Request $request)
@@ -48,7 +50,8 @@ class HonorerController extends Controller
     public function edit($id)
     {
         $data = Honorer::where('id', $id)->get()[0];
-        return view('settings/pramubhakti/edit', compact('data'));
+        $jabatan = Jabatan::where('id','>',18)->get();
+        return view('settings/pramubhakti/edit', compact('data','jabatan'));
     }
 
     public function update(Request $request, $id)
@@ -56,7 +59,7 @@ class HonorerController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_pegawai' => 'required',
             'tempat_lahir' => 'required',
-            'jabatan' => 'required',
+            'jabatan_id' => 'required',
             'alamat' => 'required',
             'foto'=>'file|nullable|max:1000|mimes:jpg,jpeg,png,bmp'
         ]);
@@ -69,7 +72,7 @@ class HonorerController extends Controller
         $update->update([
             'nama_pegawai' => $request->nama_pegawai,
             'tempat_lahir' => $request->tempat_lahir,
-            'jabatan' => $request->jabatan,
+            'jabatan_id' => $request->jabatan_id,
             'alamat' => $request->alamat
             ]);
 

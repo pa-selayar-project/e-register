@@ -8,7 +8,6 @@
 @endsection
 
 @section('content')
-{{dd($regsk)}}
 <?php $obyek = explode(',', $regsk->obyek);?>
 <?php if($regsk->obyek!=""){$obyek;}?>
 

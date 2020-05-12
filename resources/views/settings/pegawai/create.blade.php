@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="pangkat" class="col-sm-3 col-form-label">pangkat</label>
               <div class="col-sm-9">
-                <select name="pangkat" id="pangkat" class="form-control">
+                <select name="pangkat_id" id="pangkat_id" class="form-control">
                   @foreach($pangkat as $pgkt)
                     <option value="{{$pgkt->id}}">{{$pgkt->nama_pangkat}} ({{$pgkt->golongan}})</option>
                   @endforeach
@@ -36,9 +36,9 @@
             <div class="form-group row">
               <label for="jabatan" class="col-sm-3 col-form-label">Jabatan</label>
               <div class="col-sm-9">
-                <select name="jabatan" id="jabatan" class="form-control">
+                <select name="jabatan_id" id="jabatan_id" class="form-control">
                   @foreach($jabatan as $jbt)
-                    <option value="{{$jbt->nama_jabatan}}">{{$jbt->nama_jabatan}}</option>
+                    <option value="{{$jbt->id}}">{{$jbt->nama_jabatan}}</option>
                   @endforeach
                 </select>
               </div>

@@ -3,7 +3,8 @@
 @section('title','Register Surat Cuti')
 
 @section('stylesheet')
-<link href="{{url('assets/css/css_datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{{url('vendors/chosen/chosen.css')}}">
+<link rel="stylesheet" href="{{url('asset/css/jquery-UI.css')}}">
 @endsection
 
 @section('content')
@@ -16,16 +17,14 @@
         </div>   
         <div class="card-body">
           <div class="form-group row">
-            <label for="no_cuti" class="col-sm-3 col-form-label">Nomor</label>
+            <label for="no_cuti" class="col-sm-3 col-form-label">Nama Pegawai</label>
             <div class="col-sm-9">
               <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon3">W20-A17/</span>
-                </div>
-                <input type="number" name="no_cuti" id="no_cuti" min="0" class="form-control" value="{{old('no_cuti')}}" aria-describedby="basic-addon3"/>
-                <div class="input-group-append">
-                  <span class="input-group-text">/KP.02.1/XII/{{date('Y')}}</span>
-                </div>
+                <select name="pegawai_id" class="chosen-select form-control">
+                  @foreach($pegawai as $p)
+                  <option value="{{$p->id}}">{{$p->nama_pegawai}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
           </div>
@@ -33,7 +32,7 @@
             <label for="tgl_cuti" class="col-sm-3 col-form-label">Tanggal</label>
             <div class="col-sm-9">
               <div class="input-group date">
-                <input type="text" id="tgl_cuti" name="tgl_cuti" class="form-control">
+                <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control">
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
@@ -44,11 +43,11 @@
             <label for="mulai" class="col-sm-3 col-form-label">Tanggal Cuti</label>
             <div class="col-sm-9">
               <div class="input-group date">
-                <input type="text" id="mulai" name="mulai" class="form-control"> 
+                <input type="text" id="mulai" name="mulai" class="datepicker form-control"> 
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon3">s/d</span>
                   </div> 
-                <input type="text" id="akhir" name="akhir" class="form-control">
+                <input type="text" id="akhir" name="akhir" class="datepicker form-control">
               </div>
             </div>
           </div>
@@ -62,23 +61,15 @@
       </div>
     </div>
     <div class="col-xl-3 col-lg-3">  
-      <div class="card shadow mb-0 h-auto">
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Pegawai</h6>
-        </div>   
-        <div class="card-body">
-          <select name="pegawai_id" class="form-control">
-            <option value="1">Abdul Rahman Salam, S.Ag.,M.H.</option>
-          </select>
-        </div>
-      </div>
-      <div class="card shadow mb-0 h-auto">
+      <div class="card shadow mb-0 h-30">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Atasan Pegawai</h6>
         </div>   
         <div class="card-body">
-          <select name="atasan_id" class="form-control">
-            <option value="1">Abdul Rahman Salam, S.Ag.,M.H.</option>
+          <select name="atasan_id" class="chosen-select form-control">
+            @foreach($pegawai as $p)
+            <option value="{{$p->id}}">{{$p->nama_pegawai}}</option>
+            @endforeach
           </select>
         </div>
       </div>
@@ -87,9 +78,42 @@
           <h6 class="m-0 font-weight-bold text-primary">Jenis Cuti</h6>
         </div>   
         <div class="card-body">
-          <select class="form-control">
-            <option value="1">Abdul Rahman Salam, S.Ag.,M.H.</option>
-          </select>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti1" value="option1" checked>
+            <label class="form-check-label" for="jenisCuti1">
+              Cuti Tahunan
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti2" value="option2">
+            <label class="form-check-label" for="jenisCuti2">
+              Cuti Besar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti3" value="option3">
+            <label class="form-check-label" for="jenisCuti3">
+              Cuti Sakit
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti4" value="option4">
+            <label class="form-check-label" for="jenisCuti4">
+              Cuti Melahirkan
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti5" value="option5">
+            <label class="form-check-label" for="jenisCuti5">
+              Cuti Alasan Penting
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti6" value="option6">
+            <label class="form-check-label" for="jenisCuti6">
+              Cuti Diluar Tanggungan Negara
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -104,7 +128,7 @@
           Sisa Cuti Tahun Lalu : 9 hari
         </div>
       </div>
-      <div class="card shadow mb-4 h-50">
+      <div class="card shadow mb-0 h-50">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Action</h6>
         </div>
@@ -119,27 +143,19 @@
 @endsection
 
 @section('script')
-<script src="{{url('assets/js/datepicker/bootstrap-datepicker.min.js')}}"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('#tgl_cuti').datepicker({
-      format: "dd/mm/yyyy",
-      language: "id",
-      autoclose: true,
-      todayHighlight: true
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script src="{{url('vendors/chosen/chosen.jquery.js')}}"></script>
+  <script src="{{url('vendors/chosen/chosen.proto.js')}}"></script>
+  <script src="{{url('asset/js/jquery-UI.js')}}"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $( ".datepicker" ).datepicker({
+          dateFormat: "dd MM yy"
+    });
+
+    $(".chosen-select").chosen();
   });
-  $('#mulai').datepicker({
-      format: "dd/mm/yyyy",
-      language: "id",
-      autoclose: true,
-      todayHighlight: true
-  })
-  $('#akhir').datepicker({
-      format: "dd/mm/yyyy",
-      language: "id",
-      autoclose: true,
-      todayHighlight: true
-  })
-});
-</script>
+  </script>
 @endsection

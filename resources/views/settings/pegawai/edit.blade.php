@@ -27,7 +27,6 @@
                 <label for="nama_pegawai" class="col-sm-3 col-form-label">Nama Lengkap</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" name="nama_pegawai" id="nama_pegawai" value="{{$pegawai->nama_pegawai}}">
-                  <small class="form-text text-danger">@error('nama_pegawai'){{$message}}@enderror</small>
                 </div>
               </div>
               <div class="form-group row">
@@ -54,9 +53,9 @@
                   </select>
                 </div>
                 <div class="col-sm-4">
-                  <select name="jabatan" id="jabatan" class="form-control">
+                  <select name="jabatan_id" id="jabatan_id" class="form-control">
                     @foreach($jabatan as $jbt)
-                      <option value="{{$jbt->nama_jabatan}}" @if($jbt->nama_jabatan==$pegawai->jabatan)selected @endif>{{$jbt->nama_jabatan}}</option>
+                      <option value="{{$jbt->id}}" @if($jbt->id==$pegawai->jabatan_id)selected @endif>{{$jbt->nama_jabatan}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -65,6 +64,12 @@
                 <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
                 <div class="col-sm-9">
                   <textarea rows="2" class="form-control" name="alamat" id="alamat">{{$pegawai->alamat}}</textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="nama_pegawai" class="col-sm-3 col-form-label">Aktif</label>
+                <div class="col-sm-9">
+                  <label class="switch switch-3d switch-success mr-3"><input type="checkbox" name="aktif" class="switch-input" value="1" @if($pegawai->aktif==1) checked @endif> <span class="switch-label"></span> <span class="switch-handle"></span></label>
                 </div>
               </div>  
             </div>
