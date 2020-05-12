@@ -2,22 +2,33 @@
 
 @section('title', 'Register')
 
-@section('content')
-<div class="row">
-  <div class="col-lg-5 d-none d-lg-block">
-    <img src="{{url('assets/img/paselayar.png')}}" class="m-5 w-75" />
-  </div>
-  <div class="col-lg-7">
-    <div class="p-5">
-      <div class="text-center">
-        <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-      </div>
+@section('stylesheet')
+  <link rel="apple-touch-icon" href="apple-icon.png">
+  <link rel="shortcut icon" href="favicon.ico">
 
+  <link rel="stylesheet" href="{{url('vendors/bootstrap/dist/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{url('vendors/font-awesome/css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="{{url('vendors/themify-icons/css/themify-icons.css')}}">
+  <link rel="stylesheet" href="{{url('vendors/flag-icon-css/css/flag-icon.min.css')}}">
+  <link rel="stylesheet" href="{{url('vendors/selectFX/css/cs-skin-elastic.css')}}">
+
+  <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+@endsection
+
+@section('content')
+<div class="sufee-login d-flex align-content-center flex-wrap">
+  <div class="container">
+    <div class="login-content">
+      <div class="login-logo">
+        <img class="align-content" src="images/logo.png" alt="">
+      </div>
+      <div class="login-form">
       <form method="POST" action="{{route('register')}}" class="user">
         @csrf
         <div class="form-group">
           <input type="text" name="name" id="name" class="form-control form-control-user @error('name') is-invalid @enderror" value="{{old('name')}}" placeholder="Username">
-
           @error('name')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -27,7 +38,6 @@
 
         <div class="form-group">
           <input type="email" name="email" id="email" class="form-control form-control-user @error('email') is-invalid @enderror" placeholder="Email Address" value="{{old('email')}}">
-
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -39,34 +49,27 @@
           <div class="col-sm-6 mb-3 mb-sm-0">
             <input type="password" name="password" id="password" class="form-control form-control-user @error('password') is-invalid @enderror" placeholder="Password" value="{{old('password')}}">
           </div>
-
           @error('password')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
           </span>
           @enderror
-
           <div class="col-sm-6">
             <input type="password" name="password_confirmation" class="form-control form-control-user" required autocomplete="new-password" placeholder="Repeat Password">
           </div>
-
         </div>
         <button type="submit" class="btn btn-primary btn-user btn-block">
           Register Account
         </button>
       </form>
-
-      <hr>
-
-      <div class="text-center">
-        <a class="small" href="{{route('password.request')}}">Forgot Password?</a>
-      </div>
-
-      <div class="text-center">
-        <a class="small" href="{{route('login')}}">Already have an account? Login!</a>
-      </div>
-
     </div>
   </div>
 </div>
+@endsection
+
+@section('script')
+  <script src="{{url('vendors/jquery/dist/jquery.min.js')}}"></script>
+  <script src="{{url('vendors/popper.js/dist/umd/popper.min.js')}}"></script>
+  <script src="{{url('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+  <script src="{{url('assets/js/main.js')}}"></script>
 @endsection

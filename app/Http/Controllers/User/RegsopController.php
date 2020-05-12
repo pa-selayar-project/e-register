@@ -3,86 +3,111 @@
 namespace App\Http\Controllers\User;
 
 use App\Regsop;
+use Auth;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Response, Redirect;
 
 class RegsopController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $data = Regsop::all();
         return view('register/sop/index', ['data' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama_sop' => 'required|unique:reg_sop',
+            'no_sop' => 'required|unique:reg_sop',
+            'tgl_sop' => 'required|date',
+            'bidang_sop' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+        
+        Regsop::create([
+            'nama_sop' => $request->nama_sop,
+            'no_sop' => $request->no_sop,
+            'desc_sop' => '-',
+            'tgl_sop' => strtotime($request->tgl_sop),
+            'bidang_sop' => $request->bidang_sop,
+            'tahun' => date('Y'),
+            'created_at' => date_format(date_create(),'Y-m-d H:i:s'),
+        ]);
+        return redirect('/register/sop')->withToastSuccess('Input data berhasil');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Regsop  $regsop
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Regsop $regsop)
+    public function show(Regsop $regsop, $id)
     {
-        //
+        $data = Regsop::where('id', $id)->get()[0];
+        return view('register/sop/show', compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Regsop  $regsop
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Regsop $regsop)
+    public function edit(Request $request,Regsop $regsop, $id)
     {
-        //
+        $data = Regsop::where('id', $id)->get()[0];
+        return view('register/sop/edit', compact('data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Regsop  $regsop
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Regsop $regsop)
+    public function update(Request $request, Regsop $regsop, $id)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'no_sop' => 'required',
+            'nama_sop' => 'required',
+            'desc_sop' => 'required',
+            'tgl_sop' => 'required',
+            'bidang_sop' => 'required',
+            'word' => 'file|nullable|max:1000|mimes:doc,docx',
+            'pdf' => 'file|nullable|max:3000|mimes:pdf',
+        ]);
+
+        if ($validator->fails()) {
+        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+
+        $update = Regsop::where('id', $id)->get()[0];
+        $update->update([
+            'no_sop' => $request->no_sop,
+            'nama_sop' => $request->nama_sop,
+            'desc_sop' => $request->desc_sop,
+            'tgl_sop' => strtotime($request->tgl_sop),
+            'bidang_sop' => $request->bidang_sop,
+            'tahun' => date('Y')
+            ]);
+
+        if($request->hasFile('word')){
+            $file     = $request->file('word');
+            $ext      = $file->getClientOriginalExtension();
+            $wordname = 'SOP_'.uniqid().'.'.$ext;
+            $file->storeAs('word', $wordname);
+            
+            Storage::delete('word/'.$update->word);
+            $update->update(['word'=> $wordname]);
+        }
+
+        if($request->hasFile('pdf')){
+            $file     = $request->file('pdf');
+            $ext      = $file->getClientOriginalExtension();
+            $pdfname = 'SOP_'.uniqid().'.'.$ext;
+            $file->storeAs('pdf/', $pdfname);
+            
+            Storage::delete('pdf/'.$update->pdf);
+            $update->update(['pdf'=> $pdfname]);
+        }
+
+        return redirect('/register/sop')->with('toast_success', 'Data berhasil di edit');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Regsop  $regsop
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Regsop $regsop)
+    public function destroy(Regsop $regsop, $id)
     {
-        //
+        Regsop::destroy($id);
+        return back()->with('toast_success', 'Data berhasil dihapus!');
     }
 }

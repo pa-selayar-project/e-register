@@ -3,12 +3,12 @@
 @section('title','Edit SK')
 
 @section('stylesheet')
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css"> -->
 <link rel="stylesheet" href="{{url('vendors/chosen/chosen.css')}}">
 <link rel="stylesheet" href="{{url('asset/css/jquery-UI.css')}}">
 @endsection
 
 @section('content')
+{{dd($regsk)}}
 <?php $obyek = explode(',', $regsk->obyek);?>
 <?php if($regsk->obyek!=""){$obyek;}?>
 
@@ -157,9 +157,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
   <script src="{{url('vendors/chosen/chosen.jquery.js')}}"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script> -->
   <script src="{{url('vendors/chosen/chosen.proto.js')}}"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.js"></script> -->
   <script src="{{url('asset/js/jquery-UI.js')}}"></script>
   <script>
     $(document).ready(function () {

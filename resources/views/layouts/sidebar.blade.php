@@ -15,7 +15,7 @@
         </li>
 
         <?php 
-        $head = App\Headmenu::where('place',2)->get();
+        $head = App\Headmenu::where('place',2)->where('level', Auth::user()->level)->get();
         ?>
         @foreach($head as $h)
         <h3 class="menu-title">{{$h->nama_head}}</h3><!-- /.menu-title -->
@@ -24,7 +24,7 @@
         
         @foreach($menu as $m)
         <li>
-        <a href="{{url($m->link)}}"><i class="menu-icon {{$m->icon}}"></i>{{$m->nama_menu}}</a>
+          <a href="{{url($m->link)}}"><i class="menu-icon {{$m->icon}}"></i>{{$m->nama_menu}}</a>
         </li>
         @endforeach
 

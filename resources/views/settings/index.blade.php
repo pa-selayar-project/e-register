@@ -5,93 +5,54 @@
 @section('content')
 <div class="card shadow mb-4">
   <div class="card-body">
-    <div class="row p-2">
-      <!-- Menu Manager -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Menu Manager</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <a href="{{url('settings/parent_menu')}}">Head Menu</a>
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                   <a href="{{url('settings/menu')}}">Menu</a>
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fa fa-list fa-2x text-gray-300"></i>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="row d-flex p-2 justify-content-around">
+      <div class="mx-5 my-3 p-2">
+        <a href="{{url('settings/parent_menu')}}">
+          <i class="fas fa-bars fa-8x"></i>
+          <div class="text-center text-primary">Head Menu</div>
+        </a>
       </div>
-
-      <!-- Personalia -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Personalia</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <a href="{{url('settings/pegawai')}}" class="text-success">Pegawai</a>
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <a href="{{url('settings/honorer')}}" class="text-success">Honorer</a>
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fa fa-users fa-2x text-gray-300"></i>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="mx-5 my-3 p-2">
+        <a href="{{url('settings/menu')}}">
+          <i class="fas fa-chevron-circle-down fa-8x"></i>
+          <div class="text-center text-primary">Menu</div>
+        </a>
       </div>
-
-      <!-- Satker -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-1">
-                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Data Satker</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <a href="" class="text-info">Info Satker</a>
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <a href="" class="text-info">Atribut</a>
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fa fa-clipboard-list fa-2x text-gray-300"></i>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="mx-5 my-3 p-2">
+        <a href="{{url('settings/pegawai')}}">
+          <i class="fas fa-users fa-8x"></i>
+          <div class="text-center text-primary">Pegawai</div>
+        </a>
       </div>
-
-      <!-- Aplikasi -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Aplikasi</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <a href="" class="text-warning">Setting</a>
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <a href="" class="text-warning">Database</a>
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fa fa-database fa-2x text-gray-300"></i>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="mx-5 my-3 p-2">
+        <a href="{{url('settings/pramubhakti')}}">
+          <i class="fas fa-user-friends fa-8x"></i>
+          <div class="text-center text-primary">Pramubhakti</div>
+        </a>
+      </div>
+      <div class="mx-5 my-3 p-2">
+        <a href="#">
+          <i class="fas fa-building fa-8x"></i>
+          <div class="text-center text-primary">Info Satker</div>
+        </a>
+      </div>
+      <div class="mx-5 my-3 p-2">
+        <a href="#">
+          <i class="fas fa-clipboard-list fa-8x"></i>
+          <div class="text-center text-primary">Attribut</div>
+        </a>
+      </div>
+      <div class="mx-5 my-3 p-2">
+        <a href="#">
+          <i class="fas fa-cogs fa-8x"></i>
+          <div class="text-center text-primary">Settings</div>
+        </a>
+      </div>
+      <div class="mx-5 my-3 p-2">
+        <a href="#">
+          <i class="fas fa-database fa-8x"></i>
+          <div class="text-center text-primary">Database</div>
+        </a>
       </div>
     </div>
   </div>

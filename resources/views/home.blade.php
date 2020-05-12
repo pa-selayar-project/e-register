@@ -8,5 +8,5 @@
 @endsection
 
 @section('content')
-<h1>Selamat Datang {{ucfirst(Auth::user()->name)}}</h1>
+<h1>Selamat Datang {{ucfirst(Auth::user()->level)}}</h1>
 @endsection
