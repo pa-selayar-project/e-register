@@ -14,7 +14,7 @@ class Pegawai extends Model
 
     public function regcuti()
     {
-        return $this->belongsTo('App\Regcuti', 'pegawai_id');
+        return $this->hasOne('App\Regcuti');
     }
     
     public function regsk()

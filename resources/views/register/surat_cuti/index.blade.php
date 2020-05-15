@@ -17,6 +17,7 @@
 @endsection
 
 @section('content')
+<?php use App\Helpers\Helper;?>
 <div class="card shadow mb-4">
   <div class="card-body">
     <div class="table-responsive">
@@ -36,13 +37,15 @@
           <tr>
             <td>{{$loop->iteration}}</td>
             <td>{{$d->pegawai->nama_pegawai}}</td>
-            <td>{{$d->no_cuti}}<br>Tgl. {{$d->tgl_cuti}}</td>
-            <td>{{$d->mulai}} s.d {{$d->akhir}}</td>
+            <td>{{$d->no_cuti}}
+                <div>Tgl. {{Helper::tanggal_id($d->tgl_cuti)}}</div>
+            </td>
+            <td>{{Helper::tanggal_id($d->mulai)}} s.d {{Helper::tanggal_id($d->akhir)}}</td>
             <td>{{$d->pegawai->sisa_cuti}}</td>
             <td>
               <a href="#" class="btn btn-danger btn-sm btn-circle "><i class="fas fa-trash"></i></a>
-              <a href="#" class="btn btn-success btn-sm btn-circle"><i class="fas fa-edit"></i></a>
-              <a href="#" class="btn btn-success btn-sm btn-circle"><i class="fas fa-info-circle"></i></a>
+              <a href="surat_cuti/{{$d->id}}/edit" class="btn btn-success btn-sm btn-circle"><i class="fas fa-edit"></i></a>
+              <a href="surat_cuti/{{$d->id}}" class="btn btn-primary btn-sm btn-circle"><i class="fas fa-info-circle"></i></a>
             </td>
           </tr>
           @endforeach

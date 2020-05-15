@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Register Surat Cuti')
+@section('title','Rekam Surat Cuti')
 
 @section('stylesheet')
 <link rel="stylesheet" href="{{url('vendors/chosen/chosen.css')}}">
@@ -8,7 +8,8 @@
 @endsection
 
 @section('content')
-<form method="post" action="">
+<form method="post" action="{{url('register/surat_cuti')}}">
+@csrf
 <div class="row">
     <div class="col-xl-6 col-lg-6">  
       <div class="card shadow mb-4 h-100">
@@ -52,9 +53,15 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="tgl_sc" class="col-sm-3 col-form-label">Alamat Cuti</label>
+            <label for="alamat" class="col-sm-3 col-form-label">Alamat Cuti</label>
             <div class="col-sm-9">
-              <textarea class="form-control" rows="3"></textarea>
+              <textarea name="alamat" id="alamat" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="alasan" class="col-sm-3 col-form-label">Alasan Cuti</label>
+            <div class="col-sm-9">
+              <textarea name="alasan" id="alasan" class="form-control" rows="3"></textarea>
             </div>
           </div>
         </div>
@@ -73,47 +80,19 @@
           </select>
         </div>
       </div>
-      <div class="card shadow mb-0 h-auto">
+      <div class="card shadow mb-0 h-75">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Jenis Cuti</h6>
         </div>   
         <div class="card-body">
+          @foreach($jeniscuti as $jc)
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti1" value="option1" checked>
-            <label class="form-check-label" for="jenisCuti1">
-              Cuti Tahunan
+            <input class="form-check-input" type="radio" name="jenis_cuti" id="{{$jc->jenis_cuti}}" value="{{$jc->jenis_cuti}}">
+            <label class="form-check-label" for="{{$jc->jenis_cuti}}">
+              {{$jc->ket}}
             </label>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti2" value="option2">
-            <label class="form-check-label" for="jenisCuti2">
-              Cuti Besar
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti3" value="option3">
-            <label class="form-check-label" for="jenisCuti3">
-              Cuti Sakit
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti4" value="option4">
-            <label class="form-check-label" for="jenisCuti4">
-              Cuti Melahirkan
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti5" value="option5">
-            <label class="form-check-label" for="jenisCuti5">
-              Cuti Alasan Penting
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="jenis_cuti" id="jenisCuti6" value="option6">
-            <label class="form-check-label" for="jenisCuti6">
-              Cuti Diluar Tanggungan Negara
-            </label>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>
@@ -123,7 +102,7 @@
           <h6 class="m-0 font-weight-bold text-primary">Resume</h6>
         </div>
         <div class="card-body">
-          Sisa Cuti  :  8 hari
+          Sisa Cuti Tahun Ini  :  8 hari
           <br>
           Sisa Cuti Tahun Lalu : 9 hari
         </div>

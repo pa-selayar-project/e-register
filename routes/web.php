@@ -17,7 +17,6 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
             Route::get('settings', 'HeadmenuController@settings');
         }
     );
-    Route::get('json', 'HomeController@json');
 });
 
 Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
@@ -27,8 +26,8 @@ Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
         Route::resource('register/kgb', 'RegkgbController');
         Route::resource('register/sop', 'RegsopController');
         Route::resource('register/surat_cuti', 'RegcutiController');
+        Route::post('register/surat_cuti/print/{id}', 'RegcutiController@print');
         Route::resource('register/surat_tugas', 'RegstugasController');
     });
-    Route::get('user_list', 'HomeController@userlist');
     Route::post('logout', 'Auth\LoginController@logout');
 });

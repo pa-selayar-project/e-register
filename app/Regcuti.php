@@ -14,6 +14,11 @@ class Regcuti extends Model
 
     public function pegawai()
     {
-        return $this->belongsTo('App\Pegawai', 'id');
+        return $this->belongsTo('App\Pegawai');
+    }
+
+    public function atasan()
+    {
+        return $this->belongsTo('App\Pegawai');
     }
 }
