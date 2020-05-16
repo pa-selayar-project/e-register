@@ -24,7 +24,7 @@
             <div class="input-group">
               <select name="pegawai_id" class="chosen-select form-control">
                 @foreach($pegawai as $p)
-                  <option value="{{$p->id}}" @if($p->id == $data->id) selected @endif>{{$p->nama_pegawai}}</option>
+                  <option value="{{$p->id}}" @if($p->id == $data->pegawai_id) selected @endif>{{$p->nama_pegawai}}</option>
                 @endforeach
               </select>
             </div>
@@ -65,6 +65,12 @@
           <label for="tgl_sc" class="col-sm-3 col-form-label">Alamat Cuti</label>
           <div class="col-sm-9">
             <textarea name="alamat" class="form-control" rows="3">{{$data->alamat}}</textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="alasan" class="col-sm-3 col-form-label">Alasan Cuti</label>
+          <div class="col-sm-9">
+            <textarea name="alasan" id="alasan" class="form-control" rows="3">{{$data->alasan}}</textarea>
           </div>
         </div>
       </div>
