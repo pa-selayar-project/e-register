@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 use App\Regstugas;
 use App\Pegawai;
 use Validator;
-use Table;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

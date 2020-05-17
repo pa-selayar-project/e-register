@@ -24,10 +24,10 @@
         <thead>
           <tr>
             <th style="width:5%">No</th>
-            <th style="width:30%">Nomor SOP</th>
-            <th style="width:30%">Tanggal</th>
-            <th style="width:10%">Deskripsi SOP</th>
-            <th style="width:10%">Bidang</th>
+            <th style="width:15%">Nomor SOP</th>
+            <th style="width:20%">Tanggal</th>
+            <th style="width:30%">Deskripsi SOP</th>
+            <th style="width:15%">Bidang</th>
             <th style="width:15%">Action</th>
           </tr>
         </thead>
@@ -36,7 +36,7 @@
           <tr>
             <td>{{$loop->iteration}}</td>
             <td>{{$d->no_sop}}</td>
-            <td>{{date('d M Y', $d->tgl_sop)}}</td>
+            <td>{{\App\Helpers\Helper::tanggal_id($d->tgl_sop)}}</td>
             <td>{{$d->desc_sop}}</td>
             <td>{{$d->bidang_sop}}</td>
             <td class="d-flex">

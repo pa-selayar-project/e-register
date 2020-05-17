@@ -7,7 +7,7 @@
   <span class="icon text-white-50">
     <i class="fa fa-plus"></i>
   </span>
-  <span class="text">Add Data</span>
+  <span class="text"> Tambah</span>
 </a>
 @endsection
 
@@ -19,13 +19,6 @@
 @section('content')
 <div class="card shadow mb-4">
   <div class="card-body">
-
-    @if (session('message'))
-    <div class=" alert alert-success">
-      {{ session('message') }}
-    </div>
-    @endif
-
     <div class="table-responsive">
       <table id="tabel" class="display" style="width:100%">
         <thead>
@@ -43,7 +36,7 @@
           <tr>
             <td>{{$loop->iteration}}</td>
             <td>{{$d->no_sk}} <br> 
-              Tgl. {{ date('d M Y', $d->tgl_sk)}}
+              Tgl. {{\App\Helpers\Helper::tanggal_id($d->tgl_sk)}}
             </td>
             <td>{{$d->nama_sk}}</td>
             <td>{{$d->bidang_sk}}</td>
