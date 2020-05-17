@@ -34,7 +34,7 @@
           <label for="no_cuti" class="col-sm-3 col-form-label">Nomor Surat</label>
           <div class="col-sm-9">
             <div class="input-group date">
-              <input type="text" id="no_cuti" name="no_cuti" class="form-control" value="{{$data->no_cuti}}">
+              <input type="text" id="no_cuti" name="no_cuti" class="form-control form-control-sm" value="{{$data->no_cuti}}">
             </div>
           </div>
         </div>
@@ -42,7 +42,7 @@
           <label for="tgl_cuti" class="col-sm-3 col-form-label">Tanggal</label>
           <div class="col-sm-9">
             <div class="input-group date">
-              <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control" value="{{date('d M Y', $data->tgl_cuti)}}">
+              <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control  form-control-sm" value="{{date('d M Y', $data->tgl_cuti)}}">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -53,24 +53,24 @@
           <label for="mulai" class="col-sm-3 col-form-label">Tanggal Cuti</label>
           <div class="col-sm-9">
             <div class="input-group date">
-              <input type="text" id="mulai" name="mulai" class="datepicker form-control" value="{{date('d M Y', $data->mulai)}}"> 
+              <input type="text" id="mulai" name="mulai" class="datepicker form-control form-control-sm" value="{{date('d M Y', $data->mulai)}}"> 
               <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">s/d</span>
+                <span class="input-group-text form-control form-control-sm" id="basic-addon3">s/d</span>
               </div> 
-              <input type="text" id="akhir" name="akhir" class="datepicker form-control" value="{{date('d M Y', $data->akhir)}}">
+              <input type="text" id="akhir" name="akhir" class="datepicker form-control form-control-sm" value="{{date('d M Y', $data->akhir)}}">
             </div>
           </div>
         </div>
         <div class="form-group row">
           <label for="tgl_sc" class="col-sm-3 col-form-label">Alamat Cuti</label>
           <div class="col-sm-9">
-            <textarea name="alamat" class="form-control" rows="3">{{$data->alamat}}</textarea>
+            <textarea name="alamat" class="form-control" rows="2">{{$data->alamat}}</textarea>
           </div>
         </div>
         <div class="form-group row">
           <label for="alasan" class="col-sm-3 col-form-label">Alasan Cuti</label>
           <div class="col-sm-9">
-            <textarea name="alasan" id="alasan" class="form-control" rows="3">{{$data->alasan}}</textarea>
+            <textarea name="alasan" id="alasan" class="form-control" rows="2">{{$data->alasan}}</textarea>
           </div>
         </div>
       </div>

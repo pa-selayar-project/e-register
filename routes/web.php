@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
         Route::resource('register/surat_cuti', 'RegcutiController');
         Route::post('register/surat_cuti/print/{id}', 'RegcutiController@print');
         Route::resource('register/surat_tugas', 'RegstugasController');
+        Route::post('register/surat_tugas/print/{id}', 'RegstugasController@print');
     });
     Route::post('logout', 'Auth\LoginController@logout');
 });

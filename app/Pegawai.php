@@ -31,4 +31,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo('App\Jabatan', 'jabatan_id');
     }
+    
+    public function regstugas()
+    {
+        return $this->hasOne('App\Regstugas');
+    }
 }

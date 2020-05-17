@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Edit Surat Tugas')
+@section('title','Rekam Surat Tugas')
 
 @section('stylesheet')
 <link rel="stylesheet" href="{{url('vendors/chosen/chosen.css')}}">
@@ -8,8 +8,7 @@
 @endsection
 
 @section('content')
-<form action="/register/surat_tugas/{{$data->id}}" method="POST" enctype="multipart/form-data">
-@method('patch')
+<form action="/register/surat_tugas" method="POST">
 @csrf
   <div class="col-xs-6 col-md-6">
     <div class="card">
@@ -19,7 +18,7 @@
             <strong>Nomor Surat</strong>
           </label>
           <div class="input-group">
-            <input type="text" name="no_stugas" class="form-control form-control-sm" value="{{$data->no_stugas}}">
+            <input type="text" name="no_stugas" class="form-control form-control-sm" value="{{old('no_stugas')}}">
           </div>
         </div>
         
@@ -29,7 +28,7 @@
               <strong>Tanggal</strong>
             </label>
             <div class="input-group">
-              <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm" value="{{date('d F Y',$data->tgl_stugas)}}">
+              <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm" value="{{old('tgl_stugas')}}">
             </div>
           </div>
 
@@ -40,7 +39,7 @@
             <div class="input-group">
               <select name="ttd_stugas" class="chosen-select form-control">
                 @foreach($penandatangan as $ttd)
-                  <option value="{{$ttd->nama_pegawai}}" @if($ttd->nama_pegawai == $data->ttd_stugas)selected @endif>
+                  <option value="{{$ttd->nama_pegawai}}">
                   {{$ttd->nama_pegawai}}
                   </option>
                 @endforeach
@@ -56,7 +55,7 @@
           <div class="input-group">
             <select name="pegawai[]" class="chosen-select form-control" multiple="multiple">
               @foreach($pelaksana as $p)
-                <option value="{{$p->id}}" @if(in_array($p->id, explode(',',$data->pegawai))) selected @endif>
+                <option value="{{$p->id}}">
                   {{$p->nama_pegawai}}
                 </option>
               @endforeach
@@ -69,7 +68,7 @@
             <strong>Pertimbangan</strong>
           </label>
           <div class="input-group">
-            <textarea name="menimbang" rows="4" class="form-control">{{$data->menimbang}}</textarea>
+            <textarea name="menimbang" rows="4" class="form-control">{{old('menimbang')}}</textarea>
           </div>
         </div>
       </div>
@@ -84,7 +83,7 @@
             <strong>Dasar</strong>
           </label>
           <div class="input-group">
-            <textarea name="dasar" rows="2" class="form-control">{{$data->dasar}}</textarea>
+            <textarea name="dasar" rows="3" class="form-control">{{old('dasar')}}</textarea>
           </div>
         </div>
 
@@ -93,7 +92,7 @@
             <strong>Maksud</strong>
           </label>
           <div class="input-group">
-            <textarea name="maksud" rows="2" class="form-control">{{$data->maksud}}</textarea>
+            <textarea name="maksud" rows="3" class="form-control">{{old('maksud')}}</textarea>
           </div>
         </div>
        
@@ -103,37 +102,14 @@
           </label>
           <div class="input-group">
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="dipa1" name="dipa" class="custom-control-input" value="1" @if($data->dipa == 1)checked @endif>
+              <input type="radio" id="dipa1" name="dipa" class="custom-control-input" value="1" checked>
               <label class="custom-control-label" for="dipa1">Ya</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="dipa2" name="dipa" class="custom-control-input" value="2" @if($data->dipa == 2)checked @endif>
+              <input type="radio" id="dipa2" name="dipa" class="custom-control-input" value="2">
               <label class="custom-control-label" for="dipa2">Tidak</label>
             </div>
           </div>
-        </div>
-
-        <div class="row my-1">
-          <div class="col col-md-1">
-            <i class="fas fa-file-word @if($data->word)text-primary @else text-secondary @endif fa-2x ml-3"></i>
-          </div>
-          <div class="col col-md-5">
-            <div class="custom-file">
-              <input type="file" name="word" class="custom-file-input" id="word">
-              <label class="custom-file-label" for="word">Choose file</label>
-            </div>
-             <small class="form-text text-danger">@error('word'){{$message}}@enderror</small>
-          </div>  
-          <div class="col col-md-1">
-            <i class="fas fa-file-pdf @if($data->pdf)text-danger @else text-secondary @endif fa-2x ml-3"></i>
-          </div>
-          <div class="col col-md-5">
-            <div class="custom-file">
-              <input type="file" name="pdf" class="custom-file-input" id="pdf">
-              <label class="custom-file-label" for="pdf">Choose file</label>
-            </div>
-             <small class="form-text text-danger">@error('pdf'){{$message}}@enderror</small>
-          </div>  
         </div>
 
         <div class="form-group float-right">
