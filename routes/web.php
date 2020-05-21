@@ -29,6 +29,9 @@ Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
         Route::post('register/surat_cuti/print/{id}', 'RegcutiController@print');
         Route::resource('register/surat_tugas', 'RegstugasController');
         Route::post('register/surat_tugas/print/{id}', 'RegstugasController@print');
+        Route::get('profil/ubah_password', 'ProfilController@ubah_password');
+        Route::resource('profil', 'ProfilController');
+        Route::patch('profil/update_password/{id}', 'ProfilController@update_password');
     });
     Route::post('logout', 'Auth\LoginController@logout');
 });

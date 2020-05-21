@@ -2,6 +2,14 @@
 
 @section('title','Detail SK')
 
+@section('breadcumb')
+<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+  <span class="icon text-white-50">
+    <i class="fa fa-chevron-circle-left"></i>
+  </span>
+</a>
+@endsection
+
 @section('content')
 <div class="card shadow mb-4">
   <div class="card-body">
@@ -16,7 +24,7 @@
         </tr>
         <tr>
           <td>Tanggal</td>
-          <td>{{date('d M Y', $regsk->tgl_sk)}}</td>
+          <td>{{\App\Helpers\Helper::tanggal_id($regsk->tgl_sk)}}</td>
         </tr>
         <tr>
           <td>Perihal</td>

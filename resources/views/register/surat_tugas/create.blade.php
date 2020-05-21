@@ -7,6 +7,14 @@
 <link rel="stylesheet" href="{{url('asset/css/jquery-UI.css')}}">
 @endsection
 
+@section('breadcumb')
+<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+  <span class="icon text-white-50">
+    <i class="fa fa-chevron-circle-left"></i>
+  </span>
+</a>
+@endsection
+
 @section('content')
 <form action="/register/surat_tugas" method="POST">
 @csrf

@@ -71,16 +71,13 @@
 			<div class="col-sm-5">
 					<div class="user-area dropdown float-right">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<img class="user-avatar rounded-circle" src="{{url('images/admin.jpg')}}" alt="User Avatar">
+									<img class="user-avatar rounded-circle" src="/assets/pic/{{Auth::user()->image}}" height="30" width="30">
 							</a>
-
+							<?php $topmenu = App\Menu::where('headmenu_id', 3)->get();?>
 							<div class="user-menu dropdown-menu">
-									<a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
-
-									<a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
-
-									<a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
-
+								@foreach($topmenu as $tm)
+									<a class="nav-link" href="{{$tm->link}}"><i class="{{$tm->icon}}"></i> {{$tm->nama_menu}}</a>
+								@endforeach
 									<form method="POST" action="{{url('logout')}}">
 											@csrf
 											<button class="nav-link border-0 bg-white"><i class="fa fa-power-off"></i> Logout</button>

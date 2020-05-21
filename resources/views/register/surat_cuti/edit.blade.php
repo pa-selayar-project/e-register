@@ -33,7 +33,7 @@
         <div class="form-group row">
           <label for="no_cuti" class="col-sm-3 col-form-label">Nomor Surat</label>
           <div class="col-sm-9">
-            <div class="input-group date">
+            <div class="input-group">
               <input type="text" id="no_cuti" name="no_cuti" class="form-control form-control-sm" value="{{$data->no_cuti}}">
             </div>
           </div>

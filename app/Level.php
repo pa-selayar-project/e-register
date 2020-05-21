@@ -10,5 +10,5 @@ class Level extends Model
     use SoftDeletes;
 
     protected $table = "tb_level";
-    protected $guarded = "['id','created_at','updated_at','deleted_at']";
+    protected $guarded = ['id','created_at','updated_at','deleted_at'];
 }
