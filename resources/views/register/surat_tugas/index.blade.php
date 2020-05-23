@@ -46,7 +46,7 @@
               @endforeach
               </ol>
             </td>
-            <td>{{$d->ttd_stugas}}</td>
+            <td>{{$d->jabatan->nama_jabatan}}</td>
             <td class="d-flex">
               <form action="/register/surat_tugas/{{$d->id}}" method="post">
                 @csrf

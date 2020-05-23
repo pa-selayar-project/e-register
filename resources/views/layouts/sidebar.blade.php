@@ -1,11 +1,13 @@
 <aside id="left-panel" class="left-panel">
+<?php $data = \App\Setting::where('id',1)->first();?>
   <nav class="navbar navbar-expand-sm navbar-default">
     <div class="navbar-header">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fa fa-bars"></i>
       </button>
-      <a class="navbar-brand" href="./"><img src="{{url('images/logo.png')}}" alt="Logo"></a>
-      <a class="navbar-brand hidden" href="./"><img src="{{url('images/logo2.png')}}" alt="Logo"></a>
+
+      <a class="navbar-brand mt-0" href="{{url('/home')}}"><img src="{{url('assets/images/logo/'.$data->logo_kecil)}}" height="60" width="60" alt="Logo">{{$data->nama_aplikasi}}</a>
+      <a class="navbar-brand hidden" href="{{url('/home')}}"><img src="{{url('assets/images/logo/'.$data->logo_kecil)}}" height="60" width="60"></a>
     </div>
 
     <div id="main-menu" class="main-menu collapse navbar-collapse">

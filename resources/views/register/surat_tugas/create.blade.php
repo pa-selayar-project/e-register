@@ -47,8 +47,8 @@
             <div class="input-group">
               <select name="ttd_stugas" class="chosen-select form-control">
                 @foreach($penandatangan as $ttd)
-                  <option value="{{$ttd->nama_pegawai}}">
-                  {{$ttd->nama_pegawai}}
+                  <option value="{{$ttd->jabatan_id}}">
+                  {{$ttd->jabatan->nama_jabatan}}
                   </option>
                 @endforeach
               </select>

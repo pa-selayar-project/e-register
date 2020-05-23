@@ -48,8 +48,8 @@
             <div class="input-group">
               <select name="ttd_stugas" class="chosen-select form-control">
                 @foreach($penandatangan as $ttd)
-                  <option value="{{$ttd->nama_pegawai}}" @if($ttd->nama_pegawai == $data->ttd_stugas)selected @endif>
-                  {{$ttd->nama_pegawai}}
+                  <option value="{{$ttd->jabatan_id}}" @if($ttd->jabatan_id == $data->ttd_stugas)selected @endif>
+                  {{$ttd->jabatan->nama_jabatan}}
                   </option>
                 @endforeach
               </select>

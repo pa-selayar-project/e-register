@@ -21,4 +21,9 @@ class Jabatan extends Model
     {
         return $this->belongsTo('App\Honorer', 'id');
     }
+    
+    public function regstugas()
+    {
+        return $this->belongsTo('App\Regstugas', 'id');
+    }
 }

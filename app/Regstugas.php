@@ -16,4 +16,9 @@ class Regstugas extends Model
     {
         return $this->belongsTo('App\Pegawai', 'id');
     }
+
+    public function jabatan()
+    {
+        return $this->belongsTo('App\Jabatan','ttd_stugas');
+    }
 }
