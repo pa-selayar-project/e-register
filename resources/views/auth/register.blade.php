@@ -18,11 +18,13 @@
 @endsection
 
 @section('content')
+<?php $data = \App\Setting::where('id',1)->first();?>
 <div class="sufee-login d-flex align-content-center flex-wrap">
   <div class="container">
     <div class="login-content">
       <div class="login-logo">
-        <img class="align-content" src="images/logo.png" alt="">
+        <img class="align-content" src="{{url('assets/images/logo/'.$data->logo_besar)}}" width="150" height="200">
+        <div class="text-white"><h2>{{$data->nama_aplikasi}} V {{$data->versi}}</h2></div>
       </div>
       <div class="login-form">
       <form method="POST" action="{{route('register')}}" class="user">

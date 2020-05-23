@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
             Route::resource('settings/parent_menu', 'HeadmenuController');
             Route::resource('settings/pegawai', 'PegawaiController');
             Route::resource('settings/pramubhakti', 'HonorerController');
+            Route::resource('settings/setting', 'SettingController');
             Route::get('settings', 'HeadmenuController@settings');
         }
     );

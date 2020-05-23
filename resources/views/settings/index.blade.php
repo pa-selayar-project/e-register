@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Settings')
+@section('title','Setting')
 
 @section('content')
 <div class="card shadow mb-4">
@@ -43,9 +43,9 @@
         </a>
       </div>
       <div class="mx-5 my-3 p-2">
-        <a href="#">
+        <a href="{{url('settings/setting')}}">
           <i class="fas fa-cogs fa-8x"></i>
-          <div class="text-center text-primary">Settings</div>
+          <div class="text-center text-primary">Setting</div>
         </a>
       </div>
       <div class="mx-5 my-3 p-2">
