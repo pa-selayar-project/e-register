@@ -37,8 +37,8 @@ class Helper {
       
       $numBulan = 1 + (date("Y",$now)-date("Y",$tmtCpns))*12;
       $numBulan += date("m",$now)-date("m",$tmtCpns);
-      $tahun = floor($numBulan/12).' TAHUN';
-      $bulan = $numBulan%12 .' BULAN';
+      $tahun = floor($numBulan/12).' Tahun';
+      $bulan = $numBulan%12 .' Bulan';
       return $tahun.' '.$bulan;
     }
 

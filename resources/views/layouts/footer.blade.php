@@ -3,7 +3,7 @@
 <script src="{{url('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <script src="{{url('assets/js/main.js')}}"></script>
 
-<script src="{{url('vendors/chart.js/dist/Chart.bundle.min.js')}}"></script>
-<script src="{{url('assets/js/dashboard.js')}}"></script>
-<script src="{{url('assets/js/widgets.js')}}"></script>
+<!-- <script src="vendors/chart.js/dist/Chart.bundle.min.js"></script> -->
+<!-- <script src="assets/js/dashboard.js"></script> -->
+<!-- <script src="assets/js/widgets.js"></script> -->
 @yield('script')

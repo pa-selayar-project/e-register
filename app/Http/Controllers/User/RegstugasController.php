@@ -139,7 +139,7 @@ class RegstugasController extends Controller
 
 	public function print($id)
 	{
-		$data = Regstugas::where('id', $id)->get()[0];
+		$data = Regstugas::where('id', $id)->first();
 		$arr_pelaksana = explode(',',$data->pegawai);
        
     $hitung = count($arr_pelaksana);

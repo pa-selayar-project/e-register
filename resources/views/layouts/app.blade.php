@@ -8,7 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Web Kepegawaian">
   <meta name="author" content="Muhammad Rizaldy Idil">
-
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
   <title>@yield('title')</title>
 
     @include('layouts.style')

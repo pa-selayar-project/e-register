@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
-@section('title','Detail SK')
+@section('title','Detail KGB')
+
+@section('breadcumb')
+<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+  <span class="icon text-white-50">
+    <i class="fa fa-chevron-circle-left"></i>
+  </span>
+</a>
+@endsection
 
 @section('content')
 <div class="card shadow mb-4">
@@ -11,40 +19,41 @@
           <th class="p-5 text-center text-uppercase" colspan="3">data surat keputusan</th>
         </tr>
         <tr>
+          <td style="width:25%">Nama Pegawai</td>
+          <td style="width:75%">{{$data->pegawai->nama_pegawai}}</td>
+        </tr>
+        <tr>
           <td style="width:25%">Nomor</td>
-          <td style="width:75%">{{$regsk->no_sk}}</td>
+          <td style="width:75%">{{$data->no_kgb}}</td>
         </tr>
         <tr>
           <td>Tanggal</td>
-          <td>{{date('d M Y', $regsk->tgl_sk)}}</td>
+          <td>{{\App\Helpers\Helper::tanggal_id($data->tgl_kgb)}}</td>
         </tr>
         <tr>
-          <td>Perihal</td>
-          <td>{{$regsk->desc_sk}}</td>
+          <td>TMT KGB</td>
+          <td>{{\App\Helpers\Helper::tanggal_id($data->tmt_kgb)}}</td>
         </tr>
         <tr>
-          <td>Obyek SK</td>
+          <td>Template</td>
           <td>
-          @if(collect($obyek)->count()==0)
-            Tidak Ada
-          @else
-            @foreach($obyek as $oby)
-              {{$oby->nama_pegawai}}<br>
-            @endforeach
-          @endif
+            <form method="post" action="/register/kgb/print/{{$data->id}}">
+              @csrf
+              <button type="submit" class="btn btn-primary rounded">Print</button>
+            </form>
           </td>
         </tr>
         <tr>
           <td>Files</td>
           <td>
-            @if($regsk->word)
-            <a href="{{url('assets/word/'.$regsk->word)}}" class="mr-5"><i class="fas fa-file-word text-primary"></i> Download File Word</a>
+            @if($data->word)
+            <a href="{{url('assets/word/'.$data->word)}}" class="mr-5"><i class="fas fa-file-word text-primary"></i> Download File Word</a>
             @else
             <i class="fas fa-file-word text-secondary"></i> Tidak ada file
             @endif
 
-            @if($regsk->pdf)
-            <a href="{{url('assets/pdf/'.$regsk->pdf)}}" class="ml-5" target="_blank"><i class="fas fa-file-pdf text-danger"></i> Download File PDF</a>
+            @if($data->pdf)
+            <a href="{{url('assets/pdf/'.$data->pdf)}}" class="ml-5" target="_blank"><i class="fas fa-file-pdf text-danger"></i> Download File PDF</a>
             @else
             <i class="fas fa-file-pdf text-secondary ml-5"></i> Tidak ada file
             @endif

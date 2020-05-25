@@ -65,7 +65,7 @@ class RegcutiController extends Controller
 
     public function show($id)
     {
-        $data = Regcuti::where('id', $id)->get()[0];
+        $data = Regcuti::where('id', $id)->first();
         return view('register/surat_cuti/show', compact('data'));
     }
 

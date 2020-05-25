@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Edit KGB')
+@section('title','Rekam KGB')
 
 @section('breadcumb')
 <a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
@@ -16,21 +16,24 @@
 @endsection
 
 @section('content')
-<form method="post" action="/register/kgb/{{$data->id}}" enctype="multipart/form-data">
+<form method="post" action="{{url('register/kgb')}}">
 @csrf
-@method("patch")
 <div class="row">
   <div class="col-xl-6 col-lg-6">  
     <div class="card shadow mb-4 h-100">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Data Surat KGB ({{$data->pegawai->nama_pegawai}})</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Data Surat KGB</h6>
       </div>   
       <div class="card-body">
         <div class="form-group row">
-          <label for="pegawai_id" class="col-sm-4 col-form-label">Nomor Surat KGB</label>
+          <label for="pegawai_id" class="col-sm-4 col-form-label">Nama Pegawai</label>
           <div class="col-sm-8">
             <div class="input-group">
-              <input type="text" id="no_kgb" name="no_kgb" class="form-control" value="{{$data->no_kgb}}">
+              <select name="pegawai_id" class="chosen-select form-control">
+                @foreach($pegawai as $p)
+                <option value="{{$p->id}}">{{$p->nama_pegawai}}</option>
+                @endforeach
+              </select>
             </div>
           </div>
         </div>
@@ -38,7 +41,7 @@
           <label for="tgl_kgb" class="col-sm-4 col-form-label">Tanggal</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="tgl_kgb" name="tgl_kgb" class="datepicker form-control" value="{{date('d F Y',$data->tgl_kgb)}}">
+              <input type="text" id="tgl_kgb" name="tgl_kgb" class="datepicker form-control">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -49,7 +52,7 @@
           <label for="gapok_baru" class="col-sm-4 col-form-label">Gaji Pokok</label>
           <div class="col-sm-8">
             <div class="input-group">
-              <input type="number" id="gapok_baru" name="gapok_baru" class="form-control" min="0" value="{{$data->gapok_baru}}">
+              <input type="number" id="gapok_baru" name="gapok_baru" class="form-control" min="0">
             </div>
           </div>
         </div>
@@ -58,7 +61,7 @@
           <label for="masa_kerja" class="col-sm-4 col-form-label">Masa Kerja Golongan</label>
           <div class="col-sm-8">
             <div class="input-group">
-              <input type="text" id="masa_kerja" name="masa_kerja" class="form-control" value="{{$data->masa_kerja}}">
+              <input type="text" id="masa_kerja" name="masa_kerja" class="form-control">
             </div>
           </div>
         </div>
@@ -67,7 +70,7 @@
           <label for="tmt_kgb" class="col-sm-4 col-form-label">TMT KGB</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="tmt_kgb" name="tmt_kgb" class="datepicker form-control" value="{{date('d F Y', $data->tmt_kgb)}}">
+              <input type="text" id="tmt_kgb" name="tmt_kgb" class="datepicker form-control">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -75,29 +78,13 @@
           </div>
         </div>
 
-        <div class="form group row mb-1">
-          <div class="col col-md-4">
-            <i class="fas fa-file-word @if($data->word)text-primary @else text-secondary @endif fa-3x ml-3"></i>
-          </div>
-          <div class="col col-md-8">
-            <div class="custom-file">
-              <input type="file" name="word" class="custom-file-input" id="word">
-              <label class="custom-file-label" for="word">Choose file</label>
+        <div class="form-group row">
+          <label for="pejabat_kgb" class="col-sm-4 col-form-label">Pejabat KGB</label>
+          <div class="col-sm-8">
+            <div class="input-group date">
+              <input type="text" id="pejabat_kgb" name="pejabat_kgb" class="form-control" value="Ketua Pengadilan Agama Selayar" disabled>
             </div>
-             <small class="form-text text-danger">@error('word'){{$message}}@enderror</small>
-          </div>  
-        </div>
-        <div class="form group row">
-          <div class="col col-md-4">
-            <i class="fas fa-file-pdf @if($data->pdf)text-danger @else text-secondary @endif fa-3x ml-3"></i>
           </div>
-          <div class="col col-md-8">
-            <div class="custom-file">
-              <input type="file" name="pdf" class="custom-file-input" id="pdf">
-              <label class="custom-file-label" for="pdf">Choose file</label>
-            </div>
-             <small class="form-text text-danger">@error('pdf'){{$message}}@enderror</small>
-          </div>  
         </div>
 
       </div>
@@ -114,7 +101,7 @@
           <label for="kgb_lama" class="col-sm-4 col-form-label">Nomor KGB/SK</label>
           <div class="col-sm-8">
             <div class="input-group">
-              <input type="text" id="kgb_lama" name="kgb_lama" class="form-control" value="{{$data->kgb_lama}}">
+              <input type="text" id="kgb_lama" name="kgb_lama" class="form-control">
             </div>
           </div>
         </div>
@@ -123,7 +110,7 @@
           <label for="tgl_kgb_lama" class="col-sm-4 col-form-label">Tanggal KGB Lama</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="tgl_kgb_lama" name="tgl_kgb_lama" class="datepicker form-control" value="{{date('d F Y', $data->tgl_kgb_lama)}}">
+              <input type="text" id="tgl_kgb_lama" name="tgl_kgb_lama" class="datepicker form-control">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -135,7 +122,7 @@
           <label for="gapok_lama" class="col-sm-4 col-form-label">Gaji Pokok</label>
           <div class="col-sm-8">
             <div class="input-group">
-              <input type="number" id="gapok_lama" name="gapok_lama" class="form-control" min="0" value="{{$data->gapok_lama}}">
+              <input type="number" id="gapok_lama" name="gapok_lama" class="form-control" min="0">
             </div>
           </div>
         </div>
@@ -144,7 +131,7 @@
           <label for="masa_kerja_lama" class="col-sm-4 col-form-label">Masa Kerja Lama</label>
           <div class="col-sm-8">
             <div class="input-group">
-              <input type="text" id="masa_kerja_lama" name="masa_kerja_lama" class="form-control" value="{{$data->masa_kerja_lama}}">
+              <input type="text" id="masa_kerja_lama" name="masa_kerja_lama" class="form-control">
             </div>
           </div>
         </div>
@@ -153,7 +140,7 @@
           <label for="tmt_kgb_lama" class="col-sm-4 col-form-label">TMT KGB Lama</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="tmt_kgb_lama" name="tmt_kgb_lama" class="datepicker form-control" value="{{date('d F Y', $data->tmt_kgb_lama)}}">
+              <input type="text" id="tmt_kgb_lama" name="tmt_kgb_lama" class="datepicker form-control">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -165,7 +152,7 @@
           <label for="pejabat_kgb_lama" class="col-sm-4 col-form-label">Pejabat KGB Lama</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="pejabat_kgb_lama" name="pejabat_kgb_lama" class="form-control" value="{{$data->pejabat_kgb_lama}}">
+              <input type="text" id="pejabat_kgb_lama" name="pejabat_kgb_lama" class="form-control">
             </div>
           </div>
         </div>
@@ -196,10 +183,18 @@
 
     $(".chosen-select").chosen();
 
-    $(".custom-file-input").on('change', function(){
-        let fileName= $(this).val().split('\\').pop();
-        $(this).next(".custom-file-label").addClass("selected").html(fileName);
+    $('select').on('change', function(){
+      let id = $(this).val();
+      
+      $.ajax({
+        type: 'GET',
+        url:id+'/hasil',
+        success:function(result){
+          console.log(result);
+          $('#masa_kerja').val(result[1]);
+        }
       });
+    });
   });
   </script>
 @endsection

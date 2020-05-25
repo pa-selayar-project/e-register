@@ -32,6 +32,11 @@ class Pegawai extends Model
         return $this->belongsTo('App\Jabatan', 'jabatan_id');
     }
     
+    public function regkgb()
+    {
+        return $this->hasOne('App\Regkgb');
+    }
+    
     public function regstugas()
     {
         return $this->hasOne('App\Regstugas');
