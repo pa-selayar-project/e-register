@@ -6,14 +6,14 @@
         <i class="fa fa-bars"></i>
       </button>
 
-      <a class="navbar-brand mt-0" href="{{url('/home')}}"><img src="{{url('assets/images/logo/'.$data->logo_kecil)}}" height="60" width="60" alt="Logo">{{$data->nama_aplikasi}}</a>
-      <a class="navbar-brand hidden" href="{{url('/home')}}"><img src="{{url('assets/images/logo/'.$data->logo_kecil)}}" height="60" width="60"></a>
+      <a class="navbar-brand mt-0" href="{{url('/dashboard')}}"><img src="{{url('assets/images/logo/'.$data->logo_kecil)}}" height="60" width="60" alt="Logo">{{$data->nama_aplikasi}}</a>
+      <a class="navbar-brand hidden" href="{{url('/dashboard')}}"><img src="{{url('assets/images/logo/'.$data->logo_kecil)}}" height="60" width="60"></a>
     </div>
 
     <div id="main-menu" class="main-menu collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active">
-          <a href="{{url('home')}}"> <i class="menu-icon fa fa-book"></i>Dashboard </a>
+          <a href="{{url('dashboard')}}"> <i class="menu-icon fa fa-book"></i>Dashboard </a>
         </li>
 
         <?php 

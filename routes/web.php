@@ -22,7 +22,9 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
 
 Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
     Route::group(['namespace' => '\App\Http\Controllers\User'], function () {
-        Route::get('home', 'HomeController@index')->name('home');
+        Route::get('dashboard', 'HomeController@index');
+        Route::get('dashboard/pegawai', 'HomeController@pegawai');
+        Route::get('dashboard/honorer', 'HomeController@honorer');
         Route::resource('register/regsk', 'RegskController');
         Route::post('register/kgb/print/{id}', 'RegkgbController@print');
         Route::resource('register/kgb', 'RegkgbController');
