@@ -1,85 +1,54 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Log;
+use Auth;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Response, Redirect;
 
 class LogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+			if (Auth::user()->level == 1) {
+			$data = Log::orderBy('id', 'desc')->get();
+			} else {
+			$data = Log::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+			}
+
+        return view('log/index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Log  $log
-     * @return \Illuminate\Http\Response
-     */
     public function show(Log $log)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Log  $log
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Log $log)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Log  $log
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Log $log)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Log  $log
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Log $log)
+    public function destroy($id)
     {
-        //
+        Log::destroy($id);
+        return back()->with('toast_success', 'Data berhasil dihapus!');
     }
 }

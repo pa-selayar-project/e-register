@@ -103,7 +103,7 @@ User : {{Auth::user()->name}}
 		<div class="card-header">
 			<strong class="card-title">Log Activity
 				@if($hitunglog > 6)
-				<a href="#" class="text-success"> [Selengkapnya]</a>
+				<a href="/log" class="text-success"> [Selengkapnya]</a>
 				@endif
 				<small>
 					<span class="badge badge-success float-right mt-1">{{$hitunglog}}</span>

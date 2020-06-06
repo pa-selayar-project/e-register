@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
             Route::resource('settings/parent_menu', 'HeadmenuController');
             Route::resource('settings/pegawai', 'PegawaiController');
             Route::resource('settings/pramubhakti', 'HonorerController');
+            Route::resource('daftar', 'DaftarController');
             Route::resource('settings/setting', 'SettingController');
             Route::get('settings', 'HeadmenuController@settings');
         }
@@ -25,6 +26,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
         Route::get('dashboard', 'HomeController@index');
         Route::get('dashboard/pegawai', 'HomeController@pegawai');
         Route::get('dashboard/honorer', 'HomeController@honorer');
+        Route::resource('log', 'LogController');
         Route::resource('register/regsk', 'RegskController');
         Route::post('register/kgb/print/{id}', 'RegkgbController@print');
         Route::resource('register/kgb', 'RegkgbController');

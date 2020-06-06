@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Menu;
 use App\Log;
 use App\Headmenu;
+use Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
