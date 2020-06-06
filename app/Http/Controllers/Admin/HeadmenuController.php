@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Headmenu;
+use App\Log;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,6 +21,12 @@ class HeadmenuController extends Controller
     {
         $insert = Headmenu::create($this->validateRequest('create'));
         Response::json($insert);
+
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Menambahkan Head Menu'
+        ]);
+
         return Redirect::back()->with('message', 'Data Head Menu Berhasil ditambahkan');
     }
 
@@ -28,6 +35,12 @@ class HeadmenuController extends Controller
     {
         $headmenu->update($this->validateRequest('update'));
         Response::json($headmenu);
+
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Merubah Head Menu'
+        ]);
+
         return Redirect::back()->with('message', 'Data Head Menu Berhasil dirubah');
     }
 
@@ -37,7 +50,7 @@ class HeadmenuController extends Controller
     }
 
     public function settings()
-    {    
+    {
         return view('settings/index');
     }
 

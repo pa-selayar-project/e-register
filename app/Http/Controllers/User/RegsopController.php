@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Regsop;
+use App\Log;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -28,9 +29,9 @@ class RegsopController extends Controller
         ]);
 
         if ($validator->fails()) {
-        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         }
-        
+
         Regsop::create([
             'nama_sop' => $request->nama_sop,
             'no_sop' => $request->no_sop,
@@ -38,8 +39,13 @@ class RegsopController extends Controller
             'tgl_sop' => strtotime($request->tgl_sop),
             'bidang_sop' => $request->bidang_sop,
             'tahun' => date('Y'),
-            'created_at' => date_format(date_create(),'Y-m-d H:i:s'),
         ]);
+
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Menginput SOP'
+        ]);
+
         return redirect('/register/sop')->withToastSuccess('Input data berhasil');
     }
 
@@ -49,7 +55,7 @@ class RegsopController extends Controller
         return view('register/sop/show', compact('data'));
     }
 
-    public function edit(Request $request,Regsop $regsop, $id)
+    public function edit(Request $request, Regsop $regsop, $id)
     {
         $data = Regsop::where('id', $id)->get()[0];
         return view('register/sop/edit', compact('data'));
@@ -69,7 +75,7 @@ class RegsopController extends Controller
         ]);
 
         if ($validator->fails()) {
-        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         }
 
         $update = Regsop::where('id', $id)->get()[0];
@@ -80,27 +86,33 @@ class RegsopController extends Controller
             'tgl_sop' => strtotime($request->tgl_sop),
             'bidang_sop' => $request->bidang_sop,
             'tahun' => date('Y')
-            ]);
+        ]);
 
-        if($request->hasFile('word')){
+
+        if ($request->hasFile('word')) {
             $file     = $request->file('word');
             $ext      = $file->getClientOriginalExtension();
-            $wordname = 'SOP_'.uniqid().'.'.$ext;
+            $wordname = 'SOP_' . uniqid() . '.' . $ext;
             $file->storeAs('word', $wordname);
-            
-            Storage::delete('word/'.$update->word);
-            $update->update(['word'=> $wordname]);
+
+            Storage::delete('word/' . $update->word);
+            $update->update(['word' => $wordname]);
         }
 
-        if($request->hasFile('pdf')){
+        if ($request->hasFile('pdf')) {
             $file     = $request->file('pdf');
             $ext      = $file->getClientOriginalExtension();
-            $pdfname = 'SOP_'.uniqid().'.'.$ext;
+            $pdfname = 'SOP_' . uniqid() . '.' . $ext;
             $file->storeAs('pdf/', $pdfname);
-            
-            Storage::delete('pdf/'.$update->pdf);
-            $update->update(['pdf'=> $pdfname]);
+
+            Storage::delete('pdf/' . $update->pdf);
+            $update->update(['pdf' => $pdfname]);
         }
+
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Mengedit SOP'
+        ]);
 
         return redirect('/register/sop')->with('toast_success', 'Data berhasil di edit');
     }
@@ -108,6 +120,10 @@ class RegsopController extends Controller
     public function destroy(Regsop $regsop, $id)
     {
         Regsop::destroy($id);
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Menghapus SOP'
+        ]);
         return back()->with('toast_success', 'Data berhasil dihapus!');
     }
 }

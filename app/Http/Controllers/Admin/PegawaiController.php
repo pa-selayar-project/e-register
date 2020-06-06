@@ -16,7 +16,7 @@ class PegawaiController extends Controller
 {
     public function index()
     {
-        $data = Pegawai::where('status',1)->where('aktif',1)->whereNull('deleted_at')->orderBy('jabatan_id')->get();
+        $data = Pegawai::where('status', 1)->where('aktif', 1)->whereNull('deleted_at')->orderBy('jabatan_id')->get();
         return view('settings/pegawai/index', ['data' => $data]);
     }
 
@@ -35,7 +35,7 @@ class PegawaiController extends Controller
             'pangkat_id' => 'required',
             'jabatan_id' => 'required'
         ]);
-        
+
         Pegawai::create([
             'nama_pegawai' => $request->name,
             'nip' => $request->nip,
@@ -69,11 +69,14 @@ class PegawaiController extends Controller
             'pangkat_id' => 'required',
             'jabatan_id' => 'required',
             'alamat' => 'required',
-            'foto'=>'file|nullable|max:1000|mimes:jpg,jpeg,png,bmp'
+            'kgb_yad' => 'required',
+            'kp_yad' => 'required',
+            'sisa_cuti' => 'required',
+            'foto' => 'file|nullable|max:1000|mimes:jpg,jpeg,png,bmp'
         ]);
 
         if ($validator->fails()) {
-        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         }
 
         $update = Pegawai::where('id', $pegawai->id);
@@ -85,23 +88,26 @@ class PegawaiController extends Controller
             'pangkat_id' => $request->pangkat_id,
             'jabatan_id' => $request->jabatan_id,
             'alamat' => $request->alamat,
-            'aktif'=> $request->aktif
-            ]);
-        
-        if($request->aktif==null){
-            $update->update(['aktif'=>2]);
+            'kgb_yad' => strtotime($request->kgb_yad),
+            'kp_yad' => strtotime($request->kp_yad),
+            'sisa_cuti' => $request->sisa_cuti,
+            'aktif' => $request->aktif
+        ]);
+
+        if ($request->aktif == null) {
+            $update->update(['aktif' => 2]);
         }
 
-        if($request->hasFile('foto')){
+        if ($request->hasFile('foto')) {
             $file     = $request->file('foto');
             $ext      = $file->getClientOriginalExtension();
-            $picname  = 'Profil_'.uniqid().'.'.$ext;
+            $picname  = 'Profil_' . uniqid() . '.' . $ext;
             $file->storeAs('pic', $picname);
-            
-            Storage::delete('pic/'.$pegawai->foto);
-            $update->update(['foto'=> $picname]);
+
+            Storage::delete('pic/' . $pegawai->foto);
+            $update->update(['foto' => $picname]);
         }
-        
+
         return redirect('/settings/pegawai')->with('toast_success', 'Data berhasil di edit');
     }
 

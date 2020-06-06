@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Menu;
+use App\Log;
 use App\Headmenu;
 
 use Illuminate\Http\Request;
@@ -23,6 +24,12 @@ class MenuController extends Controller
     {
         $insert = Menu::create($this->validateRequest('create'));
         Response::json($insert);
+
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Menambahkan Menu Baru'
+        ]);
+
         return Redirect::back()->with('message', 'Data Menu Berhasil ditambahkan');
     }
 
@@ -30,6 +37,12 @@ class MenuController extends Controller
     {
         $menu->update($this->validateRequest('update'));
         Response::json($menu);
+
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Mengedit Menu'
+        ]);
+
         return Redirect::back()->with('message', 'Data Menu Berhasil dirubah');
     }
 

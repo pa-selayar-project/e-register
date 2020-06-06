@@ -17,19 +17,21 @@
 @endsection
 
 @section('content')
-<?php use App\Helpers\Helper;?>
+<?php
+
+use App\Helpers\Helper; ?>
 <div class="card shadow mb-4">
   <div class="card-body">
     <div class="table-responsive">
       <table id="suratCutiList" class="display table-striped" style="width:100%">
         <thead>
           <tr>
-            <th>No</th>
-            <th>Nama Pegawai</th>
-            <th>Nomor Permohonan / Tanggal</th>
-            <th>Tanggal Cuti</th>
-            <th>Sisa Cuti</th>
-            <th>Action</th>
+            <th style="width:5%">No</th>
+            <th style="width:25%">Nama Pegawai</th>
+            <th style="width:25%">Nomor Permohonan / Tanggal</th>
+            <th style="width:25%">Tanggal Cuti</th>
+            <th style="width:10%">Sisa Cuti</th>
+            <th style="width:10%">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -38,14 +40,20 @@
             <td>{{$loop->iteration}}</td>
             <td>{{$d->pegawai->nama_pegawai}}</td>
             <td>{{$d->no_cuti}}
-                <div>Tgl. {{Helper::tanggal_id($d->tgl_cuti)}}</div>
+              <div>Tgl. {{Helper::tanggal_id($d->tgl_cuti)}}</div>
             </td>
             <td>{{Helper::tanggal_id($d->mulai)}} s.d {{Helper::tanggal_id($d->akhir)}}</td>
             <td>{{$d->pegawai->sisa_cuti}}</td>
-            <td>
-              <a href="#" class="btn btn-danger btn-sm btn-circle "><i class="fas fa-trash"></i></a>
-              <a href="surat_cuti/{{$d->id}}/edit" class="btn btn-success btn-sm btn-circle"><i class="fas fa-edit"></i></a>
-              <a href="surat_cuti/{{$d->id}}" class="btn btn-primary btn-sm btn-circle"><i class="fas fa-info-circle"></i></a>
+            <td class="d-flex">
+              <form method="post" action="/register/surat_cuti/{{$d->id}}">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger btn-sm btn-circle rounded">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+              <a href="surat_cuti/{{$d->id}}/edit" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fas fa-edit"></i></a>
+              <a href="surat_cuti/{{$d->id}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fas fa-folder-open"></i></a>
             </td>
           </tr>
           @endforeach

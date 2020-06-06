@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Honorer;
 use App\Jabatan;
+use App\Log;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -14,13 +16,13 @@ class HonorerController extends Controller
 {
     public function index()
     {
-        $data = Honorer::where('status',2)->whereNull('deleted_at')->get();
+        $data = Honorer::where('status', 2)->whereNull('deleted_at')->get();
         return view('settings/pramubhakti/index', ['data' => $data]);
     }
 
     public function create()
     {
-        $jabatan = Jabatan::where('id','>',18)->get();
+        $jabatan = Jabatan::where('id', '>', 18)->get();
         return view('settings/pramubhakti/create', compact('jabatan'));
     }
 
@@ -30,13 +32,18 @@ class HonorerController extends Controller
             'name' => 'required',
             'jabatan' => 'required'
         ]);
-        
+
         Honorer::create([
             'nama_pegawai' => $request->name,
             'nip' => 111111111111111111,
             'pangkat_id' => 0,
             'jabatan' => $request->jabatan,
             'status' => 2
+        ]);
+
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Menambahkan Tenaga Honorer Baru'
         ]);
 
         return redirect('/settings/pramubhakti')->with('success', 'Input Pramubhakti berhasil');
@@ -50,8 +57,8 @@ class HonorerController extends Controller
     public function edit($id)
     {
         $data = Honorer::where('id', $id)->get()[0];
-        $jabatan = Jabatan::where('id','>',18)->get();
-        return view('settings/pramubhakti/edit', compact('data','jabatan'));
+        $jabatan = Jabatan::where('id', '>', 18)->get();
+        return view('settings/pramubhakti/edit', compact('data', 'jabatan'));
     }
 
     public function update(Request $request, $id)
@@ -61,11 +68,11 @@ class HonorerController extends Controller
             'tempat_lahir' => 'required',
             'jabatan_id' => 'required',
             'alamat' => 'required',
-            'foto'=>'file|nullable|max:1000|mimes:jpg,jpeg,png,bmp'
+            'foto' => 'file|nullable|max:1000|mimes:jpg,jpeg,png,bmp'
         ]);
 
         if ($validator->fails()) {
-        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         }
 
         $update = Honorer::where('id', $id)->get()[0];
@@ -74,18 +81,23 @@ class HonorerController extends Controller
             'tempat_lahir' => $request->tempat_lahir,
             'jabatan_id' => $request->jabatan_id,
             'alamat' => $request->alamat
-            ]);
+        ]);
 
-        if($request->hasFile('foto')){
+        if ($request->hasFile('foto')) {
             $file     = $request->file('foto');
             $ext      = $file->getClientOriginalExtension();
-            $picname  = 'Profil_'.uniqid().'.'.$ext;
+            $picname  = 'Profil_' . uniqid() . '.' . $ext;
             $file->storeAs('pic', $picname);
-            
-            Storage::delete('pic/'.$update->foto);
-            $update->update(['foto'=> $picname]);
+
+            Storage::delete('pic/' . $update->foto);
+            $update->update(['foto' => $picname]);
         }
-        
+
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Mengedit Profil Honorer'
+        ]);
+
         return redirect('/settings/pramubhakti')->with('toast_success', 'Data berhasil di edit');
     }
 

@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'level','image'
+        'name', 'email', 'password', 'level', 'image'
     ];
 
     protected $hidden = [
@@ -21,4 +21,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function log()
+    {
+        return $this->belongsTo('App\Log', 'id');
+    }
 }

@@ -4,11 +4,11 @@
 
 
 @section('breadcumb')
-	@if(Auth::user()->level == 1)
-		Admin : {{Auth::user()->name}}
-	@else
-		User : {{Auth::user()->name}}
-	@endif
+@if(Auth::user()->level == 1)
+Admin : {{Auth::user()->name}}
+@else
+User : {{Auth::user()->name}}
+@endif
 @endsection
 
 @section('content')
@@ -69,24 +69,56 @@
 </div>
 
 <div class="col-md-6">
-	<div class="card" style="height:22rem;">
+	<div class="card">
 		<div class="card-header">
-			<strong class="card-title">Pesan Notifikasi <small><span class="badge badge-success float-right mt-1">90</span></small></strong>
+			<strong class="card-title">Pesan Notifikasi
+				@if($hitungnotif > 4)
+				<a href="#" class="text-success"> [Selengkapnya]</a>
+				@endif
+				<small>
+					<span class="badge badge-success float-right mt-1">
+						{{$hitungnotif}}
+					</span>
+				</small>
+			</strong>
 		</div>
 		<div class="card-body">
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			<ul class="list-group list-group-flush">
+				@foreach($notif as $n)
+				<li class="list-group-item text-justify">
+					@if(date('Y',$n->kgb_yad) == date('Y'))
+					Pegawai An. <strong>{{$n->nama_pegawai}}</strong> akan KGB pada <strong>{{\App\Helpers\Helper::tanggal_id($n->kgb_yad)}}</strong>
+					@else(date('Y',$n->kp_yad) == date('Y'))
+					Pegawai An. <strong>{{$n->nama_pegawai}}</strong> akan Naik Pangkat pada <strong>{{\App\Helpers\Helper::tanggal_id($n->kp_yad)}}</strong>
+					@endif
+				</li>
+				@endforeach
+			</ul>
 		</div>
 	</div>
 </div>
 
 <div class="col-md-6">
-	<div class="card" style="height:22rem;">
+	<div class="card">
 		<div class="card-header">
-			<strong class="card-title">Log Activity <small><span class="badge badge-success float-right mt-1">34</span></small></strong>
+			<strong class="card-title">Log Activity
+				@if($hitunglog > 6)
+				<a href="#" class="text-success"> [Selengkapnya]</a>
+				@endif
+				<small>
+					<span class="badge badge-success float-right mt-1">{{$hitunglog}}</span>
+				</small>
+			</strong>
 		</div>
 		<div class="card-body">
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			
+			<ul class="list-group list-group-flush">
+				@foreach($logs as $log)
+				<li class="list-group-item text-justify">
+					User <strong>{{ucfirst($log->user->name)}}</strong> {{$log->pesan_log}} pada <strong>{{\App\Helpers\Helper::tanggal_id(date(strtotime($log->created_at)))}}</strong>;
+				</li>
+				@endforeach
+			</ul>
+
 		</div>
 	</div>
 </div>
