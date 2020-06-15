@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Regkgb;
 use App\Pegawai;
 use App\Log;
+use Auth;
 use Validator;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
@@ -28,7 +29,6 @@ class RegkgbController extends Controller
 
 	public function store(Request $request)
 	{
-
 		$validator = Validator::make($request->all(), [
 			'pegawai_id' => 'required',
 			'tgl_kgb' => 'required|date',
@@ -62,12 +62,12 @@ class RegkgbController extends Controller
 			'masa_kerja_lama' => $request->masa_kerja_lama,
 			'tmt_kgb_lama' => strtotime($request->tmt_kgb_lama),
 			'pejabat_kgb_lama' => $request->pejabat_kgb_lama,
-			'tmt_yad' => strtotime($request->tmt_kgb) + 31540000,
+			'tmt_yad' => strtotime($request->tmt_kgb) + 63080000,
 			'tahun' => date('Y')
 		]);
 
 		Pegawai::where('id', $request->pegawai_id)->first()->update([
-			'kgb_yad' => strtotime($request->tmt_kgb) + 31540000
+			'kgb_yad' => strtotime($request->tmt_kgb) + 63080000
 		]);
 
 		Log::create([
@@ -122,12 +122,12 @@ class RegkgbController extends Controller
 			'masa_kerja_lama' => $request->masa_kerja_lama,
 			'tmt_kgb_lama' => strtotime($request->tmt_kgb_lama),
 			'pejabat_kgb_lama' => $request->pejabat_kgb_lama,
-			'tmt_yad' => strtotime($request->tmt_kgb) + 31540000,
+			'tmt_yad' => strtotime($request->tmt_kgb) + 63080000,
 			'tahun' => date('Y')
 		]);
 
 		Pegawai::where('id', $request->pegawai_id)->update([
-			'kgb_yad' => strtotime($request->tmt_kgb) + 31540000
+			'kgb_yad' => strtotime($request->tmt_kgb) + 63080000
 		]);
 
 

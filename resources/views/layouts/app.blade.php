@@ -2,22 +2,31 @@
 <html class="no-js" lang="en">
 
 <head>
-
+	<?php $data = \App\Setting::where('id',1)->first();?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Web Kepegawaian">
   <meta name="author" content="Muhammad Rizaldy Idil">
-    <link rel="apple-touch-icon" href="apple-icon.png">
-    <link rel="shortcut icon" href="favicon.ico">
+	<link rel="apple-touch-icon" href="apple-icon.png">
+	<link rel="shortcut icon" href="{{url('assets/images/logo/'.$data->logo_kecil)}}">
+	<style>
+		#loader{
+			position : fixed;
+			width : 100%;
+			height : 100%;
+			z-index : 999;
+			background : url("https://media.giphy.com/media/52qtwCtj9OLTi/giphy.gif") 50% no-repeat rgba(255, 255, 255, 0.5);
+		}
+	</style>
+
   <title>@yield('title')</title>
 
     @include('layouts.style')
-
 </head>
 
 <body>
-
+<div id="loader"></div>	
 <!-- Left Panel -->
 
     @include('layouts.sidebar')
@@ -57,11 +66,15 @@
         </div> <!-- .content -->
     </div><!-- /#right-panel -->
 
-  <!-- Right Panel -->
-
+  <!-- Right Panel -->	
   @include('layouts.footer')
     @include('sweetalert::alert')
-
+	<script type="text/javascript">
+		var $=jQuery.noConflict();
+		$(window).on("load",function(){
+			$("#loader").fadeOut("slow");
+		})
+	</script>
 </body>
 
 </html>

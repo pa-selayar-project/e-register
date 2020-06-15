@@ -18,7 +18,7 @@ class LogController extends Controller
 			$data = Log::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
 			}
 
-        return view('log/index', compact('data'));
+      return view('log/index', compact('data'));
     }
 
     public function create()
