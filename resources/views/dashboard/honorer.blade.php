@@ -42,6 +42,7 @@
             <th>Foto</th>
             <th>Nama</th>
             <th>Jabatan</th>
+            <th>Daftar SK</th>
           </tr>
         </thead>
         <tbody>
@@ -57,6 +58,9 @@
             </td>
             <td>{{$d->nama_pegawai}}</td>
             <td>{{$d->jabatan->nama_jabatan}}</td>
+            <td>
+              <a href="daftarsk/{{$d->id}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fas fa-address-book"></i></a>
+            </td>
           </tr>
           @endforeach
         </tbody>

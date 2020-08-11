@@ -27,6 +27,7 @@
             <th>Nama / NIP</th>
             <th>Pangkat</th>
             <th>Jabatan</th>
+            <th>Daftar SK</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +44,9 @@
             <td>{{$d->nama_pegawai}}<br>NIP {{$d->nip}}</td>
             <td>{{$d->pangkat->nama_pangkat}} ({{$d->pangkat->golongan}})</td>
             <td>{{$d->jabatan['nama_jabatan']}}</td>
+            <td>
+              <a href="daftarsk/{{$d->id}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fas fa-address-book"></i></a>
+            </td>
           </tr>
           @endforeach
         </tbody>

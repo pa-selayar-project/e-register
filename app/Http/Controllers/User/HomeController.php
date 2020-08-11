@@ -54,4 +54,11 @@ class HomeController extends Controller
 		$data = Honorer::where('status', 2)->whereNull('deleted_at')->get();
 		return view('dashboard/honorer', ['data' => $data]);
 	}
+
+	public function daftarsk($id)
+	{
+			$data = Regsk::where('obyek','like','%'.$id.'%')->paginate(5);
+			$pgw = Pegawai::where('id', $id)->first();
+			return view('dashboard/daftarsk', compact('data','pgw'));
+	}
 }
