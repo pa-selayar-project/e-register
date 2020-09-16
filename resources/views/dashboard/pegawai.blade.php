@@ -3,6 +3,11 @@
 @section('title','Daftar Pegawai')
 
 @section('breadcumb')
+<a href="{{url('dashboard/pegawai_nonaktif')}}" class="d-none d-sm-inline-block btn btn-sm btn-danger btn-icon-split rounded mr-1">
+  <span class="icon text-white-50">
+    <i class="fa fa-stop"></i> Pegawai Pindah/Pensiun
+  </span>
+</a>
 <a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
   <span class="icon text-white-50">
     <i class="fa fa-chevron-circle-left"></i>

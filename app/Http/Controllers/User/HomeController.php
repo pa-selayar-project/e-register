@@ -23,7 +23,7 @@ class HomeController extends Controller
 		$awaltahun = strtotime(date('01-01-Y'));
 		$akhirtahun = strtotime(date('31-12-Y'));
 
-		$notif = Pegawai::where('status', 1)->where('aktif', 1)
+		$notif = Pegawai::where('aktif', 1)->where('status', 1)
 			->where('kgb_yad', '>', $awaltahun)
 			->where('kgb_yad', '<', $akhirtahun)
 			->orWhere('kp_yad', '>', $awaltahun)
@@ -39,7 +39,7 @@ class HomeController extends Controller
 			$logs = Log::where('user_id', Auth::user()->id)->limit(6)->orderBy('id', 'desc')->get();
 			$hitunglog = Log::where('user_id', Auth::user()->id)->count();
 		}
-
+		
 		return view('dashboard/index', compact('pegawai', 'honorer', 'sk', 'st', 'notif', 'hitungnotif', 'logs', 'hitunglog'));
 	}
 
@@ -47,6 +47,12 @@ class HomeController extends Controller
 	{
 		$data = Pegawai::where('status', 1)->where('aktif', 1)->whereNull('deleted_at')->orderBy('jabatan_id')->get();
 		return view('dashboard/pegawai', ['data' => $data]);
+	}
+
+	public function pegawai_nonaktif()
+	{
+		$data = Pegawai::where('status', 1)->where('aktif', 2)->whereNull('deleted_at')->orderBy('jabatan_id')->get();
+		return view('dashboard/pegawai_nonaktif', ['data' => $data]);
 	}
 
 	public function honorer()
@@ -57,8 +63,9 @@ class HomeController extends Controller
 
 	public function daftarsk($id)
 	{
-			$data = Regsk::where('obyek','like','%'.$id.'%')->paginate(5);
-			$pgw = Pegawai::where('id', $id)->first();
+		$data = Regsk::where('obyek','like','%'.$id.'%')->paginate(5);
+		// $data = Regsk::whereIn('obyek', [$id])->paginate(5);
+		$pgw = Pegawai::where('id', $id)->first();
 			return view('dashboard/daftarsk', compact('data','pgw'));
 	}
 }

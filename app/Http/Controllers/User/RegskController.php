@@ -77,7 +77,7 @@ class RegskController extends Controller
 			'ttd_sk' => 'required',
 			'obyek' => 'nullable',
 			'word' => 'file|nullable|max:1000|mimes:doc,docx',
-			'pdf' => 'file|nullable|max:3000|mimes:pdf',
+			'pdf' => 'file|nullable|max:5000|mimes:pdf',
 		]);
 
 		if ($validator->fails()) {

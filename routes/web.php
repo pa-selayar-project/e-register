@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
     Route::group(['namespace' => '\App\Http\Controllers\User'], function () {
         Route::get('dashboard', 'HomeController@index');
         Route::get('dashboard/pegawai', 'HomeController@pegawai');
+        Route::get('dashboard/pegawai_nonaktif', 'HomeController@pegawai_nonaktif');
         Route::get('dashboard/honorer', 'HomeController@honorer');
         Route::get('dashboard/daftarsk/{id}', 'HomeController@daftarsk');
         Route::resource('log', 'LogController');

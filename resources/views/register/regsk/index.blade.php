@@ -35,7 +35,7 @@
           @foreach($data as $d)
           <tr>
             <td>{{$loop->iteration}}</td>
-            <td>{{$d->no_sk}} <br> 
+            <td class="@if($d->word == null || $d->pdf == null) text-danger @endif">{{$d->no_sk}} <br> 
               Tgl. {{\App\Helpers\Helper::tanggal_id($d->tgl_sk)}}
             </td>
             <td>{{$d->nama_sk}}</td>
