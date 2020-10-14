@@ -160,7 +160,9 @@ class RegcutiController extends Controller
 
     public function print($id)
     {
-        $data = Regcuti::where('id', $id)->get()[0];
+        $data = Regcuti::where('id', $id)->first();
+
+        $ketua = Pegawai::where('jabatan_id',1)->where('aktif',1)->first();
 
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/surat_cuti.docx'));
         $templateProcessor->setValues([
@@ -171,13 +173,16 @@ class RegcutiController extends Controller
             'jabatan' => strtoupper($data->pegawai->jabatan->nama_jabatan),
             'pangkat' => strtoupper($data->pegawai->pangkat->nama_pangkat),
             'golongan' => $data->pegawai->pangkat->golongan,
+            'hp' => $data->pegawai->hp,
             'mulai' => Helper::tanggal_id($data->mulai),
             'akhir' => Helper::tanggal_id($data->akhir),
             'alamat' => $data->alamat,
             'jc' => $data->jumlah_cuti,
             'masa_kerja' => Helper::masa_kerja($data->pegawai->nip),
             'atasan' => strtoupper($data->atasan->nama_pegawai),
-            'nip_atasan' => $data->atasan->nip
+            'nip_atasan' => $data->atasan->nip,
+            'ketua'=>strtoupper($ketua->nama_pegawai),
+            'nip_ketua'=>$ketua->nip
         ]);
 
         header("Content-Disposition: attachment; filename=surat_cuti.docx");
