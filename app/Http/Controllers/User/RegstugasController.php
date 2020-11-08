@@ -78,7 +78,7 @@ class RegstugasController extends Controller
 	public function edit($id)
 	{
 		$data = Regstugas::findOrFail($id);
-		$pelaksana = Pegawai::all()->orderBy('jabatan_id')->get();
+		$pelaksana = Pegawai::orderBy('jabatan_id')->get();
 		$penandatangan = Pegawai::where('jabatan_id', [1,2,4,5])->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/edit', compact('data', 'penandatangan', 'pelaksana'));
 	}
