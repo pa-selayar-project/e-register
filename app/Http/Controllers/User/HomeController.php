@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use Auth;
-use \App\Pegawai;
-use \App\Honorer;
-use \App\Regsk;
-use \App\Regstugas;
-use \App\Log;
+use App\Pegawai;
+use App\Honorer;
+use App\Regsk;
+use App\Regstugas;
+use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,15 +15,15 @@ class HomeController extends Controller
 {
 	public function index()
 	{
-		$pegawai = Pegawai::where('status', 1)->where('aktif', 1)->count();
-		$honorer = Pegawai::where('status', 2)->count();
-		$sk = Regsk::where('deleted_at', null)->count();
-		$st = Regstugas::where('deleted_at', null)->count();
+		$pegawai = Pegawai::whereStatus(1)->count();
+		$honorer = Pegawai::whereStatus(2)->count();
+		$sk = Regsk::all()->count();
+		$st = Regstugas::all()->count();
 
 		$awaltahun = strtotime(date('01-01-Y'));
 		$akhirtahun = strtotime(date('31-12-Y'));
 
-		$notif = Pegawai::where('aktif', 1)->where('status', 1)
+		$notif = Pegawai::whereStatus(1)
 			->where('kgb_yad', '>', $awaltahun)
 			->where('kgb_yad', '<', $akhirtahun)
 			->orWhere('kp_yad', '>', $awaltahun)
@@ -33,10 +33,10 @@ class HomeController extends Controller
 		$hitungnotif = $notif->count();
 
 		if (Auth::user()->level == 1) {
-			$logs = Log::limit(6)->orderBy('id', 'desc')->get();
+			$logs = Log::limit(5)->orderBy('id', 'desc')->get();
 			$hitunglog = Log::all()->count();
 		} else {
-			$logs = Log::where('user_id', Auth::user()->id)->limit(6)->orderBy('id', 'desc')->get();
+			$logs = Log::where('user_id', Auth::user()->id)->limit(5)->orderBy('id', 'desc')->get();
 			$hitunglog = Log::where('user_id', Auth::user()->id)->count();
 		}
 		
@@ -45,27 +45,28 @@ class HomeController extends Controller
 
 	public function pegawai()
 	{
-		$data = Pegawai::where('status', 1)->where('aktif', 1)->whereNull('deleted_at')->orderBy('jabatan_id')->get();
+		$data = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
 		return view('dashboard/pegawai', ['data' => $data]);
 	}
 
 	public function pegawai_nonaktif()
 	{
-		$data = Pegawai::where('status', 1)->where('aktif', 2)->whereNull('deleted_at')->orderBy('jabatan_id')->get();
+		$data = Pegawai::onlyTrashed()->orderBy('jabatan_id')->get();
 		return view('dashboard/pegawai_nonaktif', ['data' => $data]);
 	}
 
 	public function honorer()
 	{
-		$data = Honorer::where('status', 2)->whereNull('deleted_at')->get();
+		$data = Honorer::whereStatus(2)->get();
 		return view('dashboard/honorer', ['data' => $data]);
 	}
 
 	public function daftarsk($id)
 	{
 		$data = Regsk::where('obyek','like','%'.$id.'%')->paginate(5);
-		// $data = Regsk::whereIn('obyek', [$id])->paginate(5);
-		$pgw = Pegawai::where('id', $id)->first();
-			return view('dashboard/daftarsk', compact('data','pgw'));
+		
+		$pgw = Pegawai::withTrashed()->findOrFail($id);
+		
+		return view('dashboard/daftarsk', compact('data','pgw'));
 	}
 }

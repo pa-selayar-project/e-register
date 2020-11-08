@@ -14,7 +14,7 @@ class Regstugas extends Model
 
     public function pegawai()
     {
-        return $this->belongsTo('App\Pegawai', 'id');
+        return $this->belongsTo('App\Pegawai')->withTrashed();
     }
 
     public function jabatan()

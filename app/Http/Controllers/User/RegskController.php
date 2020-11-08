@@ -84,7 +84,7 @@ class RegskController extends Controller
 			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
 		}
 
-		$update = Regsk::where('id', $regsk->id);
+		$update = Regsk::findOrFail($regsk->id);
 
 		if ($request->obyek != "") {
 			$obyek = implode(',', $request->obyek);

@@ -23,7 +23,7 @@ class RegkgbController extends Controller
 
 	public function create()
 	{
-		$pegawai = Pegawai::where('status', 1)->where('aktif', 1)->orderBy('jabatan_id')->get();
+		$pegawai = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
 		return view('register/kgb/create', compact('pegawai'));
 	}
 
@@ -66,7 +66,7 @@ class RegkgbController extends Controller
 			'tahun' => date('Y')
 		]);
 
-		Pegawai::where('id', $request->pegawai_id)->first()->update([
+		Pegawai::findOrFail($request->pegawai_id)->update([
 			'kgb_yad' => strtotime($request->tmt_kgb) + 63080000
 		]);
 
@@ -80,13 +80,13 @@ class RegkgbController extends Controller
 
 	public function show($id)
 	{
-		$data = Regkgb::where('id', $id)->first();
+		$data = Regkgb::findOrFail($id);
 		return view('register/kgb/show', compact('data'));
 	}
 
 	public function edit($id)
 	{
-		$data = Regkgb::where('id', $id)->first();
+		$data = Regkgb::findOrFail($id);
 		return view('register/kgb/edit', compact('data'));
 	}
 
@@ -109,7 +109,7 @@ class RegkgbController extends Controller
 			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
 		}
 
-		$update = Regkgb::where('id', $id)->first();
+		$update = Regkgb::findOrFail($id);
 		$update->update([
 			'no_kgb' => $request->no_kgb,
 			'tgl_kgb' => strtotime($request->tgl_kgb),
@@ -126,7 +126,7 @@ class RegkgbController extends Controller
 			'tahun' => date('Y')
 		]);
 
-		Pegawai::where('id', $request->pegawai_id)->update([
+		Pegawai::findOrFail($request->pegawai_id)->update([
 			'kgb_yad' => strtotime($request->tmt_kgb) + 63080000
 		]);
 
@@ -171,14 +171,14 @@ class RegkgbController extends Controller
 
 	public function get_data($id)
 	{
-		$d = Pegawai::where('id', $id)->first();
+		$d = Pegawai::findOrFail($id);
 		$mk = Helper::masa_kerja($d->nip);
 		return [$d, $mk];
 	}
 
 	public function print($id)
 	{
-		$data = Regkgb::where('id', $id)->first();
+		$data = Regkgb::findOrFail($id);
 
 		\PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
 

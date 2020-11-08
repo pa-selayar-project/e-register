@@ -49,15 +49,15 @@ class RegsopController extends Controller
         return redirect('/register/sop')->withToastSuccess('Input data berhasil');
     }
 
-    public function show(Regsop $regsop, $id)
+    public function show($id)
     {
-        $data = Regsop::where('id', $id)->get()[0];
+        $data = Regsop::findOrFail($id);
         return view('register/sop/show', compact('data'));
     }
 
-    public function edit(Request $request, Regsop $regsop, $id)
+    public function edit($id)
     {
-        $data = Regsop::where('id', $id)->get()[0];
+        $data = Regsop::findOrFail($id);
         return view('register/sop/edit', compact('data'));
     }
 
@@ -78,7 +78,7 @@ class RegsopController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         }
 
-        $update = Regsop::where('id', $id)->get()[0];
+        $update = Regsop::findOrFail($id);
         $update->update([
             'no_sop' => $request->no_sop,
             'nama_sop' => $request->nama_sop,
@@ -117,7 +117,7 @@ class RegsopController extends Controller
         return redirect('/register/sop')->with('toast_success', 'Data berhasil di edit');
     }
 
-    public function destroy(Regsop $regsop, $id)
+    public function destroy($id)
     {
         Regsop::destroy($id);
         Log::create([

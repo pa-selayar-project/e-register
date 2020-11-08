@@ -16,7 +16,7 @@
 			width : 100%;
 			height : 100%;
 			z-index : 999;
-			background : url("https://media.giphy.com/media/52qtwCtj9OLTi/giphy.gif") 50% no-repeat rgba(255, 255, 255, 0.5);
+			background : url("images/loader.gif") 50% no-repeat rgba(255, 255, 255, 0.5);
 		}
 	</style>
 

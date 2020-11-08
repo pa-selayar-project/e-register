@@ -16,13 +16,13 @@ class ProfilController extends Controller
 {
 	public function index()
 	{
-		$data = Profil::where('id', Auth::user()->id)->first();
+		$data = Profil::findOrFail(Auth::user()->id);
 		return view('profil/index', compact('data'));
 	}
 
 	public function edit($id)
 	{
-		$data = Profil::where('id', Auth::user()->id)->first();
+		$data = Profil::findOrFail($id);
 		return view('profil/edit', compact('data'));
 	}
 
@@ -38,7 +38,7 @@ class ProfilController extends Controller
 			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
 		}
 
-		$update = Profil::where('id', $id)->first();
+		$update = Profil::findOrFail($id);
 
 		$update->update([
 			'name' => $request->name,
@@ -66,7 +66,7 @@ class ProfilController extends Controller
 
 	public function ubah_password()
 	{
-		$data = Profil::where('id', Auth::user()->id)->first();
+		$data = Profil::findOrFail(Auth::user()->id);
 		return view('/profil/ubah_password', compact('data'));
 	}
 
@@ -84,7 +84,7 @@ class ProfilController extends Controller
 
 		if ($check) {
 			if ($request->password == $request->ulang_password) {
-				Profil::where('id', $id)->first()->update([
+				Profil::findOrFail($id)->update([
 					'password' => Hash::make($request->password)
 				]);
 

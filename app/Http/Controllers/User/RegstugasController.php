@@ -24,8 +24,8 @@ class RegstugasController extends Controller
 
 	public function create()
 	{
-		$pelaksana = Pegawai::where('aktif', 1)->orderBy('jabatan_id')->get();
-		$penandatangan = Pegawai::where('jabatan_id', '<=', 2)->where('aktif', 1)->orderBy('jabatan_id')->get();
+		$pelaksana = Pegawai::all()->orderBy('jabatan_id')->get();
+		$penandatangan = Pegawai::where('jabatan_id', [1,2,4,5])->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/create', compact('pelaksana', 'penandatangan'));
 	}
 
@@ -68,7 +68,7 @@ class RegstugasController extends Controller
 
 	public function show($id)
 	{
-		$data = Regstugas::where('id', $id)->get()[0];
+		$data = Regstugas::findOrFail($id);
 		$tgl = Helper::tanggal_id($data->tgl_stugas);
 		$pelaksana = explode(',', $data->pegawai);
 		$pelaksana = Pegawai::whereIn('id', $pelaksana)->orderBy('jabatan_id')->get();
@@ -77,9 +77,9 @@ class RegstugasController extends Controller
 
 	public function edit($id)
 	{
-		$data = Regstugas::where('id', $id)->get()[0];
-		$pelaksana = Pegawai::where('aktif', 1)->orderBy('jabatan_id')->get();
-		$penandatangan = Pegawai::where('jabatan_id', '<=', 2)->where('aktif', 1)->orderBy('jabatan_id')->get();
+		$data = Regstugas::findOrFail($id);
+		$pelaksana = Pegawai::all()->orderBy('jabatan_id')->get();
+		$penandatangan = Pegawai::where('jabatan_id', [1,2,4,5])->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/edit', compact('data', 'penandatangan', 'pelaksana'));
 	}
 
@@ -102,7 +102,7 @@ class RegstugasController extends Controller
 			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
 		}
 
-		$update = Regstugas::where('id', $id)->get()[0];
+		$update = Regstugas::findOrFail($id);
 
 		$update->update([
 			'no_stugas' => $request->no_stugas,
@@ -155,12 +155,12 @@ class RegstugasController extends Controller
 
 	public function print($id)
 	{
-		$data = Regstugas::where('id', $id)->first();
+		$data = Regstugas::findOrFail($id);
 		$arr_pelaksana = explode(',', $data->pegawai);
 
 		$hitung = count($arr_pelaksana);
 
-		$pegawai = Pegawai::where('aktif', 1)->whereIn('id', $arr_pelaksana)->orderBy('jabatan_id')->get();
+		$pegawai = Pegawai::whereIn('id', $arr_pelaksana)->orderBy('jabatan_id')->get();
 
 		\PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
 		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/surat_tugas_' . $hitung . '.docx'));

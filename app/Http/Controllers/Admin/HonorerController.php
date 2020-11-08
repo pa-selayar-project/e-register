@@ -16,13 +16,13 @@ class HonorerController extends Controller
 {
     public function index()
     {
-        $data = Honorer::where('status', 2)->whereNull('deleted_at')->get();
+        $data = Honorer::whereStatus(2)->get();
         return view('settings/pramubhakti/index', ['data' => $data]);
     }
 
     public function create()
     {
-        $jabatan = Jabatan::where('id', '>', 18)->get();
+        $jabatan = Jabatan::whereIn('id',[19,20,21])->get();
         return view('settings/pramubhakti/create', compact('jabatan'));
     }
 

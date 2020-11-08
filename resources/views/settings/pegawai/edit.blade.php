@@ -2,9 +2,17 @@
 
 @section('title','Edit Pegawai')
 
+@section('breadcumb')
+<a href="#" onclick="javascript:history.back();" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-danger">
+  <span class="icon text-white">
+    <i class="fas fa-arrow-alt-circle-left"></i>
+  </span>
+</a>
+@endsection
+
 @section('stylesheet')
 <link rel="stylesheet" href="{{url('vendors/chosen/chosen.css')}}">
-<link rel="stylesheet" href="{{url('asset/css/jquery-UI.css')}}">
+<link rel="stylesheet" href="{{url('asset/css/jquery-ui.css')}}">
 @endsection
 
 @section('content')
@@ -112,7 +120,7 @@
 
 <script src="{{url('vendors/chosen/chosen.jquery.js')}}"></script>
 <script src="{{url('vendors/chosen/chosen.proto.js')}}"></script>
-<script src="{{url('asset/js/jquery-UI.js')}}"></script>
+<script src="{{url('asset/js/jquery-ui.js')}}"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     $(".datepicker").datepicker({

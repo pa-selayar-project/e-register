@@ -10,45 +10,20 @@ use Response, Redirect;
 
 class LogController extends Controller
 {
-    public function index()
-    {
-			if (Auth::user()->level == 1) {
+  public function index()
+  {
+		if (Auth::user()->level == 1) {
 			$data = Log::orderBy('id', 'desc')->get();
-			} else {
+		} else {
 			$data = Log::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
-			}
+		}
 
-      return view('log/index', compact('data'));
-    }
+    return view('log/index', compact('data'));
+  }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(Log $log)
-    {
-        //
-    }
-
-    public function edit(Log $log)
-    {
-        //
-    }
-
-    public function update(Request $request, Log $log)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        Log::destroy($id);
-        return back()->with('toast_success', 'Data berhasil dihapus!');
+  public function destroy($id)
+  {
+    Log::destroy($id);
+    return back()->with('toast_success', 'Data berhasil dihapus!');
     }
 }

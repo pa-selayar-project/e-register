@@ -12,7 +12,7 @@
 
 @section('stylesheet')
 <link rel="stylesheet" href="{{url('vendors/chosen/chosen.css')}}">
-<link rel="stylesheet" href="{{url('asset/css/jquery-UI.css')}}">
+<link rel="stylesheet" href="{{url('asset/css/jquery-ui.css')}}">
 @endsection
 
 @section('content')
@@ -135,7 +135,7 @@
 
   <script src="{{url('vendors/chosen/chosen.jquery.js')}}"></script>
   <script src="{{url('vendors/chosen/chosen.proto.js')}}"></script>
-  <script src="{{url('asset/js/jquery-UI.js')}}"></script>
+  <script src="{{url('asset/js/jquery-ui.js')}}"></script>
   <script type="text/javascript">
   $(document).ready(function() {
     $( ".datepicker" ).datepicker({
@@ -143,6 +143,11 @@
     });
 
     $(".chosen-select").chosen();
+
+    $(".custom-file-input").on('change', function(){
+        let fileName= $(this).val().split('\\').pop();
+        $(this).next(".custom-file-label").addClass("selected").html(fileName);
+      });
   });
   </script>
 @endsection

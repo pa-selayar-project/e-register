@@ -13,28 +13,13 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $data = Setting::where('id',1)->first();
+        $data = Setting::findOrFail(1);
         return view('settings/setting/index', compact('data'));
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(Setting $setting)
-    {
-        //
     }
 
     public function edit($id)
     {
-        $data = Setting::where('id', $id)->first();
+        $data = Setting::findOrFail($id);
         return view('settings/setting/edit', compact('data'));
     }
 
@@ -52,7 +37,7 @@ class SettingController extends Controller
         return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         }
 
-        $update = Setting::where('id', $id)->first();
+        $update = Setting::findOrFail($id);
 
         $update->update([
             'nama_aplikasi' => $request->nama_aplikasi,

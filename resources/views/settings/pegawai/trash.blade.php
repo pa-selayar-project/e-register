@@ -1,20 +1,8 @@
 @extends('layouts.app')
 
-@section('title','Daftar Pegawai')
+@section('title','Daftar Pegawai Pindah/Pensiun')
 
 @section('breadcumb')
-<a href="{{url('settings/pegawai/create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split">
-  <span class="icon text-white">
-    <i class="fas fa-plus"></i>
-  </span>
-  <span class="text">Rekam Pegawai</span>
-</a>
-<a href="{{url('settings/pegawai/trash')}}" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-warning btn-icon-split">
-  <span class="icon text-white">
-    <i class="fas fa-trash"></i>
-  </span>
-  <span class="text">Pegawai Pindah/Pensiun</span>
-</a>
 <a href="#" onclick="javascript:history.back();" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-danger">
   <span class="icon text-white">
     <i class="fas fa-arrow-alt-circle-left"></i>
@@ -57,12 +45,7 @@
             <td>{{$d->pangkat->nama_pangkat}} ({{$d->pangkat->golongan}})</td>
             <td>{{$d->jabatan['nama_jabatan']}}</td>
             <td class="d-flex">
-              <form method="post" action="{{url('settings/pegawai')}}/{{$d->id}}">
-                @csrf
-                @method('delete')
-                <button type="submit"class="btn btn-danger btn-sm btn-circle mr-1"><i class="fas fa-trash"></i></button> 
-              </form>
-              <a href="{{url('settings/pegawai/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle"><i class="fas fa-edit"></i></a>
+              <a href="{{url('settings/pegawai/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle"><i class="fas fa-redo-alt"></i></a>
             </td>
           </tr>
           @endforeach

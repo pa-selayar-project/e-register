@@ -25,7 +25,7 @@ class RegcutiController extends Controller
     public function create()
     {
         $jeniscuti = Jeniscuti::all();
-        $pegawai = Pegawai::where('status', 1)->where('aktif', 1)->orderBy('jabatan_id')->get();
+        $pegawai = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
         return view('register/surat_cuti/create', compact('pegawai', 'jeniscuti'));
     }
 
@@ -72,15 +72,15 @@ class RegcutiController extends Controller
 
     public function show($id)
     {
-        $data = Regcuti::where('id', $id)->first();
+        $data = Regcuti::findOrFail($id);
         return view('register/surat_cuti/show', compact('data'));
     }
 
     public function edit($id)
     {
-        $pegawai = Pegawai::where('status', 1)->where('aktif', 1)->orderBy('jabatan_id')->get();
+        $pegawai = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
         $jeniscuti = Jeniscuti::all();
-        $data = Regcuti::where('id', $id)->get()[0];
+        $data = Regcuti::findOrFail($id);
         return view('/register/surat_cuti/edit', compact('pegawai', 'data', 'jeniscuti'));
     }
 
@@ -105,7 +105,7 @@ class RegcutiController extends Controller
 
         $jml_cuti = Helper::get_hari_kerja(strtotime($request->mulai), strtotime($request->akhir));
 
-        $update = Regcuti::where('id', $id)->get()[0];
+        $update = Regcuti::find($id);
 
         $update->update([
             'no_cuti' => $request->no_cuti,
@@ -160,9 +160,9 @@ class RegcutiController extends Controller
 
     public function print($id)
     {
-        $data = Regcuti::where('id', $id)->first();
+        $data = Regcuti::findOrFail($id);
 
-        $ketua = Pegawai::where('jabatan_id',1)->where('aktif',1)->first();
+        $ketua = Pegawai::whereJabatanId(1)->first();
 
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/surat_cuti.docx'));
         $templateProcessor->setValues([
