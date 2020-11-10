@@ -69,27 +69,32 @@ User : {{Auth::user()->name}}
 </div>
 
 <div class="col-md-6">
-	<div class="card">
+	<div class="card" style="height:330px;">
 		<div class="card-header">
 			<strong class="card-title">Pesan Notifikasi
 				@if($hitungnotif > 4)
 				<a href="#" class="text-success"> [Selengkapnya]</a>
 				@endif
 				<small>
-					<span class="badge badge-success float-right mt-1">
-						{{$hitungnotif}}
-					</span>
+					@if($hitungnotif)
+						<span class="badge badge-success float-right mt-1">
+							{{$hitungnotif}}
+						</span>
+					@endif
 				</small>
 			</strong>
 		</div>
 		<div class="card-body">
+			@if(!$hitungnotif)
+				<p>Tidak ada Data Notifikasi</p>
+			@endif
 			<ul class="list-group list-group-flush">
 				@foreach($notif as $n)
 				<li class="list-group-item text-justify">
 					@if(date('Y',$n->kgb_yad) == date('Y'))
-					Pegawai An. <strong>{{$n->nama_pegawai}}</strong> akan KGB pada <strong>{{\App\Helpers\Helper::tanggal_id($n->kgb_yad)}}</strong>
-					@else(date('Y',$n->kp_yad) == date('Y'))
-					Pegawai An. <strong>{{$n->nama_pegawai}}</strong> akan Naik Pangkat pada <strong>{{\App\Helpers\Helper::tanggal_id($n->kp_yad)}}</strong>
+						Pegawai An. <strong>{{$n->nama_pegawai}}</strong> akan KGB pada <strong>{{\App\Helpers\Helper::tanggal_id($n->kgb_yad)}}</strong>
+					@elseif(date('Y',$n->kp_yad) == date('Y'))
+						Pegawai An. <strong>{{$n->nama_pegawai}}</strong> akan Naik Pangkat pada <strong>{{\App\Helpers\Helper::tanggal_id($n->kp_yad)}}</strong>
 					@endif
 				</li>
 				@endforeach
@@ -99,7 +104,7 @@ User : {{Auth::user()->name}}
 </div>
 
 <div class="col-md-6">
-	<div class="card">
+	<div class="card" style="height:330px;">
 		<div class="card-header">
 			<strong class="card-title">Log Activity
 				@if($hitunglog > 6)

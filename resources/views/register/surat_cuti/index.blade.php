@@ -43,7 +43,7 @@ use App\Helpers\Helper; ?>
               <div>Tgl. {{Helper::tanggal_id($d->tgl_cuti)}}</div>
             </td>
             <td>{{Helper::tanggal_id($d->mulai)}} s.d {{Helper::tanggal_id($d->akhir)}}</td>
-            <td>{{$d->pegawai->sisa_cuti}}</td>
+            <td>{{$d->sisa_cuti}}</td>
             <td class="d-flex">
               <form method="post" action="/register/surat_cuti/{{$d->id}}">
                 @csrf
