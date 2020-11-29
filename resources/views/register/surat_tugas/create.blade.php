@@ -36,7 +36,7 @@
               <strong>Tanggal</strong>
             </label>
             <div class="input-group">
-              <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm" value="{{old('tgl_stugas')}}">
+              <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm" value="{{old('tgl_stugas')}}" autocomplete="off">
             </div>
           </div>
 

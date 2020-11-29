@@ -41,7 +41,7 @@
           <label for="tgl_kgb" class="col-sm-4 col-form-label">Tanggal</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="tgl_kgb" name="tgl_kgb" class="datepicker form-control">
+              <input type="text" id="tgl_kgb" name="tgl_kgb" class="datepicker form-control" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -70,7 +70,7 @@
           <label for="tmt_kgb" class="col-sm-4 col-form-label">TMT KGB</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="tmt_kgb" name="tmt_kgb" class="datepicker form-control">
+              <input type="text" id="tmt_kgb" name="tmt_kgb" class="datepicker form-control" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -110,7 +110,7 @@
           <label for="tgl_kgb_lama" class="col-sm-4 col-form-label">Tanggal KGB Lama</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="tgl_kgb_lama" name="tgl_kgb_lama" class="datepicker form-control">
+              <input type="text" id="tgl_kgb_lama" name="tgl_kgb_lama" class="datepicker form-control" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -140,7 +140,7 @@
           <label for="tmt_kgb_lama" class="col-sm-4 col-form-label">TMT KGB Lama</label>
           <div class="col-sm-8">
             <div class="input-group date">
-              <input type="text" id="tmt_kgb_lama" name="tmt_kgb_lama" class="datepicker form-control">
+              <input type="text" id="tmt_kgb_lama" name="tmt_kgb_lama" class="datepicker form-control" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>

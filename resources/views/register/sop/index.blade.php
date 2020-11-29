@@ -83,7 +83,7 @@
           <div class="row">
             <div class="form-group col">
               <label for="tglSk">Tanggal</label>
-              <input type="date" class="form-control" name="tgl_sop" id="tglSop">
+              <input type="date" class="form-control" name="tgl_sop" id="tglSop" autocomplete="off">
             </div>
             <div class="form-group col">
               <label for="bidang">Bidang</label>

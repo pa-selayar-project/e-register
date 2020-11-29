@@ -44,7 +44,7 @@
             </label>
 
             <div class="input-group">
-              <input type="text" name="tgl_sk" class="datepicker form-control form-control-sm" value="{{date('d F yy', $regsk->tgl_sk)}}">
+              <input type="text" name="tgl_sk" class="datepicker form-control form-control-sm" value="{{date('d F yy', $regsk->tgl_sk)}}" autocomplete="off">
             </div>
             <small class="form-text text-danger">@error('tgl_sk'){{$message}}@enderror</small>
           </div>

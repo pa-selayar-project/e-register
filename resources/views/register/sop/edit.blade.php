@@ -40,7 +40,7 @@
             </label>
 
             <div class="input-group">
-              <input type="text" name="tgl_sop" class="datepicker form-control form-control-sm" value="{{date('d F yy', $data->tgl_sop)}}">
+              <input type="text" name="tgl_sop" class="datepicker form-control form-control-sm" value="{{date('d F yy', $data->tgl_sop)}}" autocomplete="off">
             </div>
           </div>
 

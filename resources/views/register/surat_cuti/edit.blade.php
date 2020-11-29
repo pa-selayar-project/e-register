@@ -42,7 +42,7 @@
           <label for="tgl_cuti" class="col-sm-3 col-form-label">Tanggal</label>
           <div class="col-sm-9">
             <div class="input-group date">
-              <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control  form-control-sm" value="{{date('d M Y', $data->tgl_cuti)}}">
+              <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control  form-control-sm" value="{{date('d M Y', $data->tgl_cuti)}}" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
@@ -53,11 +53,11 @@
           <label for="mulai" class="col-sm-3 col-form-label">Tanggal Cuti</label>
           <div class="col-sm-9">
             <div class="input-group date">
-              <input type="text" id="mulai" name="mulai" class="datepicker form-control form-control-sm" value="{{date('d M Y', $data->mulai)}}"> 
+              <input type="text" id="mulai" name="mulai" class="datepicker form-control form-control-sm" value="{{date('d M Y', $data->mulai)}}" autocomplete="off"> 
               <div class="input-group-prepend">
                 <span class="input-group-text form-control form-control-sm" id="basic-addon3">s/d</span>
               </div> 
-              <input type="text" id="akhir" name="akhir" class="datepicker form-control form-control-sm" value="{{date('d M Y', $data->akhir)}}">
+              <input type="text" id="akhir" name="akhir" class="datepicker form-control form-control-sm" value="{{date('d M Y', $data->akhir)}}" autocomplete="off">
             </div>
           </div>
         </div>
