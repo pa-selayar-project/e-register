@@ -3,7 +3,7 @@
 @section('title','Edit KGB')
 
 @section('breadcumb')
-<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+<a href="{{url('register/kgb')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
   <span class="icon text-white-50">
     <i class="fa fa-chevron-circle-left"></i>
   </span>
@@ -31,7 +31,12 @@
             <label for="pegawai_id" class="col-sm-4 col-form-label">Nomor Surat KGB</label>
             <div class="col-sm-8">
               <div class="input-group">
-                <input type="text" id="no_kgb" name="no_kgb" class="form-control" value="{{$data->no_kgb}}">
+                <input type="text" id="no_kgb" name="no_kgb" class="form-control @error('no_kgb') is-invalid @enderror" value="{{$data->no_kgb}}">
+                @error('no_kgb')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -39,10 +44,15 @@
             <label for="tgl_kgb" class="col-sm-4 col-form-label">Tanggal</label>
             <div class="col-sm-8">
               <div class="input-group date">
-                <input type="text" id="tgl_kgb" name="tgl_kgb" class="datepicker form-control" value="{{date('d F Y',$data->tgl_kgb)}}">
+                <input type="text" id="tgl_kgb" name="tgl_kgb" class="datepicker form-control @error('tgl_kgb') is-invalid @enderror" value="{{date('d F Y',$data->tgl_kgb)}}">
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
+                @error('tgl_kgb')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -50,7 +60,12 @@
             <label for="gapok_baru" class="col-sm-4 col-form-label">Gaji Pokok</label>
             <div class="col-sm-8">
               <div class="input-group">
-                <input type="number" id="gapok_baru" name="gapok_baru" class="form-control" min="0" value="{{$data->gapok_baru}}">
+                <input type="number" id="gapok_baru" name="gapok_baru" class="form-control @error('gapok_baru') is-invalid @enderror" min="0" value="{{$data->gapok_baru}}">
+                @error('gapok_baru')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -59,7 +74,12 @@
             <label for="masa_kerja" class="col-sm-4 col-form-label">Masa Kerja Golongan</label>
             <div class="col-sm-8">
               <div class="input-group">
-                <input type="text" id="masa_kerja" name="masa_kerja" class="form-control" value="{{$data->masa_kerja}}">
+                <input type="text" id="masa_kerja" name="masa_kerja" class="form-control @error('masa_kerja') is-invalid @enderror" value="{{$data->masa_kerja}}">
+                @error('masa_kerja')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -68,10 +88,15 @@
             <label for="tmt_kgb" class="col-sm-4 col-form-label">TMT KGB</label>
             <div class="col-sm-8">
               <div class="input-group date">
-                <input type="text" id="tmt_kgb" name="tmt_kgb" class="datepicker form-control" value="{{date('d F Y', $data->tmt_kgb)}}" autocomplete="off">
+                <input type="text" id="tmt_kgb" name="tmt_kgb" class="datepicker form-control @error('tmt_kgb') is-invalid @enderror" value="{{date('d F Y', $data->tmt_kgb)}}" autocomplete="off">
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
+                @error('tmt_kgb')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -82,10 +107,14 @@
             </div>
             <div class="col col-md-8">
               <div class="custom-file">
-                <input type="file" name="word" class="custom-file-input" id="word">
+                <input type="file" name="word" class="custom-file-input @error('word') is-invalid @enderror" id="word">
                 <label class="custom-file-label" for="word">Choose file</label>
               </div>
-              <small class="form-text text-danger">@error('word'){{$message}}@enderror</small>
+              @error('word')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
           </div>
           <div class="form group row">
@@ -94,10 +123,14 @@
             </div>
             <div class="col col-md-8">
               <div class="custom-file">
-                <input type="file" name="pdf" class="custom-file-input" id="pdf">
+                <input type="file" name="pdf" class="custom-file-input @error('pdf') is-invalid @enderror" id="pdf">
                 <label class="custom-file-label" for="pdf">Choose file</label>
               </div>
-              <small class="form-text text-danger">@error('pdf'){{$message}}@enderror</small>
+              @error('pdf')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
           </div>
 
@@ -115,7 +148,12 @@
             <label for="kgb_lama" class="col-sm-4 col-form-label">Nomor KGB/SK</label>
             <div class="col-sm-8">
               <div class="input-group">
-                <input type="text" id="kgb_lama" name="kgb_lama" class="form-control" value="{{$data->kgb_lama}}">
+                <input type="text" id="kgb_lama" name="kgb_lama" class="form-control @error('kgb_lama') is-invalid @enderror" value="{{$data->kgb_lama}}">
+                @error('kgb_lama')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -124,10 +162,15 @@
             <label for="tgl_kgb_lama" class="col-sm-4 col-form-label">Tanggal KGB Lama</label>
             <div class="col-sm-8">
               <div class="input-group date">
-                <input type="text" id="tgl_kgb_lama" name="tgl_kgb_lama" class="datepicker form-control" value="{{date('d F Y', $data->tgl_kgb_lama)}}">
+                <input type="text" id="tgl_kgb_lama" name="tgl_kgb_lama" class="datepicker form-control @error('tgl_kgb_lama') is-invalid @enderror" value="{{date('d F Y', $data->tgl_kgb_lama)}}">
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
+                @error('tgl_kgb_lama')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -136,7 +179,12 @@
             <label for="gapok_lama" class="col-sm-4 col-form-label">Gaji Pokok</label>
             <div class="col-sm-8">
               <div class="input-group">
-                <input type="number" id="gapok_lama" name="gapok_lama" class="form-control" min="0" value="{{$data->gapok_lama}}">
+                <input type="number" id="gapok_lama" name="gapok_lama" class="form-control @error('gapok_lama') is-invalid @enderror" min="0" value="{{$data->gapok_lama}}">
+                @error('gapok_lama')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -145,7 +193,12 @@
             <label for="masa_kerja_lama" class="col-sm-4 col-form-label">Masa Kerja Lama</label>
             <div class="col-sm-8">
               <div class="input-group">
-                <input type="text" id="masa_kerja_lama" name="masa_kerja_lama" class="form-control" value="{{$data->masa_kerja_lama}}">
+                <input type="text" id="masa_kerja_lama" name="masa_kerja_lama" class="form-control @error('masa_kerja_lama') is-invalid @enderror" value="{{$data->masa_kerja_lama}}">
+                @error('masa_kerja_lama')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -154,10 +207,15 @@
             <label for="tmt_kgb_lama" class="col-sm-4 col-form-label">TMT KGB Lama</label>
             <div class="col-sm-8">
               <div class="input-group date">
-                <input type="text" id="tmt_kgb_lama" name="tmt_kgb_lama" class="datepicker form-control" value="{{date('d F Y', $data->tmt_kgb_lama)}}" autocomplete="off">
+                <input type="text" id="tmt_kgb_lama" name="tmt_kgb_lama" class="datepicker form-control @error('tmt_kgb_lama') is-invalid @enderror" value="{{date('d F Y', $data->tmt_kgb_lama)}}" autocomplete="off">
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
+                @error('tmt_kgb_lama')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -166,7 +224,12 @@
             <label for="pejabat_kgb_lama" class="col-sm-4 col-form-label">Pejabat KGB Lama</label>
             <div class="col-sm-8">
               <div class="input-group date">
-                <input type="text" id="pejabat_kgb_lama" name="pejabat_kgb_lama" class="form-control" value="{{$data->pejabat_kgb_lama}}">
+                <input type="text" id="pejabat_kgb_lama" name="pejabat_kgb_lama" class="form-control @error('pejabat_kgb_lama') is-invalid @enderror" value="{{$data->pejabat_kgb_lama}}">
+                @error('pejabat_kgb_lama')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -174,7 +237,6 @@
         </div>
         <div class="card-footer text-right">
           <button type="submit" class="btn btn-success">Simpan</button>
-          <button type="reset" class="btn btn-primary">Reset</button>
         </div>
       </div>
     </div>

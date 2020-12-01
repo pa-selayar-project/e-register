@@ -7,7 +7,6 @@ use App\Regcuti;
 use App\Pegawai;
 use App\Jeniscuti;
 use App\Log;
-use Validator;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,21 +30,7 @@ class RegcutiController extends Controller
 
 	public function store(Request $request)
 	{
-		$validator = Validator::make($request->all(), [
-			'pegawai_id' => 'required',
-			'tgl_cuti' => 'required|date',
-			'mulai' => 'required|date',
-			'akhir' => 'required|date',
-			'alamat' => 'required',
-			'alasan' => 'required',
-			'atasan_id' => 'required',
-			'jenis_cuti' => 'required'
-		]);
-
-		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-		}
-
+		$this->validasiRequest();
 		$jml_cuti = Helper::get_hari_kerja(strtotime($request->mulai), strtotime($request->akhir));	
 
 		$pegawai = Pegawai::find($request->pegawai_id);
@@ -95,23 +80,7 @@ class RegcutiController extends Controller
 
 	public function update(Request $request, Regcuti $regcuti, $id)
 	{
-		$validator = Validator::make($request->all(), [
-			'pegawai_id' => 'required',
-			'tgl_cuti' => 'required|date',
-			'mulai' => 'required|date',
-			'akhir' => 'required|date',
-			'alamat' => 'required',
-			'alasan' => 'required',
-			'atasan_id' => 'required',
-			'jenis_cuti' => 'required',
-			'word' => 'file|nullable|max:1000|mimes:doc,docx',
-			'pdf' => 'file|nullable|max:3000|mimes:pdf'
-		]);
-
-		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-		}
-
+		$this->validasiRequest();
 		$jml_cuti = Helper::get_hari_kerja(strtotime($request->mulai), strtotime($request->akhir));
 
 		$update = Regcuti::find($id);
@@ -206,5 +175,30 @@ class RegcutiController extends Controller
 		header("Content-Disposition: attachment; filename=surat_cuti.docx");
 
 		$templateProcessor->saveAs('php://output');
+	}
+
+	private function validasiRequest()
+	{
+		$messages = [
+			'required'=>'Wajib diisi !',
+			'date'=>'Harus Format Tanggal !',
+			'pdf.mimes'=>'Format harus Pdf',
+			'pdf.max'=>'Ukuran File Max 2MB',
+			'word.mimes'=>'Format harus Doc, Docx',
+			'word.max'=>'Ukuran File Max 1MB'
+		];
+
+		return request()->validate([
+					'pegawai_id' => 'required',
+					'tgl_cuti' => 'required|date',
+					'mulai' => 'required|date',
+					'akhir' => 'required|date',
+					'alamat' => 'required',
+					'alasan' => 'required',
+					'atasan_id' => 'required',
+					'jenis_cuti' => 'required',
+					'word' => 'file|nullable|max:1000|mimes:doc,docx',
+					'pdf' => 'file|nullable|max:3000|mimes:pdf'
+					], $messages);
 	}
 }

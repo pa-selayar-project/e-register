@@ -2,6 +2,15 @@
 
 @section('title','Edit Surat Cuti')
 
+@section('breadcumb')
+<a href="{{url('register/surat_cuti')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+  <span class="icon text-white-50">
+    <i class="fa fa-chevron-circle-left"></i>
+  </span>
+</a>
+@endsection
+
+
 @section('stylesheet')
 <link rel="stylesheet" href="{{url('vendors/chosen/chosen.css')}}">
 <link rel="stylesheet" href="{{url('asset/css/jquery-ui.css')}}">
@@ -34,7 +43,12 @@
           <label for="no_cuti" class="col-sm-3 col-form-label">Nomor Surat</label>
           <div class="col-sm-9">
             <div class="input-group">
-              <input type="text" id="no_cuti" name="no_cuti" class="form-control form-control-sm" value="{{$data->no_cuti}}">
+              <input type="text" id="no_cuti" name="no_cuti" class="form-control form-control-sm @error('no_cuti') is-invalid @enderror" value="{{$data->no_cuti}}">
+              @error('no_cuti')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
           </div>
         </div>
@@ -42,10 +56,15 @@
           <label for="tgl_cuti" class="col-sm-3 col-form-label">Tanggal</label>
           <div class="col-sm-9">
             <div class="input-group date">
-              <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control  form-control-sm" value="{{date('d M Y', $data->tgl_cuti)}}" autocomplete="off">
+              <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control form-control-sm @error('tgl_cuti') is-invalid @enderror" value="{{date('d M Y', $data->tgl_cuti)}}" autocomplete="off">
               <div class="input-group-append">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
+              @error('tgl_cuti')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
           </div>
         </div>
@@ -53,24 +72,39 @@
           <label for="mulai" class="col-sm-3 col-form-label">Tanggal Cuti</label>
           <div class="col-sm-9">
             <div class="input-group date">
-              <input type="text" id="mulai" name="mulai" class="datepicker form-control form-control-sm" value="{{date('d M Y', $data->mulai)}}" autocomplete="off"> 
+              <input type="text" id="mulai" name="mulai" class="datepicker form-control form-control-sm @error('mulai') is-invalid @enderror" value="{{date('d M Y', $data->mulai)}}" autocomplete="off"> 
               <div class="input-group-prepend">
                 <span class="input-group-text form-control form-control-sm" id="basic-addon3">s/d</span>
               </div> 
-              <input type="text" id="akhir" name="akhir" class="datepicker form-control form-control-sm" value="{{date('d M Y', $data->akhir)}}" autocomplete="off">
+              <input type="text" id="akhir" name="akhir" class="datepicker form-control form-control-sm @error('akhir') is-invalid @enderror" value="{{date('d M Y', $data->akhir)}}" autocomplete="off">
+              @error('mulai')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
           </div>
         </div>
         <div class="form-group row">
           <label for="tgl_sc" class="col-sm-3 col-form-label">Alamat Cuti</label>
           <div class="col-sm-9">
-            <textarea name="alamat" class="form-control" rows="2">{{$data->alamat}}</textarea>
+            <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="2">{{$data->alamat}}</textarea>
+            @error('alamat')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
         <div class="form-group row">
           <label for="alasan" class="col-sm-3 col-form-label">Alasan Cuti</label>
           <div class="col-sm-9">
-            <textarea name="alasan" id="alasan" class="form-control" rows="2">{{$data->alasan}}</textarea>
+            <textarea name="alasan" id="alasan" class="form-control @error('alasan') is-invalid @enderror" rows="2">{{$data->alasan}}</textarea>
+            @error('alasan')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
       </div>
@@ -115,10 +149,14 @@
           </div>
           <div class="col col-md-10">
             <div class="custom-file">
-              <input type="file" name="word" class="custom-file-input" id="word">
+              <input type="file" name="word" class="custom-file-input @error('word') is-invalid @enderror" id="word">
               <label class="custom-file-label" for="word">Choose file</label>
+              @error('word')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
-            <small class="form-text text-danger">@error('word'){{$message}}@enderror</small>
           </div>  
         </div>
         <div class="row">
@@ -127,10 +165,14 @@
           </div>
           <div class="col col-md-10">
             <div class="custom-file">
-              <input type="file" name="pdf" class="custom-file-input" id="pdf">
+              <input type="file" name="pdf" class="custom-file-input @error('pdf') is-invalid @enderror" id="pdf">
               <label class="custom-file-label" for="pdf">Choose file</label>
+              @error('pdf')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
-            <small class="form-text text-danger">@error('pdf'){{$message}}@enderror</small>
           </div>  
         </div>
       </div>
@@ -141,7 +183,6 @@
       </div>
       <div class="card-body py-5 text-center">
         <button type="submit" class="btn btn-success">Simpan</button>
-        <button type="reset" class="btn btn-primary">Reset</button>
       </div>
     </div>
   </div>

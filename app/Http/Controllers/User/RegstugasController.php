@@ -6,7 +6,6 @@ use App\Regstugas;
 use App\Pegawai;
 use App\Log;
 use Auth;
-use Validator;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,34 +17,20 @@ class RegstugasController extends Controller
 	public function index()
 	{
 		$data = Regstugas::all();
-		$pgw = Pegawai::where('aktif', 1)->orderBy('jabatan_id')->get();
+		$pgw = Pegawai::withTrashed()->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/index', ['data' => $data, 'pgw' => $pgw]);
 	}
 
 	public function create()
 	{
 		$pelaksana = Pegawai::orderBy('jabatan_id')->get();
-		$penandatangan = Pegawai::where('jabatan_id', [1,2,4,5])->orderBy('jabatan_id')->get();
+		$penandatangan = Pegawai::whereIn('jabatan_id',[1,2,4,5])->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/create', compact('pelaksana', 'penandatangan'));
 	}
 
 	public function store(Request $request)
 	{
-		$validator = Validator::make($request->all(), [
-			'no_stugas' => 'required',
-			'tgl_stugas' => 'required|date',
-			'ttd_stugas' => 'required',
-			'pegawai' => 'required',
-			'menimbang' => 'required',
-			'dasar' => 'required',
-			'maksud' => 'required',
-			'dipa' => 'required'
-		]);
-
-		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-		}
-
+		$this->validasiRequest();
 		Regstugas::create([
 			'no_stugas' => $request->no_stugas,
 			'pegawai' => implode(',', $request->pegawai),
@@ -79,29 +64,13 @@ class RegstugasController extends Controller
 	{
 		$data = Regstugas::findOrFail($id);
 		$pelaksana = Pegawai::orderBy('jabatan_id')->get();
-		$penandatangan = Pegawai::where('jabatan_id', [1,2,4,5])->orderBy('jabatan_id')->get();
+		$penandatangan = Pegawai::whereIn('jabatan_id', [1,2,4,5])->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/edit', compact('data', 'penandatangan', 'pelaksana'));
 	}
 
 	public function update(Request $request, Regstugas $regstugas, $id)
 	{
-		$validator = Validator::make($request->all(), [
-			'no_stugas' => 'required',
-			'tgl_stugas' => 'required|date',
-			'ttd_stugas' => 'required',
-			'pegawai' => 'required',
-			'menimbang' => 'required',
-			'dasar' => 'required',
-			'maksud' => 'required',
-			'dipa' => 'required',
-			'word' => 'file|nullable|max:1000|mimes:doc,docx',
-			'pdf' => 'file|nullable|max:3000|mimes:pdf'
-		]);
-
-		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-		}
-
+		$this->validasiRequest();
 		$update = Regstugas::findOrFail($id);
 
 		$update->update([
@@ -194,5 +163,30 @@ class RegstugasController extends Controller
 		header("Content-Disposition: attachment; filename=surat_tugas.docx");
 
 		$templateProcessor->saveAs('php://output');
+	}
+
+	private function validasiRequest()
+	{
+		$messages= [
+			'required'=>'Wajib diisi !',
+			'date'=>'Harus Format Tanggal !',
+			'pdf.mimes'=>'Format harus Pdf',
+			'pdf.max'=>'Ukuran File Max 2MB',
+			'word.mimes'=>'Format harus Doc, Docx',
+			'word.max'=>'Ukuran File Max 1MB',
+		];
+
+		return request()->validate([
+			'no_stugas' => 'required',
+			'tgl_stugas' => 'required|date',
+			'ttd_stugas' => 'required',
+			'pegawai' => 'required',
+			'menimbang' => 'required',
+			'dasar' => 'required',
+			'maksud' => 'required',
+			'dipa' => 'required',
+			'word' => 'file|nullable|max:1000|mimes:doc,docx',
+			'pdf' => 'file|nullable|max:3000|mimes:pdf'
+		], $messages);
 	}
 }

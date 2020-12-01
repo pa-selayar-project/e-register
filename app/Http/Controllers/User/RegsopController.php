@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 use App\Regsop;
 use App\Log;
 use Auth;
-use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -21,17 +20,7 @@ class RegsopController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nama_sop' => 'required|unique:reg_sop',
-            'no_sop' => 'required|unique:reg_sop',
-            'tgl_sop' => 'required|date',
-            'bidang_sop' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        }
-
+        $this->validasiRequest();
         Regsop::create([
             'nama_sop' => $request->nama_sop,
             'no_sop' => $request->no_sop,
@@ -63,21 +52,7 @@ class RegsopController extends Controller
 
     public function update(Request $request, Regsop $regsop, $id)
     {
-
-        $validator = Validator::make($request->all(), [
-            'no_sop' => 'required',
-            'nama_sop' => 'required',
-            'desc_sop' => 'required',
-            'tgl_sop' => 'required',
-            'bidang_sop' => 'required',
-            'word' => 'file|nullable|max:1000|mimes:doc,docx',
-            'pdf' => 'file|nullable|max:3000|mimes:pdf',
-        ]);
-
-        if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        }
-
+        $this->validasiRequest();
         $update = Regsop::findOrFail($id);
         $update->update([
             'no_sop' => $request->no_sop,
@@ -87,7 +62,6 @@ class RegsopController extends Controller
             'bidang_sop' => $request->bidang_sop,
             'tahun' => date('Y')
         ]);
-
 
         if ($request->hasFile('word')) {
             $file     = $request->file('word');
@@ -126,4 +100,26 @@ class RegsopController extends Controller
         ]);
         return back()->with('toast_success', 'Data berhasil dihapus!');
     }
+
+    private function validasiRequest()
+	{
+		$messages= [
+			'required'=>'Wajib diisi !',
+			'date'=>'Harus Format Tanggal !',
+			'pdf.mimes'=>'Format harus Pdf',
+			'pdf.max'=>'Ukuran File Max 2MB',
+			'word.mimes'=>'Format harus Doc, Docx',
+			'word.max'=>'Ukuran File Max 1MB',
+		];
+
+		return request()->validate([
+			'no_sop' => 'required',
+            'nama_sop' => 'required',
+            'desc_sop' => 'required',
+            'tgl_sop' => 'required',
+            'bidang_sop' => 'required',
+            'word' => 'file|nullable|max:1000|mimes:doc,docx',
+            'pdf' => 'file|nullable|max:3000|mimes:pdf'
+		], $messages);
+	}
 }

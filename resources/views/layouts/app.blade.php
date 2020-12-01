@@ -16,7 +16,7 @@
 			width : 100%;
 			height : 100%;
 			z-index : 999;
-			background : url("images/loader.gif") 50% no-repeat rgba(255, 255, 255, 0.5);
+			background : url({{url('images/loader.gif')}}) 50% no-repeat rgba(255, 255, 255, 0.5);
 		}
 	</style>
 
@@ -71,7 +71,7 @@
     @include('sweetalert::alert')
 	<script type="text/javascript">
 		var $=jQuery.noConflict();
-		$(window).on("load",function(){
+		$(document).ready(function(){
 			$("#loader").fadeOut("slow");
 		})
 	</script>

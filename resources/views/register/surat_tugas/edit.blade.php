@@ -3,7 +3,7 @@
 @section('title','Edit Surat Tugas')
 
 @section('breadcumb')
-<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+<a href="{{url('register/surat_tugas')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
   <span class="icon text-white-50">
     <i class="fa fa-chevron-circle-left"></i>
   </span>
@@ -27,7 +27,13 @@
             <strong>Nomor Surat</strong>
           </label>
           <div class="input-group">
-            <input type="text" name="no_stugas" class="form-control form-control-sm" value="{{$data->no_stugas}}">
+            <input type="text" name="no_stugas" class="form-control form-control-sm @error('no_stugas') is-invalid @enderror" value="{{$data->no_stugas}}">
+
+            @error('no_stugas')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
         
@@ -37,7 +43,13 @@
               <strong>Tanggal</strong>
             </label>
             <div class="input-group">
-              <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm" value="{{date('d F Y',$data->tgl_stugas)}}" autocomplete="off">
+              <input type="text" name="tgl_stugas" class="datepicker form-control @error('tgl_stugas') is-invalid @enderror" value="{{date('d F Y',$data->tgl_stugas)}}" autocomplete="off">
+
+              @error('tgl_stugas')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+              @enderror
             </div>
           </div>
 
@@ -62,13 +74,19 @@
             <strong>Pelaksana</strong>
           </label>
           <div class="input-group">
-            <select name="pegawai[]" class="chosen-select form-control" multiple="multiple">
+            <select name="pegawai[]" class="chosen-select form-control  @error('pegawai') is-invalid @enderror" multiple="multiple">
               @foreach($pelaksana as $p)
                 <option value="{{$p->id}}" @if(in_array($p->id, explode(',',$data->pegawai))) selected @endif>
                   {{$p->nama_pegawai}}
                 </option>
               @endforeach
             </select>
+
+            @error('pegawai')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
 
@@ -77,7 +95,13 @@
             <strong>Pertimbangan</strong>
           </label>
           <div class="input-group">
-            <textarea name="menimbang" rows="4" class="form-control">{{$data->menimbang}}</textarea>
+            <textarea name="menimbang" rows="4" class="form-control @error('menimbang') is-invalid @enderror">{{$data->menimbang}}</textarea>
+
+            @error('menimbang')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
       </div>
@@ -92,7 +116,13 @@
             <strong>Dasar</strong>
           </label>
           <div class="input-group">
-            <textarea name="dasar" rows="2" class="form-control">{{$data->dasar}}</textarea>
+            <textarea name="dasar" rows="2" class="form-control @error('dasar') is-invalid @enderror">{{$data->dasar}}</textarea>
+
+            @error('dasar')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
 
@@ -101,7 +131,13 @@
             <strong>Maksud</strong>
           </label>
           <div class="input-group">
-            <textarea name="maksud" rows="2" class="form-control">{{$data->maksud}}</textarea>
+            <textarea name="maksud" rows="2" class="form-control @error('maksud') is-invalid @enderror">{{$data->maksud}}</textarea>
+
+            @error('maksud')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
        
@@ -127,20 +163,28 @@
           </div>
           <div class="col col-md-5">
             <div class="custom-file">
-              <input type="file" name="word" class="custom-file-input" id="word">
+              <input type="file" name="word" class="custom-file-input @error('word') is-invalid @enderror" id="word">
               <label class="custom-file-label" for="word">Choose file</label>
+              @error('word')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
-             <small class="form-text text-danger">@error('word'){{$message}}@enderror</small>
           </div>  
           <div class="col col-md-1">
             <i class="fas fa-file-pdf @if($data->pdf)text-danger @else text-secondary @endif fa-2x ml-3"></i>
           </div>
           <div class="col col-md-5">
             <div class="custom-file">
-              <input type="file" name="pdf" class="custom-file-input" id="pdf">
+              <input type="file" name="pdf" class="custom-file-input @error('pdf') is-invalid @enderror" id="pdf">
               <label class="custom-file-label" for="pdf">Choose file</label>
+              @error('pdf')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
-             <small class="form-text text-danger">@error('pdf'){{$message}}@enderror</small>
           </div>  
         </div>
 

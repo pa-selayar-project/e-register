@@ -8,7 +8,7 @@
 @endsection
 
 @section('breadcumb')
-<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+<a href="{{url('register/surat_tugas')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
   <span class="icon text-white-50">
     <i class="fa fa-chevron-circle-left"></i>
   </span>
@@ -26,7 +26,13 @@
             <strong>Nomor Surat</strong>
           </label>
           <div class="input-group">
-            <input type="text" name="no_stugas" class="form-control form-control-sm" value="{{old('no_stugas')}}">
+            <input type="text" name="no_stugas" class="form-control form-control-sm @error('no_stugas') is-invalid @enderror" value="{{old('no_stugas')}}">
+
+            @error('no_stugas')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
         
@@ -36,7 +42,13 @@
               <strong>Tanggal</strong>
             </label>
             <div class="input-group">
-              <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm" value="{{old('tgl_stugas')}}" autocomplete="off">
+              <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm @error('tgl_stugas') is-invalid @enderror" value="{{old('tgl_stugas')}}" autocomplete="off">
+              
+              @error('tgl_stugas')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+              @enderror
             </div>
           </div>
 
@@ -61,13 +73,19 @@
             <strong>Pelaksana</strong>
           </label>
           <div class="input-group">
-            <select name="pegawai[]" class="chosen-select form-control" multiple="multiple">
+            <select name="pegawai[]" class="chosen-select form-control @error('pegawai') is-invalid @enderror" multiple="multiple">
               @foreach($pelaksana as $p)
                 <option value="{{$p->id}}">
                   {{$p->nama_pegawai}}
                 </option>
               @endforeach
             </select>
+            
+            @error('pegawai')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
 
@@ -76,7 +94,12 @@
             <strong>Pertimbangan</strong>
           </label>
           <div class="input-group">
-            <textarea name="menimbang" rows="4" class="form-control">{{old('menimbang')}}</textarea>
+            <textarea name="menimbang" rows="4" class="form-control @error('menimbang') is-invalid @enderror">{{old('menimbang')}}</textarea>
+            @error('menimbang')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
       </div>
@@ -91,7 +114,12 @@
             <strong>Dasar</strong>
           </label>
           <div class="input-group">
-            <textarea name="dasar" rows="3" class="form-control">{{old('dasar')}}</textarea>
+            <textarea name="dasar" rows="3" class="form-control @error('dasar') is-invalid @enderror">{{old('dasar')}}</textarea>
+            @error('dasar')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
 
@@ -100,7 +128,12 @@
             <strong>Maksud</strong>
           </label>
           <div class="input-group">
-            <textarea name="maksud" rows="3" class="form-control">{{old('maksud')}}</textarea>
+            <textarea name="maksud" rows="3" class="form-control @error('maksud') is-invalid @enderror">{{old('maksud')}}</textarea>
+            @error('maksud')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
        

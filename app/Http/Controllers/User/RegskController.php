@@ -68,24 +68,8 @@ class RegskController extends Controller
 
 	public function update(Request $request, Regsk $regsk)
 	{
-		$validator = Validator::make($request->all(), [
-			'no_sk' => 'required',
-			'nama_sk' => 'required',
-			'desc_sk' => 'required',
-			'tgl_sk' => 'required',
-			'bidang_sk' => 'required',
-			'ttd_sk' => 'required',
-			'obyek' => 'nullable',
-			'word' => 'file|nullable|max:1000|mimes:doc,docx',
-			'pdf' => 'file|nullable|max:5000|mimes:pdf',
-		]);
-
-		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-		}
-
+		$this->validasiRequest();
 		$update = Regsk::findOrFail($regsk->id);
-
 		if ($request->obyek != "") {
 			$obyek = implode(',', $request->obyek);
 		} else {
@@ -138,5 +122,29 @@ class RegskController extends Controller
 			'pesan_Log' => 'Menghapus SK'
 		]);
 		return back()->with('toast_success', 'Data berhasil dihapus!');
+	}
+
+	private function validasiRequest()
+	{
+		$messages = [
+			'required'=>'Wajib diisi !',
+			'date'=>'Harus Format Tanggal !',
+			'pdf.mimes'=>'Format harus Pdf',
+			'pdf.max'=>'Ukuran File Max 2MB',
+			'word.mimes'=>'Format harus Doc, Docx',
+			'word.max'=>'Ukuran File Max 1MB'
+		];
+
+		return request()->validate([
+			'no_sk' => 'required',
+			'nama_sk' => 'required',
+			'desc_sk' => 'required',
+			'tgl_sk' => 'required',
+			'bidang_sk' => 'required',
+			'ttd_sk' => 'required',
+			'obyek' => 'nullable',
+			'word' => 'file|nullable|max:1000|mimes:doc,docx',
+			'pdf' => 'file|nullable|max:5000|mimes:pdf',
+		], $messages);
 	}
 }

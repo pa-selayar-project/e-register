@@ -6,7 +6,6 @@ use App\Regkgb;
 use App\Pegawai;
 use App\Log;
 use Auth;
-use Validator;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,24 +28,7 @@ class RegkgbController extends Controller
 
 	public function store(Request $request)
 	{
-		$validator = Validator::make($request->all(), [
-			'pegawai_id' => 'required',
-			'tgl_kgb' => 'required|date',
-			'gapok_baru' => 'required|numeric|integer',
-			'masa_kerja' => 'required',
-			'tmt_kgb' => 'required|date',
-			'kgb_lama' => 'required',
-			'tgl_kgb_lama' => 'required|date',
-			'gapok_lama' => 'required|numeric|integer',
-			'masa_kerja_lama' => 'required',
-			'tmt_kgb_lama' => 'required|date',
-			'pejabat_kgb_lama' => 'required',
-		]);
-
-		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-		}
-
+		$this->validasiRequest();
 		$bulan = Helper::get_bulan_romawi(date('m'));
 
 		Regkgb::create([
@@ -92,22 +74,7 @@ class RegkgbController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		$validator = Validator::make($request->all(), [
-			'tgl_kgb' => 'required|date',
-			'gapok_baru' => 'required|numeric|integer',
-			'masa_kerja' => 'required',
-			'tmt_kgb' => 'required|date',
-			'kgb_lama' => 'required',
-			'tgl_kgb_lama' => 'required|date',
-			'gapok_lama' => 'required|numeric|integer',
-			'masa_kerja_lama' => 'required',
-			'tmt_kgb_lama' => 'required|date',
-			'pejabat_kgb_lama' => 'required'
-		]);
-
-		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-		}
+		$this->validasiRequest();
 
 		$update = Regkgb::findOrFail($id);
 		$update->update([
@@ -207,5 +174,32 @@ class RegkgbController extends Controller
 		header("Content-Disposition: attachment; filename=kgb.docx");
 
 		$templateProcessor->saveAs('php://output');
+	}
+
+	private function validasiRequest()
+	{
+		$messages= [
+			'required'=>'Wajib diisi !',
+			'date'=>'Harus Format Tanggal !',
+			'pdf.mimes'=>'Format harus Pdf',
+			'pdf.max'=>'Ukuran File Max 2MB',
+			'word.mimes'=>'Format harus Doc, Docx',
+			'word.max'=>'Ukuran File Max 1MB'
+		];
+
+		return request()->validate([
+			'tgl_kgb' => 'required|date',
+			'gapok_baru' => 'required|numeric|integer',
+			'masa_kerja' => 'required',
+			'tmt_kgb' => 'required|date',
+			'kgb_lama' => 'required',
+			'tgl_kgb_lama' => 'required|date',
+			'gapok_lama' => 'required|numeric|integer',
+			'masa_kerja_lama' => 'required',
+			'tmt_kgb_lama' => 'required|date',
+			'pejabat_kgb_lama' => 'required',
+			'word' => 'file|nullable|max:1000|mimes:doc,docx',
+      'pdf' => 'file|nullable|max:3000|mimes:pdf'
+		], $messages);
 	}
 }

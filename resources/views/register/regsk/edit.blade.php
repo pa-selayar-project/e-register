@@ -8,7 +8,7 @@
 @endsection
 
 @section('breadcumb')
-<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+<a href="{{url('register/regsk')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
   <span class="icon text-white-50">
     <i class="fa fa-chevron-circle-left"></i>
   </span>
@@ -32,9 +32,13 @@
           </label>
           
           <div class="input-group">
-            <input type="text" name="no_sk" class="form-control form-control-sm" value="{{$regsk->no_sk}}">
+            <input type="text" name="no_sk" class="form-control form-control-sm @error('no_sk') is-invalid @enderror" value="{{$regsk->no_sk}}">
+            @error('no_sk')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
-          <small class="form-text text-danger">@error('no_sk'){{$message}}@enderror</small>
         </div>
         
         <div class="row m-auto d-flex">  
@@ -44,9 +48,13 @@
             </label>
 
             <div class="input-group">
-              <input type="text" name="tgl_sk" class="datepicker form-control form-control-sm" value="{{date('d F yy', $regsk->tgl_sk)}}" autocomplete="off">
+              <input type="text" name="tgl_sk" class="datepicker form-control form-control-sm @error('tgl_sk') is-invalid @enderror" value="{{date('d F yy', $regsk->tgl_sk)}}" autocomplete="off">
+              @error('tgl_sk')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
-            <small class="form-text text-danger">@error('tgl_sk'){{$message}}@enderror</small>
           </div>
 
           <div class="form-group flex-fill">
@@ -69,9 +77,13 @@
           </label>
 
           <div class="input-group">
-            <input type="text" name="nama_sk" class="form-control form-control-sm" value="{{$regsk->nama_sk}}">
+            <input type="text" name="nama_sk" class="form-control form-control-sm @error('nama_sk') is-invalid @enderror" value="{{$regsk->nama_sk}}">
+            @error('nama_sk')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
-          <small class="form-text text-danger">@error('nama_sk'){{$message}}@enderror</small>
         </div>
 
         <div class="form-group">
@@ -80,7 +92,12 @@
           </label>
 
           <div class="input-group">
-            <textarea name="desc_sk" rows="4" class="form-control">{{$regsk->desc_sk}}</textarea>
+            <textarea name="desc_sk" rows="4" class="form-control @error('desc_sk') is-invalid @enderror">{{$regsk->desc_sk}}</textarea>
+            @error('desc_sk')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
           </div>
         </div>
 
@@ -130,10 +147,14 @@
           </div>
           <div class="col col-md-10">
             <div class="custom-file">
-              <input type="file" name="word" class="custom-file-input" id="word">
+              <input type="file" name="word" class="custom-file-input @error('word') is-invalid @enderror" id="word">
               <label class="custom-file-label" for="word">Choose file</label>
+              @error('word')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
-             <small class="form-text text-danger">@error('word'){{$message}}@enderror</small>
           </div>  
         </div>
         <div class="row">
@@ -142,16 +163,19 @@
           </div>
           <div class="col col-md-10">
             <div class="custom-file">
-              <input type="file" name="pdf" class="custom-file-input" id="pdf">
+              <input type="file" name="pdf" class="custom-file-input @error('pdf') is-invalid @enderror" id="pdf">
               <label class="custom-file-label" for="pdf">Choose file</label>
+              @error('pdf')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
-             <small class="form-text text-danger">@error('pdf'){{$message}}@enderror</small>
           </div>  
         </div>
 
         <div class="form-group my-4 float-right">
           <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="reset" class="btn btn-secondary">Reset</button>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
 @section('title','Rekam Surat Cuti')
 
 @section('breadcumb')
-<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+<a href="{{url('register/surat_cuti')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
   <span class="icon text-white-50">
     <i class="fa fa-chevron-circle-left"></i>
   </span>
@@ -41,10 +41,15 @@
             <label for="tgl_cuti" class="col-sm-3 col-form-label">Tanggal</label>
             <div class="col-sm-9">
               <div class="input-group date">
-                <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control" autocomplete="off">
+                <input type="text" id="tgl_cuti" name="tgl_cuti" class="datepicker form-control @error('tgl_cuti') is-invalid @enderror" autocomplete="off">
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
+                @error('tgl_cuti')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -52,24 +57,39 @@
             <label for="mulai" class="col-sm-3 col-form-label">Tanggal Cuti</label>
             <div class="col-sm-9">
               <div class="input-group date">
-                <input type="text" id="mulai" name="mulai" class="datepicker form-control" autocomplete="off"> 
+                <input type="text" id="mulai" name="mulai" class="datepicker form-control @error('mulai') is-invalid @enderror" autocomplete="off"> 
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon3">s/d</span>
                   </div> 
-                <input type="text" id="akhir" name="akhir" class="datepicker form-control" autocomplete="off">
+                <input type="text" id="akhir" name="akhir" class="datepicker form-control @error('akhir') is-invalid @enderror" autocomplete="off">
+                @error('mulai')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
           <div class="form-group row">
             <label for="alamat" class="col-sm-3 col-form-label">Alamat Cuti</label>
             <div class="col-sm-9">
-              <textarea name="alamat" id="alamat" class="form-control" rows="3"></textarea>
+              <textarea name="alamat" id="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3"></textarea>
+              @error('alamat')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
           </div>
           <div class="form-group row">
             <label for="alasan" class="col-sm-3 col-form-label">Alasan Cuti</label>
             <div class="col-sm-9">
-              <textarea name="alasan" id="alasan" class="form-control" rows="3"></textarea>
+              <textarea name="alasan" id="alasan" class="form-control @error('alasan') is-invalid @enderror" rows="3"></textarea>
+              @error('alasan')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
             </div>
           </div>
         </div>
@@ -88,14 +108,27 @@
           </select>
         </div>
       </div>
-      <div class="card shadow mb-0 h-75">
+      <div class="card shadow mb-0">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Pejabat Pemberi Cuti</h6>
+        </div>   
+        <div class="card-body">
+          <select name="atasan_id" class="chosen-select form-control">
+            @foreach($pegawai as $p)
+            <option value="{{$p->id}}">{{$p->nama_pegawai}}</option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+      
+      <div class="card shadow mb-0">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Jenis Cuti</h6>
         </div>   
         <div class="card-body">
           @foreach($jeniscuti as $jc)
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="jenis_cuti" id="{{$jc->jenis_cuti}}" value="{{$jc->jenis_cuti}}">
+            <input type="radio" name="jenis_cuti" id="{{$jc->jenis_cuti}}" class="form-check-input" value="{{$jc->jenis_cuti}}" @if($jc->jenis_cuti == 'CT') checked @endif>
             <label class="form-check-label" for="{{$jc->jenis_cuti}}">
               {{$jc->ket}}
             </label>
@@ -107,12 +140,12 @@
     <div class="col-xl-3 col-lg-3">  
       <div class="card shadow mb-0 h-50">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Resume</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Sisa Cuti</h6>
         </div>
         <div class="card-body">
-          Sisa Cuti Tahun Ini  :  8 hari
+          Tahun Ini  :  8 hari
           <br>
-          Sisa Cuti Tahun Lalu : 9 hari
+          Tahun Lalu : 9 hari
         </div>
       </div>
       <div class="card shadow mb-0 h-50">
