@@ -68,7 +68,7 @@
 
   <!-- Right Panel -->	
   @include('layouts.footer')
-    @include('sweetalert::alert')
+    <!-- @include('sweetalert::alert') -->
 	<script type="text/javascript">
 		var $=jQuery.noConflict();
 		$(document).ready(function(){
