@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
       Route::resource('settings/pramubhakti', 'HonorerController');
       Route::resource('daftar', 'DaftarController');
       Route::resource('settings/setting', 'SettingController');
+      Route::resource('settings/database', 'DatabaseController');
       Route::get('settings', 'HeadmenuController@settings');
     }
   );

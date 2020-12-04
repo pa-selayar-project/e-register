@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Headmenu;
 use App\Log;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Response, Redirect;

@@ -49,7 +49,7 @@
         </a>
       </div>
       <div class="mx-5 my-3 p-2">
-        <a href="#">
+        <a href="{{url('settings/database')}}">
           <i class="fas fa-database fa-8x"></i>
           <div class="text-center text-primary">Database</div>
         </a>
