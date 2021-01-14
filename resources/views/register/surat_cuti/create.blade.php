@@ -29,7 +29,7 @@
             <label for="no_cuti" class="col-sm-3 col-form-label">Nama Pegawai</label>
             <div class="col-sm-9">
               <div class="input-group">
-                <select name="pegawai_id" class="chosen-select form-control">
+                <select name="pegawai_id" class="chosen-select form-control pegawai">
                   @foreach($pegawai as $p)
                   <option value="{{$p->id}}">{{$p->nama_pegawai}}</option>
                   @endforeach
@@ -143,18 +143,31 @@
           <h6 class="m-0 font-weight-bold text-primary">Sisa Cuti</h6>
         </div>
         <div class="card-body">
-          Tahun Ini  :  8 hari
-          <br>
-          Tahun Lalu : 9 hari
+          <table width="100%" class="mt-4">
+            <tr>
+              <td width="50%">Tahun Ini</td>
+              <td width="10%">:</td>
+              <td width="40%" class="sisa_cuti"></td>
+            </tr>
+            <tr>
+              <td width="50%">Tahun Lalu</td>
+              <td width="10%">:</td>
+              <td width="40%" class="sisa_cuti_1"></td>
+            </tr>
+            <tr>
+              <td width="50%">2 Tahun Lalu</td>
+              <td width="10%">:</td>
+              <td width="40%" class="sisa_cuti_2"></td>
+            </tr>
+          </table>
         </div>
       </div>
       <div class="card shadow mb-0 h-50">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Action</h6>
         </div>
-        <div class="card-body py-5 text-center">
+        <div class="card-body mt-5 text-center">
           <button type="submit" class="btn btn-success">Simpan</button>
-          <button type="reset" class="btn btn-primary">Reset</button>
         </div>
       </div>
     </div>
@@ -181,6 +194,21 @@
         let fileName= $(this).val().split('\\').pop();
         $(this).next(".custom-file-label").addClass("selected").html(fileName);
       });
+    
+    $('.pegawai').on('change', function(){
+      let id = $(this).val();
+      
+      $.ajax({
+        type: 'GET',
+        url:id+'/hasil',
+        success:function(result){
+          console.log(result.sisa_cuti);
+          $('.sisa_cuti').html(result.sisa_cuti);
+          $('.sisa_cuti_1').html(result.sisa_cuti_1);
+          $('.sisa_cuti_2').html(result.sisa_cuti_2);
+        }
+      });
+    });  
   });
   </script>
 @endsection

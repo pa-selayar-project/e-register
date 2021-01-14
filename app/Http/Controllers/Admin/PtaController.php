@@ -10,79 +10,39 @@ use Response, Redirect;
 
 class PtaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  public function index()
+  {
+    $data = Pta::all();
+        
+    return view('settings/pta/index', ['data' => $data]);
+  }
+   
+  public function store(Request $request)
+  {
+    $messages = [
+                'nama_pta.required' => 'Nama PTA Wajib diisi',
+                'alamat.required' => 'Alamat Wajib diisi'
+                ];
+    $request->validate([
+    	'nama_pta' => 'required',
+      'alamat' => 'required'
+    ], $messages);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    Pta::create([
+    	'nama_pta' => $request->nama_pta,
+      'alamat' => $request->alamat
+    ]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    return redirect('/settings/pta/index')->with('message', 'Input PTA berhasil');
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Pta  $pta
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pta $pta)
-    {
+  public function update(Request $request, Pta $pta)
+  {
         //
-    }
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Pta  $pta
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pta $pta)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Pta  $pta
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pta $pta)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Pta  $pta
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pta $pta)
-    {
-        //
-    }
+  public function destroy(Pta $pta)
+  {
+       //
+  }
 }

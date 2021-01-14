@@ -16,6 +16,9 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
       Route::resource('settings/pramubhakti', 'HonorerController');
       Route::resource('daftar', 'DaftarController');
       Route::resource('settings/setting', 'SettingController');
+      Route::resource('settings/satker', 'SatkerController');
+      Route::resource('settings/pta', 'PtaController');
+      Route::resource('settings/pejabat', 'PejabatController');
       Route::resource('settings/database', 'DatabaseController');
       Route::get('settings', 'HeadmenuController@settings');
     }
@@ -38,6 +41,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
       Route::resource('register/sop', 'RegsopController');
       Route::resource('register/surat_cuti', 'RegcutiController');
       Route::post('register/surat_cuti/print/{id}', 'RegcutiController@print');
+      Route::get('register/surat_cuti/{id}/hasil', 'RegcutiController@get_data');
       Route::resource('register/surat_tugas', 'RegstugasController');
       Route::post('register/surat_tugas/print/{id}', 'RegstugasController@print');
       Route::get('profil/ubah_password', 'ProfilController@ubah_password');

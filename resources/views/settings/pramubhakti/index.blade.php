@@ -9,7 +9,7 @@
   </span>
   <span class="text">Rekam Pramubhakti</span>
 </a>
-<a href="#" onclick="javascript:history.back();" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-danger">
+<a href="{{url('settings')}}" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-danger">
   <span class="icon text-white">
     <i class="fas fa-arrow-alt-circle-left"></i>
   </span>

@@ -17,7 +17,7 @@ class RegcutiController extends Controller
 {
 	public function index()
 	{
-		$data = Regcuti::all();
+		$data = Regcuti::whereTahun(date('Y'))->get();
 		return view('register/surat_cuti/index', ['data' => $data]);
 	}
 
@@ -42,7 +42,7 @@ class RegcutiController extends Controller
 		$pegawai->update(['sisa_cuti'=> $update_cuti]);
 
 		Regcuti::create([
-			'no_cuti' => 'W20-A17/     /KP.04.6/' . Helper::get_bulan_romawi(date('m')) . '/' . date('Y'),
+			'no_cuti' => 'W20-A17/     /KP.05.2/' . Helper::get_bulan_romawi(date('m')) . '/' . date('Y'),
 			'pegawai_id' => $request->pegawai_id,
 			'tgl_cuti' => strtotime($request->tgl_cuti),
 			'mulai' => strtotime($request->mulai),
@@ -143,7 +143,13 @@ class RegcutiController extends Controller
 			'pesan_Log' => 'Menghapus Surat Cuti'
 		]);
 		return back()->with('toast_success', 'Data berhasil dihapus!');
-    }
+  }
+
+	public function get_data($id)
+	{
+		$data = Pegawai::find($id);
+		return $data;
+	}
 
 	public function print($id)
 	{
@@ -151,7 +157,8 @@ class RegcutiController extends Controller
 
 		$ketua = Pegawai::whereJabatanId(1)->first();
 
-		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/surat_cuti.docx'));
+		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/surat_cuti_'.$data->jenis_cuti.'.docx'));
+		
 		$templateProcessor->setValues([
 			'no_cuti' => $data->no_cuti,
 			'tgl_cuti' => Helper::tanggal_id($data->tgl_cuti),
@@ -163,13 +170,20 @@ class RegcutiController extends Controller
 			'hp' => $data->pegawai->hp,
 			'mulai' => Helper::tanggal_id($data->mulai),
 			'akhir' => Helper::tanggal_id($data->akhir),
+			'alasan' => $data->alasan,
 			'alamat' => $data->alamat,
 			'jc' => $data->jumlah_cuti,
 			'masa_kerja' => Helper::masa_kerja($data->pegawai->nip),
 			'atasan' => strtoupper($data->atasan->nama_pegawai),
 			'nip_atasan' => $data->atasan->nip,
 			'ketua'=>strtoupper($ketua->nama_pegawai),
-			'nip_ketua'=>$ketua->nip
+			'nip_ketua'=>$ketua->nip,
+			'n' => date('Y'),
+			'n1' => date('Y')-1,
+			'n2' => date('Y')-2,
+			'sc' => $data->pegawai->sisa_cuti,
+			'sc_1' => $data->pegawai->sisa_cuti_1,
+			'sc_2' => $data->pegawai->sisa_cuti_2,
 		]);
 
 		header("Content-Disposition: attachment; filename=surat_cuti.docx");

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Satker;
+use App\Pta;
+use App\Pejabat;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,58 +12,29 @@ use Response, Redirect;
 
 class SatkerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  public function index()
+  {
+    $pta = Pta::findOrFail(1);
+    $pejabat = Pejabat::findOrFail(1);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    return view('settings/satker/index', compact('pta','pejabat'));
+  }
+  
+  public function store(Request $request)
+  {
+		dd($request->nama_pta);	
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Satker  $satker
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Satker $satker)
-    {
+  public function show(Satker $satker)
+  {
         //
-    }
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Satker  $satker
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Satker $satker)
-    {
+  public function edit(Satker $satker)
+  {
         //
-    }
+  }
 
     /**
      * Update the specified resource in storage.
@@ -84,5 +57,12 @@ class SatkerController extends Controller
     public function destroy(Satker $satker)
     {
         //
-    }
+		}
+		
+		private function validasiRequest()
+		{
+			$messages = [
+				'nama_pta'=>'required|unique:nama_pta'
+			];
+		}
 }

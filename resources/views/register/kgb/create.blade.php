@@ -241,7 +241,7 @@
         type: 'GET',
         url:id+'/hasil',
         success:function(result){
-          console.log(result);
+          // console.log(result);
           $('#masa_kerja').val(result[1]);
         }
       });
