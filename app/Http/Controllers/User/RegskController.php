@@ -16,7 +16,7 @@ class RegskController extends Controller
 {
 	public function index()
 	{
-		$data = Regsk::all();
+		$data = Regsk::whereTahun(date('Y'))->get();
 		return view('register/regsk/index', ['data' => $data]);
 	}
 

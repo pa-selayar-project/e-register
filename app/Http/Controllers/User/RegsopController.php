@@ -14,7 +14,7 @@ class RegsopController extends Controller
 {
     public function index()
     {
-        $data = Regsop::all();
+        $data = Regsop::whereTahun(date('Y'))->get();
         return view('register/sop/index', ['data' => $data]);
     }
 

@@ -16,7 +16,7 @@ class RegstugasController extends Controller
 {
 	public function index()
 	{
-		$data = Regstugas::all();
+		$data = Regstugas::whereTahun(date('Y'))->get();
 		$pgw = Pegawai::withTrashed()->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/index', ['data' => $data, 'pgw' => $pgw]);
 	}

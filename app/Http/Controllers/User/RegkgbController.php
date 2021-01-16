@@ -16,7 +16,7 @@ class RegkgbController extends Controller
 {
 	public function index()
 	{
-		$data = Regkgb::all();
+		$data = Regkgb::whereTahun(date('Y'))->get();
 		return view('register/kgb/index', compact('data'));
 	}
 
