@@ -9,6 +9,7 @@ use Auth;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Response, Redirect;
 
@@ -122,6 +123,18 @@ class RegskController extends Controller
 			'pesan_Log' => 'Menghapus SK'
 		]);
 		return back()->with('toast_success', 'Data berhasil dihapus!');
+	}
+	
+	public function import(Request $request)
+	{
+		$request->validate(
+			['xls' => 'required|mimes:xls,xlsx'],
+			['required' => ':attribute wajib diisi',
+				'mimes' => 'File harus format Excel'
+			]
+		);
+		Excel::import(new \App\Imports\RegskImport, $request->file('xls'));
+		return back()->with('toast_success', 'Data berhasil diinput ke database!');
 	}
 
 	private function validasiRequest()

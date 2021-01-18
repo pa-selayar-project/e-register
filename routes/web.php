@@ -26,17 +26,18 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
-	Route::group(['namespace' => '\App\Http\Controllers\User'], 
-		function () {
-      Route::get('dashboard', 'HomeController@index');
-      Route::get('dashboard/pegawai', 'HomeController@pegawai');
-      Route::get('dashboard/pegawai_nonaktif', 'HomeController@pegawai_nonaktif');
-      Route::get('dashboard/honorer', 'HomeController@honorer');
-      Route::get('dashboard/daftarsk/{id}', 'HomeController@daftarsk');
-      Route::resource('log', 'LogController');
-      Route::resource('register/regsk', 'RegskController');
-      Route::post('register/kgb/print/{id}', 'RegkgbController@print');
-      Route::resource('register/kgb', 'RegkgbController');
+  Route::group(['namespace' => '\App\Http\Controllers\User'], 
+  function () {
+    Route::get('dashboard', 'HomeController@index');
+    Route::get('dashboard/pegawai', 'HomeController@pegawai');
+    Route::get('dashboard/pegawai_nonaktif', 'HomeController@pegawai_nonaktif');
+    Route::get('dashboard/honorer', 'HomeController@honorer');
+    Route::get('dashboard/daftarsk/{id}', 'HomeController@daftarsk');
+    Route::resource('log', 'LogController');
+    Route::resource('register/regsk', 'RegskController');
+    Route::post('settings/database', 'RegskController@import')->name('import');
+    Route::post('register/kgb/print/{id}', 'RegkgbController@print');
+    Route::resource('register/kgb', 'RegkgbController');
       Route::get('register/kgb/{id}/hasil', 'RegkgbController@get_data');
       Route::resource('register/sop', 'RegsopController');
       Route::resource('register/surat_cuti', 'RegcutiController');

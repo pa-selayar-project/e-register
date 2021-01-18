@@ -17,12 +17,12 @@
         <div class="card-header">
           <strong class="card-title mb-3">Input Massal SK Tahun Ini</strong>
         </div>
-        <form action="#" method="post" type="multipart/form-data">
+        <form action="{{route('import')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
           <div class="custom-file">
               <input type="file" name="xls" class="custom-file-input @error('xls') is-invalid @enderror" id="xls">
-              <label class="custom-file-label" for="word">Choose file</label>
+              <label class="custom-file-label" for="xls">Choose file</label>
               @error('xls')
                 <div class="invalid-feedback">
                   {{$message}}
