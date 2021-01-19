@@ -125,6 +125,7 @@ class RegstugasController extends Controller
 	public function print($id)
 	{
 		$data = Regstugas::findOrFail($id);
+		$ketua = Pegawai::whereJabatanId(1)->first();
 		$arr_pelaksana = explode(',', $data->pegawai);
 
 		$hitung = count($arr_pelaksana);
@@ -146,7 +147,9 @@ class RegstugasController extends Controller
 			'menimbang' => $data->menimbang,
 			'dasar' => $data->dasar,
 			'maksud' => $data->maksud,
-			'ket' => $dipa
+			'ket' => $dipa,
+			'ketua'=>ucfirst($ketua->nama_pegawai),
+			'nip_ketua'=>$ketua->nip
 		]);
 
 		for ($i = 0; $i < $hitung; $i++) {
