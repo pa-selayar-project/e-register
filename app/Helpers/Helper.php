@@ -49,6 +49,15 @@ class Helper {
       $bulan = [1=>'Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
       return $row[2].' '.$bulan[(int)$row[1]].' '.$row[0];
     }
+
+    public static function tgl_lahir($nip)
+    {
+      $tgl = substr($nip,6,2);
+      $bln = substr($nip,4,2);
+      $bulan = [1=>'Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+      $thn = substr($nip,0,4);
+      return $tgl." ".$bulan[$bln]." ".$thn;
+    }
 }
  
 ?>

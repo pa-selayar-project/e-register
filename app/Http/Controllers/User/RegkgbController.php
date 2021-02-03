@@ -146,7 +146,8 @@ class RegkgbController extends Controller
 	public function print($id)
 	{
 		$data = Regkgb::findOrFail($id);
-
+		$ketua = Pegawai::whereJabatanId(1)->first();
+		// dd(Helper::tanggal_id($data->tgl_kgb));
 		\PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
 
 		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/kgb.docx'));
@@ -155,6 +156,7 @@ class RegkgbController extends Controller
 			'no_kgb' => $data->no_kgb,
 			'pegawai' => $data->pegawai->nama_pegawai,
 			'ttl' => $data->pegawai->tempat_lahir,
+			'tgl_lahir' => Helper::tgl_lahir($data->pegawai->nip),
 			'nip' => $data->pegawai->nip,
 			'pangkat' => $data->pegawai->pangkat->nama_pangkat . ' (' . $data->pegawai->pangkat->golongan . ')',
 			'satker' => 'Pengadilan Agama Selayar',
@@ -168,7 +170,9 @@ class RegkgbController extends Controller
 			'tmt_lama' => Helper::tanggal_id($data->tmt_kgb_lama),
 			'masker_lama' => $data->masa_kerja_lama,
 			'kgb_yad' => Helper::tanggal_id($data->tmt_yad),
-			'tgl_surat' => Helper::tanggal_id($data->tgl_kgb)
+			'tgl_surat' => Helper::tanggal_id($data->tgl_kgb),
+			'ketua' => $ketua->nama_pegawai,
+			'nip_ketua' => $ketua->nip
 		]);
 
 		header("Content-Disposition: attachment; filename=kgb.docx");
