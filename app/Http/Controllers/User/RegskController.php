@@ -63,7 +63,7 @@ class RegskController extends Controller
 
 	public function edit(Regsk $regsk)
 	{
-		$pegawai = Pegawai::all();
+		$pegawai = Pegawai::orderBy('jabatan_id','ASC')->get();
 		return view('register/regsk/edit', compact('regsk', 'pegawai'));
 	}
 
@@ -156,7 +156,7 @@ class RegskController extends Controller
 			'bidang_sk' => 'required',
 			'ttd_sk' => 'required',
 			'obyek' => 'nullable',
-			'word' => 'file|nullable|max:1000|mimes:doc,docx',
+			'word' => 'file|nullable|max:1000|mimes:docx,doc',
 			'pdf' => 'file|nullable|max:5000|mimes:pdf',
 		], $messages);
 	}

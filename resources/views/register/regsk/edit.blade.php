@@ -48,7 +48,7 @@
             </label>
 
             <div class="input-group">
-              <input type="text" name="tgl_sk" class="datepicker form-control form-control-sm @error('tgl_sk') is-invalid @enderror" value="{{date('d F yy', $regsk->tgl_sk)}}" autocomplete="off">
+              <input type="text" name="tgl_sk" class="datepicker form-control form-control-sm @error('tgl_sk') is-invalid @enderror" value="{{date('d F Y', $regsk->tgl_sk)}}" autocomplete="off">
               @error('tgl_sk')
                 <div class="invalid-feedback">
                   {{$message}}
