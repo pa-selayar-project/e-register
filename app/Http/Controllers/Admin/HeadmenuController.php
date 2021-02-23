@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Headmenu;
 use App\Log;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Response, Redirect;
@@ -30,8 +31,9 @@ class HeadmenuController extends Controller
     }
 
 
-    public function update(Request $request, Headmenu $headmenu)
+    public function update(Request $request, $id)
     {
+        $headmenu = Headmenu::findOrFail($id);
         $headmenu->update($this->validateRequest('update'));
         Response::json($headmenu);
 
@@ -62,7 +64,7 @@ class HeadmenuController extends Controller
 
         if ($type == 'create') {
             $rule = 'required|unique:tb_head_menu';
-        } else {
+        } elseif($type == 'update'){
             $rule = 'required';
         }
 

@@ -55,9 +55,6 @@
             </label>
           </div>
           <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
-          <div class="register-link m-t-15 text-center">
-            <p>Don't have account ? <a href="{{route('register')}}"> Sign Up Here</a></p>
-          </div>
         </form>
       </div>
     </div>

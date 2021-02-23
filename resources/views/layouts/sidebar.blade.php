@@ -1,5 +1,5 @@
 <aside id="left-panel" class="left-panel">
-<?php $data = \App\Setting::where('id',1)->first();?>
+<?php $data = \App\Setting::whereId(1)->first();?>
   <nav class="navbar navbar-expand-sm navbar-default">
     <div class="navbar-header">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">

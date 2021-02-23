@@ -3,13 +3,13 @@
 @section('title','Daftar Pramubhakti')
 
 @section('breadcumb')
-<a href="{{url('settings/pramubhakti/create')}}" class="mr-1 d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split">
+<a href="{{url('settings/pramubhakti/create')}}" class="mr-1 d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
   <span class="icon text-white-50">
     <i class="fas fa-plus"></i>
   </span>
   <span class="text">Rekam Pramubhakti</span>
 </a>
-<a href="{{url('settings')}}" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-danger">
+<a href="{{url('settings')}}" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-danger rounded">
   <span class="icon text-white">
     <i class="fas fa-arrow-alt-circle-left"></i>
   </span>
@@ -68,9 +68,9 @@
               <form method="post" action="{{url('settings/pramubhakti')}}/{{$d->id}}">
                 @csrf
                 @method('delete')
-                <button type="submit"class="btn btn-danger btn-sm btn-circle mr-1"><i class="fas fa-trash"></i></button> 
+                <button type="submit"class="btn btn-danger btn-sm btn-circle rounded mr-1"><i class="fas fa-trash"></i></button> 
               </form>
-              <a href="{{url('settings/pramubhakti/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle"><i class="fas fa-edit"></i></a>
+              <a href="{{url('settings/pramubhakti/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded"><i class="fas fa-edit"></i></a>
             </td>
           </tr>
           @endforeach

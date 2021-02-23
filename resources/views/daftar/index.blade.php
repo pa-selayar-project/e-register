@@ -1,8 +1,14 @@
 @extends('layouts.app')
 
-@section('title','Daftar User/Admin')
+@section('title','Daftar User')
 
 @section('breadcumb')
+<a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+  <span class="icon text-white">
+    <i class="fas fa-plus"></i>
+  </span>
+  <span class="text">Rekam User</span>
+</a>
 <a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
   <span class="icon text-white-50">
     <i class="fa fa-chevron-circle-left"></i>
@@ -43,6 +49,40 @@
           @endforeach
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+@endsection
+
+@section('modal')
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Tambah User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{url('daftar')}}" method="POST" class="form-group">
+        <div class="modal-body">
+          @csrf
+          <label>Nama Pegawai</label>
+          <div class="input-group">
+            <select class="form-control" name="pgw">
+              @foreach($pgw as $pgw)
+                <option value="{{$pgw->id}}">
+                  {{$pgw->nama_pegawai}}
+                </option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Generate</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

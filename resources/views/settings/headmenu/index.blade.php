@@ -60,7 +60,7 @@
       </div>
       <form action="{{url('settings/parent_menu')}}" method="POST" class="form-group">
         <div class="modal-body">
-          <p class="patch"></p>
+          @method('PATCH')
           @csrf
           <label>Nama Headmenu</label>
           <input type="text" class="form-control @error('nama_head') is-invalid @enderror" name="nama_head" id="namaHead" value="{{old('nama_head')}}">

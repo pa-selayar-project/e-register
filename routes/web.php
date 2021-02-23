@@ -21,11 +21,12 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
       Route::resource('settings/pejabat', 'PejabatController');
       Route::resource('settings/database', 'DatabaseController');
       Route::get('settings', 'HeadmenuController@settings');
+      Route::post('settings/database', 'RegskController@import')->name('import');
     }
   );
 });
 
-Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
+Route::group(['middleware' => ['auth', 'CheckRole:1,2,3']], function () {
   Route::group(['namespace' => '\App\Http\Controllers\User'], 
   function () {
     Route::get('dashboard', 'HomeController@index');
@@ -35,19 +36,18 @@ Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
     Route::get('dashboard/daftarsk/{id}', 'HomeController@daftarsk');
     Route::resource('log', 'LogController');
     Route::resource('register/regsk', 'RegskController');
-    Route::post('settings/database', 'RegskController@import')->name('import');
     Route::post('register/kgb/print/{id}', 'RegkgbController@print');
     Route::resource('register/kgb', 'RegkgbController');
-      Route::get('register/kgb/{id}/hasil', 'RegkgbController@get_data');
-      Route::resource('register/sop', 'RegsopController');
-      Route::resource('register/surat_cuti', 'RegcutiController');
-      Route::post('register/surat_cuti/print/{id}', 'RegcutiController@print');
-      Route::get('register/surat_cuti/{id}/hasil', 'RegcutiController@get_data');
-      Route::resource('register/surat_tugas', 'RegstugasController');
-      Route::post('register/surat_tugas/print/{id}', 'RegstugasController@print');
-      Route::get('profil/ubah_password', 'ProfilController@ubah_password');
-      Route::resource('profil', 'ProfilController');
-      Route::patch('profil/update_password/{id}', 'ProfilController@update_password');
+    Route::get('register/kgb/{id}/hasil', 'RegkgbController@get_data');
+    Route::resource('register/sop', 'RegsopController');
+    Route::resource('register/surat_cuti', 'RegcutiController');
+    Route::post('register/surat_cuti/print/{id}', 'RegcutiController@print');
+    Route::get('register/surat_cuti/{id}/hasil', 'RegcutiController@get_data');
+    Route::resource('register/surat_tugas', 'RegstugasController');
+    Route::post('register/surat_tugas/print/{id}', 'RegstugasController@print');
+    Route::get('profil/ubah_password', 'ProfilController@ubah_password');
+    Route::resource('profil', 'ProfilController');
+    Route::patch('profil/update_password/{id}', 'ProfilController@update_password');
     });
   Route::post('logout', 'Auth\LoginController@logout');
 });

@@ -11,6 +11,6 @@ class CheckRole
         if (in_array($request->user()->level, $roles)) {
             return $next($request);
         }
-        return redirect('/home');
+        return redirect('/dashboard');
     }
 }

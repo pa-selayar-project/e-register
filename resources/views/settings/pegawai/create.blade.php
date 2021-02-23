@@ -2,6 +2,14 @@
 
 @section('title','Tambah Pegawai')
 
+@section('breadcumb')
+<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
+  <span class="icon text-white-50">
+    <i class="fa fa-chevron-circle-left"></i>
+  </span>
+</a>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-xl-12 col-lg-12">  
