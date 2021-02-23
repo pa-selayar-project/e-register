@@ -3,12 +3,14 @@
 @section('title','Register Surat Tugas')
 
 @section('breadcumb')
+@if(Auth::user()->level == 2)
 <a href="/register/surat_tugas/create" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
   <span class="icon text-white-50">
     <i class="fa fa-plus"></i>
   </span>
   <span class="text"> Tambah</span>
 </a>
+@endif
 @endsection
 
 @section('stylesheet')
@@ -48,6 +50,7 @@
             </td>
             <td>{{$d->jabatan->nama_jabatan}}</td>
             <td class="d-flex">
+            @if(Auth::user()->level == 2)
               <form action="/register/surat_tugas/{{$d->id}}" method="post">
                 @csrf
                 @method('delete')
@@ -55,7 +58,7 @@
               </form>
               
               <a href="{{url('register/surat_tugas/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
-              
+            @endif
               <a href="{{url('register/surat_tugas/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
             </td>
           </tr>

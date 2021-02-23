@@ -3,12 +3,14 @@
 @section('title','Register SK')
 
 @section('breadcumb')
+@if(Auth::user()->level == 2)
 <a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
   <span class="icon text-white-50">
     <i class="fa fa-plus"></i>
   </span>
   <span class="text"> Tambah</span>
 </a>
+@endif
 @endsection
 
 @section('stylesheet')
@@ -42,6 +44,7 @@
             <td>{{$d->bidang_sk}}</td>
             <td>{{$d->ttd_sk}}</td>
             <td class="d-flex">
+            @if(Auth::user()->level == 2)
               <form action="/register/regsk/{{$d->id}}" method="post">
                 @csrf
                 @method('delete')
@@ -49,6 +52,7 @@
               </form>
               
               <a href="{{url('register/regsk/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
+              @endif
               
               <a href="{{url('register/regsk/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
             </td>

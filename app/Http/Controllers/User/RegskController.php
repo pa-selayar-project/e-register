@@ -61,7 +61,7 @@ class RegskController extends Controller
 	public function show(Regsk $regsk)
 	{
 		$obyek = explode(',', $regsk->obyek);
-		$obyek = Pegawai::whereIn('id', $obyek)->get();
+		$obyek = Pegawai::whereIn('id', $obyek)->orderBy('jabatan_id','ASC')->get();
 		return view('register/regsk/show', compact('regsk', 'obyek'));;
 	}
 
@@ -147,7 +147,7 @@ class RegskController extends Controller
 			'required'=>'Wajib diisi !',
 			'date'=>'Harus Format Tanggal !',
 			'pdf.mimes'=>'Format harus Pdf',
-			'pdf.max'=>'Ukuran File Max 2MB',
+			'pdf.max'=>'Ukuran File Max 10MB',
 			'word.mimes'=>'Format harus Doc, Docx',
 			'word.max'=>'Ukuran File Max 1MB'
 		];
@@ -161,7 +161,7 @@ class RegskController extends Controller
 			'ttd_sk' => 'required',
 			'obyek' => 'nullable',
 			'word' => 'file|nullable|max:1000|mimes:docx,doc',
-			'pdf' => 'file|nullable|max:5000|mimes:pdf',
+			'pdf' => 'file|nullable|max:10000|mimes:pdf',
 		], $messages);
 	}
 }

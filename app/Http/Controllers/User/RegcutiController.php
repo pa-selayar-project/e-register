@@ -17,14 +17,22 @@ class RegcutiController extends Controller
 {
 	public function index()
 	{
-		$data = Regcuti::whereTahun(date('Y'))->get();
+		if(Auth::user()->level == 3){
+			$data = Regcuti::wherePegawaiId(Auth::user()->id_pegawai)->whereTahun(date('Y'))->get();
+		}else{
+			$data = Regcuti::whereTahun(date('Y'))->get();
+		}
 		return view('register/surat_cuti/index', ['data' => $data]);
 	}
 
 	public function create()
 	{
 		$jeniscuti = Jeniscuti::all();
-		$pegawai = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
+		if(Auth::user()->level == 3){
+			$pegawai = Pegawai::whereId(Auth::user()->id_pegawai)->get();
+		}else{
+			$pegawai = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
+		}
 		return view('register/surat_cuti/create', compact('pegawai', 'jeniscuti'));
 	}
 

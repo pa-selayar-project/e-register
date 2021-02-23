@@ -45,6 +45,7 @@ use App\Helpers\Helper; ?>
             <td>{{Helper::tanggal_id($d->mulai)}} s.d {{Helper::tanggal_id($d->akhir)}}</td>
             <td>{{$d->sisa_cuti}}</td>
             <td class="d-flex">
+            @if(Auth::user()->level == 2)
               <form method="post" action="/register/surat_cuti/{{$d->id}}">
                 @csrf
                 @method('delete')
@@ -53,6 +54,7 @@ use App\Helpers\Helper; ?>
                 </button>
               </form>
               <a href="surat_cuti/{{$d->id}}/edit" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fas fa-edit"></i></a>
+            @endif
               <a href="surat_cuti/{{$d->id}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fas fa-folder-open"></i></a>
             </td>
           </tr>

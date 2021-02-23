@@ -16,7 +16,11 @@ class RegkgbController extends Controller
 {
 	public function index()
 	{
-		$data = Regkgb::whereTahun(date('Y'))->get();
+		if(Auth::user()->level == 3){
+			$data = Regkgb::wherePegawaiId(Auth::user()->id_pegawai)->whereTahun(date('Y'))->get();
+		}else{
+			$data = Regkgb::whereTahun(date('Y'))->get();
+		}
 		return view('register/kgb/index', compact('data'));
 	}
 
