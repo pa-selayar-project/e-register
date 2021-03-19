@@ -3,7 +3,7 @@
 @section('title','Register Surat Tugas')
 
 @section('breadcumb')
-@if(Auth::user()->level == 2)
+@if(Auth::user()->id_level == 2)
 <a href="/register/surat_tugas/create" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
   <span class="icon text-white-50">
     <i class="fa fa-plus"></i>
@@ -50,7 +50,7 @@
             </td>
             <td>{{$d->jabatan->nama_jabatan}}</td>
             <td class="d-flex">
-            @if(Auth::user()->level == 2)
+            @if(Auth::user()->id_level == 2)
               <form action="/register/surat_tugas/{{$d->id}}" method="post">
                 @csrf
                 @method('delete')

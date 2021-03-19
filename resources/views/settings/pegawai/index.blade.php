@@ -47,11 +47,7 @@
           <tr>
             <td>{{$loop->iteration}}</td>
             <td>
-              @if($d->foto)
               <img class="rounded-circle" src="/assets/pic/{{$d->foto}}" width="60px" height="60px"/>
-              @else
-              <img class="rounded-circle" src="/assets/pic/user.png" width="60px" height="60px"/>
-              @endif
             </td>
             <td>{{$d->nama_pegawai}}<br>NIP {{$d->nip}}</td>
             <td>{{$d->pangkat->nama_pangkat}} ({{$d->pangkat->golongan}})</td>

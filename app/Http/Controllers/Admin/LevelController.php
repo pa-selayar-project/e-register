@@ -10,77 +10,40 @@ use Response, Redirect;
 
 class LevelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $data = Level::all();
+        return view('settings/level/index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+      $request->validate(['nama_level' => 'required|unique:tb_level'], 
+        ['nama_level.required' => 'Nama Level Wajib diisi',
+        'nama_level.unique' => 'Nama Level Sudah Ada'
+        ]);
+
+      Level::create(['nama_level' => $request->nama_level]);  
+      
+      return Redirect::back()->with('message', 'Data Level Berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Level  $level
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Level $level)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Level  $level
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Level $level)
     {
-        //
+      return view('settings/level/edit', compact('level'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Level  $level
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Level $level)
     {
-        //
+      $request->validate(['nama_level' => 'required|unique:tb_level'], 
+        ['nama_level.required' => 'Nama Level Wajib diisi',
+        'nama_level.unique' => 'Nama Level Sudah Ada'
+        ]);
+
+      $level->update(['nama_level' => $request->nama_level]);
+      return redirect('/settings/level')->with('message', 'Data Level Berhasil dirubah');    
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Level  $level
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Level $level)
     {
         //

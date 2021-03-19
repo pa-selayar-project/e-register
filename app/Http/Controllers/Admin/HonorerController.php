@@ -61,48 +61,53 @@ class HonorerController extends Controller
         return view('settings/pramubhakti/edit', compact('data', 'jabatan'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'nama_pegawai' => 'required',
-            'tempat_lahir' => 'required',
-            'jabatan_id' => 'required',
-            'alamat' => 'required',
-            'foto' => 'file|nullable|max:1000|mimes:jpg,jpeg,png,bmp'
-        ]);
+  public function update(Request $request, $id)
+  {
+    $validator = Validator::make($request->all(), [
+      'nama_pegawai' => 'required',
+      'tempat_lahir' => 'required',
+      'jabatan_id' => 'required',
+      'alamat' => 'required',
+      'foto' => 'file|nullable|max:1000|mimes:jpg,jpeg,png,bmp'
+    ]);
 
-        if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        }
+    if ($validator->fails()) {
+      return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+      }
 
-        $update = Honorer::where('id', $id)->get()[0];
-        $update->update([
-            'nama_pegawai' => $request->nama_pegawai,
-            'tempat_lahir' => $request->tempat_lahir,
-            'jabatan_id' => $request->jabatan_id,
-            'alamat' => $request->alamat
-        ]);
+      $update = Honorer::where('id', $id)->get()[0];
+      $update->update([
+        'nama_pegawai' => $request->nama_pegawai,
+        'tempat_lahir' => $request->tempat_lahir,
+        'jabatan_id' => $request->jabatan_id,
+        'alamat' => $request->alamat
+      ]);
 
-        if ($request->hasFile('foto')) {
-            $file     = $request->file('foto');
-            $ext      = $file->getClientOriginalExtension();
-            $picname  = 'Profil_' . uniqid() . '.' . $ext;
-            $file->storeAs('pic', $picname);
+      if ($request->hasFile('foto')) {
+        $file     = $request->file('foto');
+        $ext      = $file->getClientOriginalExtension();
+        $picname  = 'Profil_' . uniqid() . '.' . $ext;
+        $file->storeAs('pic', $picname);
 
-            Storage::delete('pic/' . $update->foto);
-            $update->update(['foto' => $picname]);
-        }
+        Storage::delete('pic/' . $update->foto);
+        $update->update(['foto' => $picname]);
+      }
 
-        Log::create([
-            'user_id' => Auth::user()->id,
-            'pesan_Log' => 'Mengedit Profil Honorer'
-        ]);
+      Log::create([
+        'user_id' => Auth::user()->id,
+        'pesan_Log' => 'Mengedit Profil Honorer'
+      ]);
 
-        return redirect('/settings/pramubhakti')->with('toast_success', 'Data berhasil di edit');
+      return redirect('/settings/pramubhakti')->with('toast_success', 'Data berhasil di edit');
     }
 
-    public function destroy($id)
-    {
-        //
-    }
+	public function destroy($id)
+  {
+    Honorer::destroy($id);
+		Log::create([
+			'user_id' => Auth::user()->id,
+			'pesan_Log' => 'Menghapus Data Honorer'
+		]);
+		return back()->with('toast_success', 'Data berhasil dihapus!');
+  }
 }

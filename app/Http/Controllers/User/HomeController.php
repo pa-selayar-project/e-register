@@ -32,7 +32,7 @@ class HomeController extends Controller
 			->get();
 		$hitungnotif = $notif->count();
 
-		if (Auth::user()->level == 1) {
+		if (Auth::user()->id_level == 1) {
 			$logs = Log::limit(5)->orderBy('id', 'desc')->get();
 			$hitunglog = Log::all()->count();
 		} else {

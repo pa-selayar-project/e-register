@@ -36,24 +36,11 @@ class SatkerController extends Controller
         //
   }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Satker  $satker
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Satker $satker)
+  public function update(Request $request, Satker $satker)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Satker  $satker
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Satker $satker)
     {
         //

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Pegawai;
 use App\Jabatan;
 use App\Pangkat;
+use App\Log;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -43,7 +44,13 @@ class PegawaiController extends Controller
       'jabatan_id' => $request->jabatan_id,
       'status' => 1,
       'aktif' => 1,
+      'foto' => 'user.png'
     ]);
+
+    Log::create([
+			'user_id' => Auth::user()->id,
+			'pesan_Log' => 'Menambahkan Pegawai Baru'
+		]);
 
     return redirect('/settings/pegawai')->with('message', 'Input Pegawai berhasil');
   }

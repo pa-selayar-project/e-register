@@ -12,7 +12,7 @@ class LogController extends Controller
 {
   public function index()
   {
-		if (Auth::user()->level == 1) {
+		if (Auth::user()->id_level == 1) {
 			$data = Log::orderBy('id', 'desc')->get();
 		} else {
 			$data = Log::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();

@@ -45,9 +45,14 @@ class HeadmenuController extends Controller
         return Redirect::back()->with('message', 'Data Head Menu Berhasil dirubah');
     }
 
-    public function destroy(Headmenu $headmenu)
+    public function destroy($id)
     {
-        //
+        Headmenu::destroy($id);
+		Log::create([
+			'user_id' => Auth::user()->id,
+			'pesan_Log' => 'Menghapus Head Menu'
+		]);
+		return back()->with('toast_success', 'Data berhasil dihapus!');
     }
 
     public function settings()

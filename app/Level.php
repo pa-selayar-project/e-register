@@ -11,4 +11,9 @@ class Level extends Model
 
     protected $table = "tb_level";
     protected $guarded = ['id','created_at','updated_at','deleted_at'];
+
+    public function daftar()
+    {
+        return $this->belongsTo('App\Daftar', 'id');
+    }
 }

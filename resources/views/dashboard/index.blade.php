@@ -4,7 +4,7 @@
 
 
 @section('breadcumb')
-@if(Auth::user()->level == 1)
+@if(Auth::user()->id_level == 1)
 Admin : {{Auth::user()->name}}
 @else
 User : {{Auth::user()->name}}

@@ -24,6 +24,14 @@
 @section('content')
 <div class="card shadow mb-4">
   <div class="card-body">
+    @if ($errors->any())
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        @foreach ($errors->all() as $error)
+          <li><strong>{{ $error }}</strong> You should check in on some of those fields below.</li>
+        @endforeach
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
     <div class="table-responsive">
       <table id="pegawai_tb" class="display" style="width:100%">
         <thead>
@@ -33,6 +41,7 @@
             <th>Nama</th>
             <th>Email</th>
             <th>Level</th>
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +53,18 @@
             </td>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
-            <td>@if($user->level == 1)Admin @else User @endif</td>
+            <td>{{$user->level->nama_level}}</td>
+            <td class="d-flex">
+              <form action="daftar/{{$user->id}}" method="post">
+                @csrf
+                @method('delete')
+                <button class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></button>
+              </form>
+              
+              <a href="{{url('daftar/'.$user->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
+              
+              <a href="{{url('daftar/'.$user->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
+            </td>
           </tr>
           @endforeach
         </tbody>
@@ -76,6 +96,10 @@
                 </option>
               @endforeach
             </select>
+          </div>
+          <label>Email</label>
+          <div class="input-group">
+            <input type="email" name="email" class="form-control" />
           </div>
         </div>
         <div class="modal-footer">

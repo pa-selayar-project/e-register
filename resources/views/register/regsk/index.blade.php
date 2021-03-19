@@ -3,7 +3,7 @@
 @section('title','Register SK')
 
 @section('breadcumb')
-@if(Auth::user()->level == 2)
+@if(Auth::user()->id_level == 2)
 <a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
   <span class="icon text-white-50">
     <i class="fa fa-plus"></i>
@@ -44,7 +44,7 @@
             <td>{{$d->bidang_sk}}</td>
             <td>{{$d->ttd_sk}}</td>
             <td class="d-flex">
-            @if(Auth::user()->level == 2)
+            @if(Auth::user()->id_level == 2)
               <form action="/register/regsk/{{$d->id}}" method="post">
                 @csrf
                 @method('delete')

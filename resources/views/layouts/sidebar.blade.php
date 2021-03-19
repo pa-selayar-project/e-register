@@ -17,7 +17,7 @@
         </li>
 
         <?php 
-        $head = App\Headmenu::where('place',2)->where('level', Auth::user()->level)->get();
+        $head = App\Headmenu::where('place',2)->where('level', Auth::user()->id_level)->get();
         ?>
         @foreach($head as $h)
         <h3 class="menu-title">{{$h->nama_head}}</h3><!-- /.menu-title -->
