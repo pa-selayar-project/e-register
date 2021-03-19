@@ -16,7 +16,7 @@ class RegkgbController extends Controller
 {
 	public function index()
 	{
-		if(Auth::user()->level == 3){
+		if(Auth::user()->id_level == 3){
 			$data = Regkgb::wherePegawaiId(Auth::user()->id_pegawai)->whereTahun(date('Y'))->get();
 		}else{
 			$data = Regkgb::whereTahun(date('Y'))->get();

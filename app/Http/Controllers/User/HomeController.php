@@ -17,8 +17,8 @@ class HomeController extends Controller
 	{
 		$pegawai = Pegawai::whereStatus(1)->count();
 		$honorer = Pegawai::whereStatus(2)->count();
-		$sk = Regsk::all()->count();
-		$st = Regstugas::all()->count();
+		$sk = Regsk::whereTahun(date('Y'))->count();
+		$st = Regstugas::whereTahun(date('Y'))->count();
 
 		$awaltahun = strtotime(date('01-01-Y'));
 		$akhirtahun = strtotime(date('31-12-Y'));
@@ -63,7 +63,8 @@ class HomeController extends Controller
 
 	public function daftarsk($id)
 	{
-		$data = Regsk::where('obyek','like','%'.$id.'%')->paginate(5);
+		$data = Regsk::whereIn('obyek', array(Auth::user()->id_pegawai))->whereTahun(date('Y'))->get();
+		// $data = Regsk::where('obyek','like','%'.$id.'%')->paginate(5);
 		
 		$pgw = Pegawai::withTrashed()->findOrFail($id);
 		

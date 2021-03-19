@@ -17,7 +17,7 @@ class RegskController extends Controller
 {
 	public function index()
 	{
-		if(Auth::user()->level == 3){
+		if(Auth::user()->id_level == 3){
 			$data = Regsk::whereIn('obyek', array(Auth::user()->id_pegawai))->whereTahun(date('Y'))->get();	
 		}else{
 			$data = Regsk::whereTahun(date('Y'))->get();

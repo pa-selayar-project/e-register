@@ -16,7 +16,7 @@ class RegstugasController extends Controller
 {
 	public function index()
 	{
-		if(Auth::user()->level == 3){
+		if(Auth::user()->id_level == 3){
 			$data = Regstugas::whereIn('pegawai', array(Auth::user()->id_pegawai))->whereTahun(date('Y'))->get();
 		}else{
 			$data = Regstugas::whereTahun(date('Y'))->get();
