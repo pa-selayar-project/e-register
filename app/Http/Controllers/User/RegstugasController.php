@@ -16,13 +16,15 @@ class RegstugasController extends Controller
 {
 	public function index()
 	{
-		if(Auth::user()->id_level == 3){
-			$data = Regstugas::whereIn('pegawai', array(Auth::user()->id_pegawai))->whereTahun(date('Y'))->get();
+		$user = Auth::user();
+		$pegawai = Pegawai::findOrFail($user->id_pegawai);
+		if($user->id_level == 3){
+			$data = Regstugas::where('pegawai', 'LIKE', '%'.$pegawai->nip.'%')->whereTahun(date('Y'))->get();
 		}else{
 			$data = Regstugas::whereTahun(date('Y'))->get();
 		}
 		$pgw = Pegawai::withTrashed()->orderBy('jabatan_id')->get();
-		return view('register/surat_tugas/index', ['data' => $data, 'pgw' => $pgw]);
+		return view('register/surat_tugas/index', compact('data','pgw'));
 	}
 
 	public function create()
@@ -59,8 +61,7 @@ class RegstugasController extends Controller
 	{
 		$data = Regstugas::findOrFail($id);
 		$tgl = Helper::tanggal_id($data->tgl_stugas);
-		$pelaksana = explode(',', $data->pegawai);
-		$pelaksana = Pegawai::whereIn('id', $pelaksana)->orderBy('jabatan_id')->get();
+		$pelaksana = Pegawai::whereIn('id', explode(',',$data->pegawai))->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/show', compact('data', 'pelaksana', 'tgl'));
 	}
 

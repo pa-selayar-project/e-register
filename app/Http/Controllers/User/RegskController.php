@@ -17,12 +17,15 @@ class RegskController extends Controller
 {
 	public function index()
 	{
-		if(Auth::user()->id_level == 3){
-			$data = Regsk::whereIn('obyek', array(Auth::user()->id_pegawai))->whereTahun(date('Y'))->get();	
+		$user = Auth::user();
+		$pegawai = Pegawai::findOrFail($user->id_pegawai);
+		if($user->id_level == 3){
+			$data = Regsk::where('obyek', 'LIKE', '%'.$pegawai->nip.'%')->whereTahun(date('Y'))->get();
 		}else{
 			$data = Regsk::whereTahun(date('Y'))->get();
-		}
-		return view('register/regsk/index', ['data' => $data]);
+		}	
+				
+		return view('register/regsk/index', compact('data'));
 	}
 
 	public function store(Request $request)
@@ -60,8 +63,7 @@ class RegskController extends Controller
 
 	public function show(Regsk $regsk)
 	{
-		$obyek = explode(',', $regsk->obyek);
-		$obyek = Pegawai::whereIn('id', $obyek)->orderBy('jabatan_id','ASC')->get();
+		$obyek = Pegawai::whereIn('nip', explode(',',$regsk->obyek))->orderBy('jabatan_id','ASC')->get();
 		return view('register/regsk/show', compact('regsk', 'obyek'));;
 	}
 

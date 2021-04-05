@@ -23,7 +23,7 @@
         </tr>
         @foreach($data as $d)
         <tr>
-          <td style="width:5%">{{ ($data->currentpage()-1) * $data->perpage() + $loop->index + 1 }}</td>
+          <td style="width:5%">{{ $loop->iteration }}</td>
           <td style="width:30%">{{$d->no_sk}} <br> 
               Tgl. {{\App\Helpers\Helper::tanggal_id($d->tgl_sk)}}</td>
           <td style="width:30%">{{$d->nama_sk}}</td>
@@ -38,7 +38,6 @@
         </tr>
         @endforeach
       </table>
-      {{ $data->links() }}
     </div>
   </div>
 </div>

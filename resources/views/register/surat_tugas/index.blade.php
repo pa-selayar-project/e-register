@@ -35,33 +35,33 @@
         </thead>
         <tbody>
           @foreach($data as $d)
-          <tr>
-            <td>{{$loop->iteration}}</td>
-            <td>{{$d->no_stugas}}</td>
-            <td>{{\App\Helpers\Helper::tanggal_id($d->tgl_stugas)}}</td>
-            <td>
-              <ol>
-              @foreach($pgw as $p)
-                @if(in_array($p->id, explode(',',$d->pegawai)))
-                  <li>{{$p->nama_pegawai}}</li>
-                @endif
-              @endforeach
-              </ol>
-            </td>
-            <td>{{$d->jabatan->nama_jabatan}}</td>
-            <td class="d-flex">
-            @if(Auth::user()->id_level == 2)
-              <form action="/register/surat_tugas/{{$d->id}}" method="post">
-                @csrf
-                @method('delete')
-                <button class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></button>
-              </form>
-              
-              <a href="{{url('register/surat_tugas/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
-            @endif
-              <a href="{{url('register/surat_tugas/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
-            </td>
-          </tr>
+              <tr>
+                <td>{{$loop->iteration}}</td>
+                <td>{{$d->no_stugas}}</td>
+                <td>{{\App\Helpers\Helper::tanggal_id($d->tgl_stugas)}}</td>
+                <td>
+                  <ol>
+                  @foreach($pgw as $p)
+                    @if(in_array($p->nip, explode(',', $d->pegawai)))
+                      <li>{{$p->nama_pegawai}}</li>
+                    @endif
+                  @endforeach
+                  </ol>
+                </td>
+                <td>{{$d->jabatan->nama_jabatan}}</td>
+                <td class="d-flex">
+                  @if(Auth::user()->id_level == 2)
+                    <form action="/register/surat_tugas/{{$d->id}}" method="post">
+                      @csrf
+                      @method('delete')
+                      <button class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></button>
+                    </form>
+                    
+                    <a href="{{url('register/surat_tugas/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
+                  @endif
+                  <a href="{{url('register/surat_tugas/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
+                </td>
+              </tr>
           @endforeach
         </tbody>
       </table>

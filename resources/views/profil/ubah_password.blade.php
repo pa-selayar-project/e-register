@@ -43,7 +43,12 @@
             <label for="password_lama" class="col-sm-3 col-form-label">Password Lama</label>
             <div class="col-sm-9">
               <div class="input-group">
-                <input type="password" id="password_lama" name="password_lama" class="form-control">
+                <input type="password" id="password_lama" name="password_lama" class="form-control @error('password_lama') is-invalid @enderror">
+                @error('password_lama')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -51,7 +56,12 @@
             <label for="password" class="col-sm-3 col-form-label">Password Baru</label>
             <div class="col-sm-9">
               <div class="input-group">
-                <input type="password" id="password" name="password" class="form-control">
+                <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror">
+                @error('password')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>
@@ -59,7 +69,12 @@
             <label for="ulang_password" class="col-sm-3 col-form-label">Ulang Password</label>
             <div class="col-sm-9">
               <div class="input-group">
-                <input type="password" id="ulang_password" name="ulang_password" class="form-control">
+                <input type="password" id="ulang_password" name="ulang_password" class="form-control @error('ulang_password') is-invalid @enderror">
+                @error('ulang_password')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                @enderror
               </div>
             </div>
           </div>

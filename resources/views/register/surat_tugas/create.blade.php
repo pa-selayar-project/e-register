@@ -75,7 +75,7 @@
           <div class="input-group">
             <select name="pegawai[]" class="chosen-select form-control @error('pegawai') is-invalid @enderror" multiple="multiple">
               @foreach($pelaksana as $p)
-                <option value="{{$p->id}}">
+                <option value="{{$p->nip}}">
                   {{$p->nama_pegawai}}
                 </option>
               @endforeach

@@ -35,28 +35,28 @@
         </thead>
         <tbody>
           @foreach($data as $d)
-          <tr>
-            <td>{{$loop->iteration}}</td>
-            <td class="@if($d->word == null || $d->pdf == null) text-danger @endif">{{$d->no_sk}} <br> 
-              Tgl. {{\App\Helpers\Helper::tanggal_id($d->tgl_sk)}}
-            </td>
-            <td>{{$d->nama_sk}}</td>
-            <td>{{$d->bidang_sk}}</td>
-            <td>{{$d->ttd_sk}}</td>
-            <td class="d-flex">
-            @if(Auth::user()->id_level == 2)
-              <form action="/register/regsk/{{$d->id}}" method="post">
-                @csrf
-                @method('delete')
-                <button class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></button>
-              </form>
-              
-              <a href="{{url('register/regsk/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
-              @endif
-              
-              <a href="{{url('register/regsk/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
-            </td>
-          </tr>
+            <tr>
+              <td>{{$loop->iteration}}</td>
+              <td class="@if($d->word == null || $d->pdf == null) text-danger @endif">{{$d->no_sk}} <br> 
+                  Tgl. {{\App\Helpers\Helper::tanggal_id($d->tgl_sk)}}
+              </td>
+              <td>{{$d->nama_sk}}</td>
+              <td>{{$d->bidang_sk}}</td>
+              <td>{{$d->ttd_sk}}</td>
+              <td class="d-flex">
+                  @if(Auth::user()->id_level == 2)
+                    <form action="/register/regsk/{{$d->id}}" method="post">
+                      @csrf
+                      @method('delete')
+                      <button class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></button>
+                    </form>
+                    
+                    <a href="{{url('register/regsk/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
+                    @endif
+                    
+                    <a href="{{url('register/regsk/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
+                  </td>
+            </tr>
           @endforeach
         </tbody>
       </table>

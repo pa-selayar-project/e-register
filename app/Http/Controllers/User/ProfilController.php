@@ -72,13 +72,15 @@ class ProfilController extends Controller
 
 	public function update_password(Request $request, $id)
 	{
-		$validator = Validator::make($request->all(), [
-			'password' => 'required|password'
-		]);
-
-		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-		}
+		$messages = [
+								'required'=>'Kolom ini harus diisi!'
+							];
+		
+		$request->validate([
+			'password_lama' => 'required',
+			'password' => 'required',
+			'ulang_password' => 'required',
+		], $messages);
 
 		$check = Hash::check($request->password_lama, Auth::user()->password);
 
@@ -87,7 +89,6 @@ class ProfilController extends Controller
 				Profil::findOrFail($id)->update([
 					'password' => Hash::make($request->password)
 				]);
-
 				Log::create([
 					'user_id' => Auth::user()->id,
 					'pesan_Log' => 'Merubah Passwordnya'

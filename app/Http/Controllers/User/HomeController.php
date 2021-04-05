@@ -63,10 +63,8 @@ class HomeController extends Controller
 
 	public function daftarsk($id)
 	{
-		$data = Regsk::whereIn('obyek', array(Auth::user()->id_pegawai))->whereTahun(date('Y'))->get();
-		// $data = Regsk::where('obyek','like','%'.$id.'%')->paginate(5);
-		
 		$pgw = Pegawai::withTrashed()->findOrFail($id);
+		$data = Regsk::where('obyek','LIKE', '%'.$pgw->nip.'%')->whereTahun(date('Y'))->get();
 		
 		return view('dashboard/daftarsk', compact('data','pgw'));
 	}

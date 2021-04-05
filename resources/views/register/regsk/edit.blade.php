@@ -16,9 +16,6 @@
 @endsection
 
 @section('content')
-<?php $obyek = explode(',', $regsk->obyek);?>
-<?php if($regsk->obyek!=""){$obyek;}?>
-
 <form action="/register/regsk/{{$regsk->id}}" method="POST" enctype="multipart/form-data">
 @method("patch")
 @csrf
@@ -117,7 +114,7 @@
             <select name="obyek[]" class="chosen-select form-control form-control-lg" multiple="multiple">
         
               @foreach($pegawai as $p)
-              <option value="{{$p->id}}" @if(in_array($p->id, $obyek)) selected @endif>{{$p->nama_pegawai}}</option>
+              <option value="{{$p->nip}}" @if(in_array($p->id, explode(',', $regsk->obyek))) selected @endif>{{$p->nama_pegawai}}</option>
               @endforeach
             </select>
           </div>
