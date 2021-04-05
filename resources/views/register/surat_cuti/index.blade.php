@@ -45,7 +45,7 @@ use App\Helpers\Helper; ?>
             <td>{{Helper::tanggal_id($d->mulai)}} s.d {{Helper::tanggal_id($d->akhir)}}</td>
             <td>{{$d->sisa_cuti}}</td>
             <td class="d-flex">
-            @if(Auth::user()->level == 2)
+            @if(Auth::user()->id_level == 2)
               <form method="post" action="/register/surat_cuti/{{$d->id}}">
                 @csrf
                 @method('delete')

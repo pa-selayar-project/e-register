@@ -42,6 +42,7 @@
             <td>{{\App\Helpers\Helper::tanggal_id($d->tmt_kgb)}}</td>
             <td>{{\App\Helpers\Helper::tanggal_id($d->tmt_yad)}}</td>
             <td class="d-flex">
+              @if(Auth::user()->id_level == 2)
               <form action="/register/kgb/{{$d->id}}" method="post">
                 @csrf
                 @method('delete')
@@ -49,7 +50,7 @@
               </form>
               
               <a href="{{url('register/kgb/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
-              
+              @endif
               <a href="{{url('register/kgb/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
             </td>
           </tr>
