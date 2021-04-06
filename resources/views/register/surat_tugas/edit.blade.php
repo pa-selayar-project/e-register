@@ -76,7 +76,7 @@
           <div class="input-group">
             <select name="pegawai[]" class="chosen-select form-control  @error('pegawai') is-invalid @enderror" multiple="multiple">
               @foreach($pelaksana as $p)
-                <option value="{{$p->nip}}" @if(in_array($p->id, explode(',', $data->pegawai))) selected @endif>
+                <option value="{{$p->nip}}" @if(in_array($p->nip, explode(',', $data->pegawai))) selected @endif>
                   {{$p->nama_pegawai}}
                 </option>
               @endforeach

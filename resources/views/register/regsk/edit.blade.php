@@ -114,7 +114,7 @@
             <select name="obyek[]" class="chosen-select form-control form-control-lg" multiple="multiple">
         
               @foreach($pegawai as $p)
-              <option value="{{$p->nip}}" @if(in_array($p->id, explode(',', $regsk->obyek))) selected @endif>{{$p->nama_pegawai}}</option>
+              <option value="{{$p->nip}}" @if(in_array($p->nip, explode(',', $regsk->obyek))) selected @endif>{{$p->nama_pegawai}}</option>
               @endforeach
             </select>
           </div>
