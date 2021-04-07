@@ -135,7 +135,7 @@ class RegstugasController extends Controller
 
 		$hitung = count($arr_pelaksana);
 
-		$pegawai = Pegawai::whereIn('id', $arr_pelaksana)->orderBy('jabatan_id')->get();
+		$pegawai = Pegawai::whereIn('nip', $arr_pelaksana)->orderBy('jabatan_id')->get();
 
 		\PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
 		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/surat_tugas_' . $hitung . '.docx'));
