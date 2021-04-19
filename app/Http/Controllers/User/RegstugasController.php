@@ -45,6 +45,9 @@ class RegstugasController extends Controller
 			'menimbang' => $request->menimbang,
 			'dasar' => $request->dasar,
 			'maksud' => $request->maksud,
+			'tgl_mulai' => strtotime($request->tgl_mulai),
+			'tgl_selesai' => strtotime($request->tgl_selesai),
+			'tujuan' => $request->tujuan,
 			'dipa' => $request->dipa,
 			'tahun' => date('Y')
 		]);
@@ -61,7 +64,7 @@ class RegstugasController extends Controller
 	{
 		$data = Regstugas::findOrFail($id);
 		$tgl = Helper::tanggal_id($data->tgl_stugas);
-		$pelaksana = Pegawai::whereIn('id', explode(',',$data->pegawai))->orderBy('jabatan_id')->get();
+		$pelaksana = Pegawai::whereIn('nip', explode(',',$data->pegawai))->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/show', compact('data', 'pelaksana', 'tgl'));
 	}
 
@@ -86,7 +89,10 @@ class RegstugasController extends Controller
 			'menimbang' => $request->menimbang,
 			'dasar' => $request->dasar,
 			'maksud' => $request->maksud,
-			'dipa' => $request->dipa,
+			'tgl_mulai' => strtotime($request->tgl_mulai),
+			'tgl_selesai' => strtotime($request->tgl_selesai),
+			'tujuan' => $request->tujuan,
+			'dipa' => $request->dipa
 		]);
 
 		Log::create([
@@ -141,7 +147,7 @@ class RegstugasController extends Controller
 		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/surat_tugas_' . $hitung . '.docx'));
 
 		if ($data->dipa == 1) {
-			$dipa = 'Biaya kegiatan ini dibebankan kepada DIPA Pengadilan Agama Selayar Tahun Anggaran ' . date('Y');
+			$dipa = 'Biaya kegiatan ini dibebankan kepada DIPA Pengadilan Agama Selayar Tahun Anggaran ' . date('Y').'.';
 		} else {
 			$dipa = '-';
 		}
@@ -173,6 +179,54 @@ class RegstugasController extends Controller
 		$templateProcessor->saveAs('php://output');
 	}
 
+	public function sppd($id)
+	{
+		$data = Regstugas::findOrFail($id);
+		$ttd_stugas = Pegawai::whereJabatanId($data->ttd_stugas)->first();
+		$ppk= Pegawai::wherePpk(1)->first();
+		$arr_pelaksana = explode(',', $data->pegawai);
+
+		$hitung = count($arr_pelaksana);
+
+		$pegawai = Pegawai::whereIn('nip', $arr_pelaksana)->orderBy('jabatan_id')->get();
+
+		\PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
+		$templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(public_path('assets/template/sppd_' . $hitung . '.docx'));
+		
+		$awal = date_create(date('Y-m-d', $data->tgl_mulai));
+		$akhir = date_create(date('Y-m-d', $data->tgl_selesai));
+		$diff = date_diff($awal,$akhir)->d+1;
+
+
+		$templateProcessor->setValues([
+			'nomor' => $data->no_stugas,
+			'no_sppd' => 'W20-A17/    /KU.01/'.Helper::get_bulan_romawi(date('m')).'/'.date('Y'),
+			'tgl' => Helper::tanggal_id($data->tgl_stugas),
+			'maksud' => $data->maksud,
+			'mulai' => Helper::tanggal_id($data->tgl_mulai),
+			'akhir' => Helper::tanggal_id($data->tgl_selesai),
+			'tujuan' => $data->tujuan,
+			'lama' => $diff,
+			'ttd_stugas'=>$ttd_stugas->nama_pegawai,
+			'nip_ttd_stugas'=>$ttd_stugas->nip,
+			'ppk'=>$ppk->nama_pegawai,
+			'nip_ppk'=>$ppk->nip
+		]);
+
+		for ($i = 0; $i < $hitung; $i++) {
+			$templateProcessor->setValues([
+				'pegawai' . $i => $pegawai[$i]->nama_pegawai,
+				'nip' . $i => $pegawai[$i]->nip,
+				'pangkat' . $i => $pegawai[$i]->pangkat->nama_pangkat,
+				'gol' . $i => $pegawai[$i]->pangkat->golongan,
+				'jabatan' . $i => $pegawai[$i]->jabatan->nama_jabatan
+			]);
+		}
+		header("Content-Disposition: attachment; filename=sppd.docx");
+
+		$templateProcessor->saveAs('php://output');
+	}
+
 	private function validasiRequest()
 	{
 		$messages= [
@@ -192,6 +246,9 @@ class RegstugasController extends Controller
 			'menimbang' => 'required',
 			'dasar' => 'required',
 			'maksud' => 'required',
+			'tgl_mulai' => 'required|date',
+			'tgl_selesai' => 'required|date',
+			'tujuan' => 'required',
 			'dipa' => 'required',
 			'word' => 'file|nullable|max:1000|mimes:doc,docx',
 			'pdf' => 'file|nullable|max:3000|mimes:pdf'

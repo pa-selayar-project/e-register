@@ -22,28 +22,27 @@
   <div class="col-xs-6 col-md-6">
     <div class="card">
       <div class="card-body card-block">
-        <div class="form-group">
-          <label class="form-control-label">
-            <strong>Nomor Surat</strong>
-          </label>
-          <div class="input-group">
-            <input type="text" name="no_stugas" class="form-control form-control-sm @error('no_stugas') is-invalid @enderror" value="{{$data->no_stugas}}">
-
-            @error('no_stugas')
-              <div class="invalid-feedback">
-                {{$message}}
-              </div>
-            @enderror
-          </div>
-        </div>
-        
-        <div class="row m-auto d-flex">  
+        <div class="row m-auto d-flex">
           <div class="form-group flex-fill mr-2">
             <label class="form-control-label">
-              <strong>Tanggal</strong>
+              <strong>Nomor Surat</strong>
             </label>
             <div class="input-group">
-              <input type="text" name="tgl_stugas" class="datepicker form-control @error('tgl_stugas') is-invalid @enderror" value="{{date('d F Y',$data->tgl_stugas)}}" autocomplete="off">
+              <input type="text" name="no_stugas" class="form-control form-control-sm @error('no_stugas') is-invalid @enderror" value="{{$data->no_stugas}}">
+
+              @error('no_stugas')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
+            </div>
+          </div>
+          <div class="form-group flex-fill">
+            <label class="form-control-label">
+              <strong>Tgl Surat</strong>
+            </label>
+            <div class="input-group">
+              <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm @error('tgl_stugas') is-invalid @enderror" value="{{date('d F Y',$data->tgl_stugas)}}" autocomplete="off">
 
               @error('tgl_stugas')
               <div class="invalid-feedback">
@@ -52,22 +51,7 @@
               @enderror
             </div>
           </div>
-
-          <div class="form-group flex-fill">
-            <label class="form-control-label">
-              <strong>Penandatangan</strong>
-            </label>
-            <div class="input-group">
-              <select name="ttd_stugas" class="chosen-select form-control">
-                @foreach($penandatangan as $ttd)
-                  <option value="{{$ttd->jabatan_id}}" @if($ttd->jabatan_id == $data->ttd_stugas)selected @endif>
-                  {{$ttd->jabatan->nama_jabatan}}
-                  </option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-        </div>  
+        </div>
 
         <div class="form-group">
           <label class="form-control-label">
@@ -90,74 +74,87 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-control-label">
-            <strong>Pertimbangan</strong>
-          </label>
-          <div class="input-group">
-            <textarea name="menimbang" rows="4" class="form-control @error('menimbang') is-invalid @enderror">{{$data->menimbang}}</textarea>
-
-            @error('menimbang')
+        <div class="row m-auto d-flex">  
+          <div class="form-group flex-fill mr-2">
+            <label class="form-control-label">
+              <strong>Tgl Mulai</strong>
+            </label>
+            <div class="input-group">
+              <input type="text" name="tgl_mulai" class="datepicker form-control form-control-sm @error('tgl_mulai') is-invalid @enderror" value="{{date('d F Y', $data->tgl_mulai)}}" autocomplete="off">
+              
+              @error('tgl_mulai')
               <div class="invalid-feedback">
                 {{$message}}
               </div>
-            @enderror
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xs-6 col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <div class="form-group">
-          <label class="form-control-label">
-            <strong>Dasar</strong>
-          </label>
-          <div class="input-group">
-            <textarea name="dasar" rows="2" class="form-control @error('dasar') is-invalid @enderror">{{$data->dasar}}</textarea>
-
-            @error('dasar')
-              <div class="invalid-feedback">
-                {{$message}}
-              </div>
-            @enderror
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label">
-            <strong>Maksud</strong>
-          </label>
-          <div class="input-group">
-            <textarea name="maksud" rows="2" class="form-control @error('maksud') is-invalid @enderror">{{$data->maksud}}</textarea>
-
-            @error('maksud')
-              <div class="invalid-feedback">
-                {{$message}}
-              </div>
-            @enderror
-          </div>
-        </div>
-       
-        <div class="form-group">
-          <label class="form-control-label">
-            <strong>DIPA</strong>
-          </label>
-          <div class="input-group">
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="dipa1" name="dipa" class="custom-control-input" value="1" @if($data->dipa == 1)checked @endif>
-              <label class="custom-control-label" for="dipa1">Ya</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="dipa2" name="dipa" class="custom-control-input" value="2" @if($data->dipa == 2)checked @endif>
-              <label class="custom-control-label" for="dipa2">Tidak</label>
+              @enderror
             </div>
           </div>
+
+          <div class="form-group flex-fill mr-2">
+            <label class="form-control-label">
+              <strong>Tgl Selesai</strong>
+            </label>
+            <div class="input-group">
+              <input type="text" name="tgl_selesai" class="datepicker form-control form-control-sm @error('tgl_selesai') is-invalid @enderror" value="{{date('d F Y', $data->tgl_selesai)}}" autocomplete="off">
+              
+              @error('tgl_selesai')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+              @enderror
+            </div>
+          </div>
+        </div>  
+
+        <div class="form-group flex-fill mr-2">
+          <label class="form-control-label">
+            <strong>Kota Tujuan</strong>
+          </label>
+          <div class="input-group">
+            <input type="text" name="tujuan" class="form-control form-control-sm @error('tujuan') is-invalid @enderror" value="{{$data->tujuan}}">
+
+            @error('tujuan')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
+          </div>
         </div>
 
-        <div class="row my-1">
+        <div class="row m-auto d-flex">  
+          <div class="form-group flex-fill">
+            <label class="form-control-label">
+              <strong>Penandatangan</strong>
+            </label>
+            <div class="input-group">
+              <select name="ttd_stugas" class="chosen-select form-control">
+                @foreach($penandatangan as $ttd)
+                  <option value="{{$ttd->jabatan_id}}" @if($ttd->jabatan_id == $data->ttd_stugas)selected @endif>
+                  {{$ttd->jabatan->nama_jabatan}}
+                  </option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group flex-fill">
+            <label class="form-control-label">
+              <strong>DIPA</strong>
+            </label>
+            <div class="input-group">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="dipa1" name="dipa" class="custom-control-input" value="1" @if($data->dipa == 1)checked @endif>
+                <label class="custom-control-label" for="dipa1">Ya</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="dipa2" name="dipa" class="custom-control-input" value="2" @if($data->dipa == 2)checked @endif>
+                <label class="custom-control-label" for="dipa2">Tidak</label>
+              </div>
+            </div>
+          </div>
+        </div>  
+
+        <div class="row my-3">
           <div class="col col-md-1">
             <i class="fas fa-file-word @if($data->word)text-primary @else text-secondary @endif fa-2x ml-3"></i>
           </div>
@@ -187,7 +184,58 @@
             </div>
           </div>  
         </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="col-xs-6 col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-control-label">
+            <strong>Pertimbangan</strong>
+          </label>
+          <div class="input-group">
+            <textarea name="menimbang" rows="3" class="form-control @error('menimbang') is-invalid @enderror">{{$data->menimbang}}</textarea>
+
+            @error('menimbang')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label">
+            <strong>Dasar</strong>
+          </label>
+          <div class="input-group">
+            <textarea name="dasar" rows="3" class="form-control @error('dasar') is-invalid @enderror">{{$data->dasar}}</textarea>
+
+            @error('dasar')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label">
+            <strong>Maksud</strong>
+          </label>
+          <div class="input-group">
+            <textarea name="maksud" rows="3" class="form-control @error('maksud') is-invalid @enderror">{{$data->maksud}}</textarea>
+
+            @error('maksud')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
+          </div>
+        </div>
+       
         <div class="form-group float-right">
           <button type="reset" class="btn btn-secondary">Reset</button>
           <button type="submit" class="btn btn-primary">Submit</button>

@@ -29,9 +29,11 @@
         <tr>
           <td>Pelaksana</td>
           <td>
+            <ol>
             @foreach($pelaksana as $pel)
-              {{$pel->nama_pegawai}}; 
+              <li class="ml-4">{{$pel->nama_pegawai}}</li> 
             @endforeach
+            </ol>
           </td>
         </tr>
         <tr>
@@ -41,10 +43,18 @@
         <tr>
           <td>Template</td>
           <td>
-            <form method="post" action="/register/surat_tugas/print/{{$data->id}}">
-              @csrf
-              <button type="submit" class="btn btn-primary rounded">Print</button>
-            </form>
+            <div class="d-flex">
+              <form method="post" action="/register/surat_tugas/print/{{$data->id}}">
+                @csrf
+                <button type="submit" class="btn btn-primary rounded mx-2">Print Surat Tugas</button>
+              </form>
+              @if($data->dipa == 1)
+              <form method="post" action="/register/surat_tugas/sppd/{{$data->id}}">
+                @csrf
+                <button type="submit" class="btn btn-success rounded mx-2">Print SPPD</button>
+              </form>
+              @endif
+            </div>
           </td>
         </tr>
         <tr>

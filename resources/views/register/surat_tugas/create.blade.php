@@ -21,25 +21,24 @@
   <div class="col-xs-6 col-md-6">
     <div class="card">
       <div class="card-body card-block">
-        <div class="form-group">
-          <label class="form-control-label">
-            <strong>Nomor Surat</strong>
-          </label>
-          <div class="input-group">
-            <input type="text" name="no_stugas" class="form-control form-control-sm @error('no_stugas') is-invalid @enderror" value="{{old('no_stugas')}}">
-
-            @error('no_stugas')
-              <div class="invalid-feedback">
-                {{$message}}
-              </div>
-            @enderror
-          </div>
-        </div>
-        
-        <div class="row m-auto d-flex">  
+        <div class="row m-auto d-flex">
           <div class="form-group flex-fill mr-2">
             <label class="form-control-label">
-              <strong>Tanggal</strong>
+              <strong>Nomor Surat</strong>
+            </label>
+            <div class="input-group">
+              <input type="text" name="no_stugas" class="form-control form-control-sm @error('no_stugas') is-invalid @enderror" value="{{old('no_stugas')}}">
+
+              @error('no_stugas')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+              @enderror
+            </div>
+          </div>
+          <div class="form-group flex-fill">
+            <label class="form-control-label">
+              <strong>Tgl Surat</strong>
             </label>
             <div class="input-group">
               <input type="text" name="tgl_stugas" class="datepicker form-control form-control-sm @error('tgl_stugas') is-invalid @enderror" value="{{old('tgl_stugas')}}" autocomplete="off">
@@ -51,22 +50,7 @@
               @enderror
             </div>
           </div>
-
-          <div class="form-group flex-fill">
-            <label class="form-control-label">
-              <strong>Penandatangan</strong>
-            </label>
-            <div class="input-group">
-              <select name="ttd_stugas" class="chosen-select form-control">
-                @foreach($penandatangan as $ttd)
-                  <option value="{{$ttd->jabatan_id}}">
-                  {{$ttd->jabatan->nama_jabatan}}
-                  </option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-        </div>  
+        </div>
 
         <div class="form-group">
           <label class="form-control-label">
@@ -89,17 +73,82 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="row m-auto d-flex">  
+          <div class="form-group flex-fill mr-2">
+            <label class="form-control-label">
+              <strong>Tgl Mulai</strong>
+            </label>
+            <div class="input-group">
+              <input type="text" name="tgl_mulai" class="datepicker form-control form-control-sm @error('tgl_mulai') is-invalid @enderror" value="{{old('tgl_mulai')}}" autocomplete="off">
+              
+              @error('tgl_mulai')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+              @enderror
+            </div>
+          </div>
+
+          <div class="form-group flex-fill mr-2">
+            <label class="form-control-label">
+              <strong>Tgl Selesai</strong>
+            </label>
+            <div class="input-group">
+              <input type="text" name="tgl_selesai" class="datepicker form-control form-control-sm @error('tgl_selesai') is-invalid @enderror" value="{{old('tgl_selesai')}}" autocomplete="off">
+              
+              @error('tgl_selesai')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+              @enderror
+            </div>
+          </div>
+        </div>  
+
+        <div class="form-group flex-fill mr-2">
           <label class="form-control-label">
-            <strong>Pertimbangan</strong>
+            <strong>Kota Tujuan</strong>
           </label>
           <div class="input-group">
-            <textarea name="menimbang" rows="4" class="form-control @error('menimbang') is-invalid @enderror">{{old('menimbang')}}</textarea>
-            @error('menimbang')
+            <input type="text" name="tujuan" class="form-control form-control-sm @error('tujuan') is-invalid @enderror" value="{{old('tujuan')}}">
+
+            @error('tujuan')
               <div class="invalid-feedback">
                 {{$message}}
               </div>
             @enderror
+          </div>
+        </div>
+
+        <div class="row m-auto d-flex mb-5 pb-5">
+          <div class="form-group flex-fill">
+            <label class="form-control-label">
+              <strong>DIPA</strong>
+            </label>
+            <div class="input-group">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="dipa1" name="dipa" class="custom-control-input" value="1" checked>
+                <label class="custom-control-label" for="dipa1">Ya</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="dipa2" name="dipa" class="custom-control-input" value="2">
+                <label class="custom-control-label" for="dipa2">Tidak</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group flex-fill">
+            <label class="form-control-label">
+              <strong>Penandatangan</strong>
+            </label>
+            <div class="input-group">
+              <select name="ttd_stugas" class="chosen-select form-control">
+                @foreach($penandatangan as $ttd)
+                  <option value="{{$ttd->jabatan_id}}">
+                  {{$ttd->jabatan->nama_jabatan}}
+                  </option>
+                @endforeach
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -109,6 +158,20 @@
   <div class="col-xs-6 col-sm-6">
     <div class="card">
       <div class="card-body">
+        <div class="form-group">
+          <label class="form-control-label">
+            <strong>Pertimbangan</strong>
+          </label>
+          <div class="input-group">
+            <textarea name="menimbang" rows="3" class="form-control @error('menimbang') is-invalid @enderror">{{old('menimbang')}}</textarea>
+            @error('menimbang')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+            @enderror
+          </div>
+        </div>
+
         <div class="form-group">
           <label class="form-control-label">
             <strong>Dasar</strong>
@@ -134,22 +197,6 @@
                 {{$message}}
               </div>
             @enderror
-          </div>
-        </div>
-       
-        <div class="form-group">
-          <label class="form-control-label">
-            <strong>DIPA</strong>
-          </label>
-          <div class="input-group">
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="dipa1" name="dipa" class="custom-control-input" value="1" checked>
-              <label class="custom-control-label" for="dipa1">Ya</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="dipa2" name="dipa" class="custom-control-input" value="2">
-              <label class="custom-control-label" for="dipa2">Tidak</label>
-            </div>
           </div>
         </div>
 
