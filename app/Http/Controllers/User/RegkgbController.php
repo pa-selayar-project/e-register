@@ -21,13 +21,16 @@ class RegkgbController extends Controller
 		}else{
 			$data = Regkgb::whereTahun(date('Y'))->get();
 		}
-		return view('register/kgb/index', compact('data'));
+		$link = Helper::link_button('kgb/create', 'Tambah KGB');
+
+		return view('register/kgb/index', compact('data','link'));
 	}
 
 	public function create()
 	{
 		$pegawai = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
-		return view('register/kgb/create', compact('pegawai'));
+		$back = Helper::back_button();
+		return view('register/kgb/create', compact('pegawai','back'));
 	}
 
 	public function store(Request $request)
@@ -67,13 +70,15 @@ class RegkgbController extends Controller
 	public function show($id)
 	{
 		$data = Regkgb::findOrFail($id);
-		return view('register/kgb/show', compact('data'));
+		$back = Helper::back_button();
+		return view('register/kgb/show', compact('data','back'));
 	}
 
 	public function edit($id)
 	{
 		$data = Regkgb::findOrFail($id);
-		return view('register/kgb/edit', compact('data'));
+		$back = Helper::back_button();
+		return view('register/kgb/edit', compact('data','back'));
 	}
 
 	public function update(Request $request, $id)

@@ -22,7 +22,8 @@ class RegcutiController extends Controller
 		}else{
 			$data = Regcuti::whereTahun(date('Y'))->get();
 		}
-		return view('register/surat_cuti/index', compact('data'));
+		$link = Helper::link_button('surat_cuti/create','Tambah Surat Cuti');
+		return view('register/surat_cuti/index', compact('data','link'));
 	}
 
 	public function create()
@@ -33,7 +34,8 @@ class RegcutiController extends Controller
 		}else{
 			$pegawai = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
 		}
-		return view('register/surat_cuti/create', compact('pegawai', 'jeniscuti'));
+		$back = Helper::back_button();
+		return view('register/surat_cuti/create', compact('pegawai', 'jeniscuti','back'));
 	}
 
 	public function store(Request $request)
@@ -75,7 +77,8 @@ class RegcutiController extends Controller
 	public function show($id)
 	{
 		$data = Regcuti::findOrFail($id);
-		return view('register/surat_cuti/show', compact('data'));
+		$back = Helper::back_button();
+		return view('register/surat_cuti/show', compact('data','back'));
 	}
 
 	public function edit($id)
@@ -83,7 +86,8 @@ class RegcutiController extends Controller
 		$pegawai = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
 		$jeniscuti = Jeniscuti::all();
 		$data = Regcuti::findOrFail($id);
-		return view('/register/surat_cuti/edit', compact('pegawai', 'data', 'jeniscuti'));
+		$back = Helper::back_button();
+		return view('/register/surat_cuti/edit', compact('pegawai', 'data', 'jeniscuti','back'));
 	}
 
 	public function update(Request $request, Regcuti $regcuti, $id)

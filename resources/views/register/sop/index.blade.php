@@ -2,8 +2,7 @@
 
 @section('title','Register SOP')
 
-@section('breadcumb')
-{!!$back!!}
+@section('tombol')
 {!!$tombol!!}
 @endsection
 

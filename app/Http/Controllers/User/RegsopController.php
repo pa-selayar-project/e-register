@@ -44,7 +44,8 @@ class RegsopController extends Controller
     public function show($id)
     {
         $data = Regsop::findOrFail($id);
-        return view('register/sop/show', compact('data'));
+        $back = Helper::back_button();
+        return view('register/sop/show', compact('data','back'));
     }
 
     public function edit(Regsop $regsop, $id)

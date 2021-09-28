@@ -23,6 +23,7 @@ class RegstugasController extends Controller
 		}else{
 			$data = Regstugas::whereTahun(date('Y'))->get();
 		}
+		
 		$pgw = Pegawai::withTrashed()->orderBy('jabatan_id')->get();
 		return view('register/surat_tugas/index', compact('data','pgw'));
 	}
@@ -31,7 +32,8 @@ class RegstugasController extends Controller
 	{
 		$pelaksana = Pegawai::orderBy('jabatan_id')->get();
 		$penandatangan = Pegawai::whereIn('jabatan_id',[1,2,4,5])->orderBy('jabatan_id')->get();
-		return view('register/surat_tugas/create', compact('pelaksana', 'penandatangan'));
+		$back = Helper::back_button();
+		return view('register/surat_tugas/create', compact('pelaksana', 'penandatangan','back'));
 	}
 
 	public function store(Request $request)
@@ -65,7 +67,8 @@ class RegstugasController extends Controller
 		$data = Regstugas::findOrFail($id);
 		$tgl = Helper::tanggal_id($data->tgl_stugas);
 		$pelaksana = Pegawai::whereIn('nip', explode(',',$data->pegawai))->orderBy('jabatan_id')->get();
-		return view('register/surat_tugas/show', compact('data', 'pelaksana', 'tgl'));
+		$back = Helper::back_button();
+		return view('register/surat_tugas/show', compact('data', 'pelaksana', 'tgl','back'));
 	}
 
 	public function edit($id)
@@ -73,7 +76,8 @@ class RegstugasController extends Controller
 		$data = Regstugas::findOrFail($id);
 		$pelaksana = Pegawai::orderBy('jabatan_id')->get();
 		$penandatangan = Pegawai::whereIn('jabatan_id', [1,2,4,5])->orderBy('jabatan_id')->get();
-		return view('register/surat_tugas/edit', compact('data', 'penandatangan', 'pelaksana'));
+		$back = Helper::back_button();
+		return view('register/surat_tugas/edit', compact('data', 'penandatangan', 'pelaksana','back'));
 	}
 
 	public function update(Request $request, Regstugas $regstugas, $id)

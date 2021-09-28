@@ -6,6 +6,7 @@ use Auth;
 use App\Pegawai;
 use App\Honorer;
 use App\Regsk;
+use App\Helpers\Helper;
 use App\Regstugas;
 use App\Log;
 use Illuminate\Http\Request;
@@ -64,8 +65,9 @@ class HomeController extends Controller
 	public function daftarsk($id)
 	{
 		$pgw = Pegawai::withTrashed()->findOrFail($id);
-		$data = Regsk::where('obyek','LIKE', '%'.$pgw->nip.'%')->whereTahun(date('Y'))->get();
+		$data = Regsk::where('obyek','LIKE', '%'.$pgw->nip.'%')->whereTahun(date('Y'))->paginate(10);
+		$back = Helper::back_button();
 		
-		return view('dashboard/daftarsk', compact('data','pgw'));
+		return view('dashboard/daftarsk', compact('data','pgw','back'));
 	}
 }

@@ -2,13 +2,8 @@
 
 @section('title','Register Surat Cuti')
 
-@section('breadcumb')
-<a href="{{url('register/surat_cuti/create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split">
-  <span class="icon text-white-50">
-    <i class="fas fa-plus"></i>
-  </span>
-  <span class="text"> Tambah</span>
-</a>
+@section('tombol')
+  {!!$link!!}
 @endsection
 
 @section('stylesheet')

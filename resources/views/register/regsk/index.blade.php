@@ -2,15 +2,10 @@
 
 @section('title','Register SK')
 
-@section('breadcumb')
-@if(Auth::user()->id_level == 2)
-<a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
-  <span class="icon text-white-50">
-    <i class="fa fa-plus"></i>
-  </span>
-  <span class="text"> Tambah</span>
-</a>
-@endif
+@section('tombol')
+  @if(Auth::user()->id_level == 2)
+    {!!$tombol!!}
+  @endif
 @endsection
 
 @section('stylesheet')

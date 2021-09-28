@@ -15,7 +15,7 @@ class PangkatController extends Controller
 {
 	public function index()
 	{
-		$data = Pangkat::paginate(15);
+		$data = Pangkat::paginate(10);
 		$back = Helper::back_button();
 		$tombol = Helper::rekam('Tambah Data Pangkat');
 		return view('settings/referensi/pangkat/index', compact('data','back','tombol'));

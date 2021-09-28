@@ -3,12 +3,7 @@
 @section('title','Register Kenaikan Gaji Berkala')
 
 @section('tombol')
-<a href="{{url('register/kgb/create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split">
-  <span class="icon text-white-50">
-    <i class="fas fa-plus"></i>
-  </span>
-  <span class="text"> Tambah</span>
-</a>
+  {!!$link!!}
 @endsection
 
 @section('stylesheet')

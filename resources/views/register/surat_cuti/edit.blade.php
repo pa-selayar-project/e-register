@@ -2,12 +2,8 @@
 
 @section('title','Edit Surat Cuti')
 
-@section('breadcumb')
-<a href="{{url('register/surat_cuti')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
-  <span class="icon text-white-50">
-    <i class="fa fa-chevron-circle-left"></i>
-  </span>
-</a>
+@section('tombol')
+  {!!$back!!}
 @endsection
 
 

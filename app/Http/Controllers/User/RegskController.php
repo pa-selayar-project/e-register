@@ -7,6 +7,7 @@ use App\Pegawai;
 use App\Log;
 use Auth;
 use Validator;
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -24,8 +25,9 @@ class RegskController extends Controller
 		}else{
 			$data = Regsk::whereTahun(date('Y'))->get();
 		}	
+		$tombol = Helper::rekam('Tambah SK');
 				
-		return view('register/regsk/index', compact('data'));
+		return view('register/regsk/index', compact('data','tombol'));
 	}
 
 	public function store(Request $request)
@@ -64,13 +66,15 @@ class RegskController extends Controller
 	public function show(Regsk $regsk)
 	{
 		$obyek = Pegawai::whereIn('nip', explode(',',$regsk->obyek))->orderBy('jabatan_id','ASC')->get();
-		return view('register/regsk/show', compact('regsk', 'obyek'));;
+		$back = Helper::back_button();
+		return view('register/regsk/show', compact('regsk', 'obyek','back'));;
 	}
 
 	public function edit(Regsk $regsk)
 	{
 		$pegawai = Pegawai::orderBy('jabatan_id','ASC')->get();
-		return view('register/regsk/edit', compact('regsk', 'pegawai'));
+		$back = Helper::back_button();
+		return view('register/regsk/edit', compact('regsk', 'pegawai','back'));
 	}
 
 	public function update(Request $request, Regsk $regsk)

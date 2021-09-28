@@ -18,8 +18,9 @@ class TaController extends Controller
         return view('settings/referensi/ta/index', compact('data','back','tombol'));
     }
   
-    public function update(Request $request, $id)
+    public function update(Request $request, Setting $setting, $id)
     {
-        dd($id);
+        Setting::find($id)->update(['thn_anggaran'=>$request->ta]);
+        return Redirect::back()->withSuccess('Tahun Anggaran berhasil diubah');
     }
 }

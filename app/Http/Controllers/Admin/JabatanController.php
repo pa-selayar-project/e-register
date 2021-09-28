@@ -16,7 +16,7 @@ class JabatanController extends Controller
 
     public function index()
     {
-			$data = Jabatan::paginate(15);
+			$data = Jabatan::paginate(10);
 			$back = Helper::back_button();
 			$tombol = Helper::rekam('Tambah Jabatan');
 			return view('settings/referensi/jabatan/index', compact('data','back','tombol'));
