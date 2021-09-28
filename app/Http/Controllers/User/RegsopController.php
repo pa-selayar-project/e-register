@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Regsop;
 use App\Log;
 use Auth;
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,9 @@ class RegsopController extends Controller
     public function index()
     {
         $data = Regsop::whereTahun(date('Y'))->get();
-        return view('register/sop/index', ['data' => $data]);
+        $back = Helper::back_button();
+        $tombol = Helper::rekam('Tambah SOP');
+        return view('register/sop/index', compact('data','back','tombol'));
     }
 
     public function store(Request $request)
@@ -35,7 +38,7 @@ class RegsopController extends Controller
             'pesan_Log' => 'Menginput SOP'
         ]);
 
-        return redirect('/register/sop')->withToastSuccess('Input data berhasil');
+        return redirect('/register/sop')->withSuccess('Input data berhasil');
     }
 
     public function show($id)
@@ -44,10 +47,11 @@ class RegsopController extends Controller
         return view('register/sop/show', compact('data'));
     }
 
-    public function edit($id)
-    {
+    public function edit(Regsop $regsop, $id)
+    { 
         $data = Regsop::findOrFail($id);
-        return view('register/sop/edit', compact('data'));
+        $back = Helper::back_button();
+        return view('register/sop/edit', compact('data','back'));
     }
 
     public function update(Request $request, Regsop $regsop, $id)
@@ -88,7 +92,7 @@ class RegsopController extends Controller
             'pesan_Log' => 'Mengedit SOP'
         ]);
 
-        return redirect('/register/sop')->with('toast_success', 'Data berhasil di edit');
+        return redirect('/register/sop')->withSuccess('Data berhasil di edit');
     }
 
     public function destroy($id)
@@ -98,7 +102,7 @@ class RegsopController extends Controller
             'user_id' => Auth::user()->id,
             'pesan_Log' => 'Menghapus SOP'
         ]);
-        return back()->with('toast_success', 'Data berhasil dihapus!');
+        return Redirect::back()->withSuccess('Data berhasil dihapus!');
     }
 
     private function validasiRequest()
@@ -115,7 +119,6 @@ class RegsopController extends Controller
 		return request()->validate([
 			'no_sop' => 'required',
             'nama_sop' => 'required',
-            'desc_sop' => 'required',
             'tgl_sop' => 'required',
             'bidang_sop' => 'required',
             'word' => 'file|nullable|max:1000|mimes:doc,docx',

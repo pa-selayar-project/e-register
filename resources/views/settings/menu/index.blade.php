@@ -2,18 +2,9 @@
 
 @section('title','Menu')
 
-@section('breadcumb')
-<a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
-  <span class="icon text-white-50">
-    <i class="fa fa-plus"></i>
-  </span>
-  <span class="text">Tambah Menu</span>
-</a>
-@endsection
-
-@section('stylesheet')
-<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+@section('tombol')
+  {!!$back!!}
+  {!!$tombol!!}
 @endsection
 
 @section('content')
@@ -36,7 +27,7 @@
     @endif
 
     <div class="table-responsive">
-      <table id="menu" class="display" style="width:100%">
+      <table class="table table-striped" style="width:100%">
         <thead>
           <tr>
             <th>No</th>
@@ -50,20 +41,25 @@
         <tbody>
           @foreach($data as $d)
           <tr>
-            <td>{{$loop->iteration}}</td>
+            <td>{{ ($data->currentpage()-1) * $data->perpage() + $loop->index + 1 }}</td>
             <td><i class="{{$d->icon}}"></i></td>
             <td>{{$d->nama_menu}}</td>
             <td>{{$d->headmenu->nama_head}}</td>
             <td>{{$d->link}}</td>
-            <td>
-              <a href="#" class="btn btn-danger btn-sm btn-circle hapusData"><i class="fa fa-trash"></i></a>
+            <td class="d-flex">
+              <form action="{{url('settings/menu')}}/{{$d->id}}" method="post">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger btn-sm btn-circle rounded mr-1"><i class="fa fa-trash"></i></button>
+              </form>
 
-              <a href="#" class="btn btn-success btn-sm btn-circle editData" data-toggle="modal" data-target="#modal" data-id="{{$d->id}}" data-nama="{{$d->nama_menu}}" data-head="{{$d->headmenu_id}}" data-link="{{$d->link}}" data-icon="{{$d->icon}}"><i class="fa fa-edit"></i></a>
+              <a href="#" class="btn btn-success btn-sm btn-circle rounded editData" data-toggle="modal" data-target="#modal" data-id="{{$d->id}}" data-nama="{{$d->nama_menu}}" data-head="{{$d->headmenu_id}}" data-link="{{$d->link}}" data-icon="{{$d->icon}}"><i class="fa fa-edit"></i></a>
             </td>
           </tr>
           @endforeach
         </tbody>
       </table>
+      {{$data->links()}}
     </div>
   </div>
 </div>
@@ -126,29 +122,13 @@
 
 @section('script')
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
-
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#menu').DataTable({
-      dom: 'Bfrtip',
-      buttons: [
-        'copy', 'excel', 'pdf'
-      ]
-    });
-
     $('#addData').on('click', function() {
       $('#modal .modal-title').html('Tambah Menu');
       $('#modal form').attr('action', `{{url('settings/menu')}}`);
-      $('#modal button[type=submit]').html('Save');
+      $('#modal button[type=submit]').html('Simpan');
       $('.patch').html('');
       $('#namaMenu').val('');
       $('#icon').val('');

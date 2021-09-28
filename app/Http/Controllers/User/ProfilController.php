@@ -35,7 +35,7 @@ class ProfilController extends Controller
 		]);
 
 		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+			return Redirect::back()->withToastError($validator->messages()->all()[0])->withInput();
 		}
 
 		$update = Profil::findOrFail($id);

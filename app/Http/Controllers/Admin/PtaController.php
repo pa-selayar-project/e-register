@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Pta;
+use App\Log;
+use App\Helpers\Helper;
+use Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,36 +16,71 @@ class PtaController extends Controller
   public function index()
   {
     $data = Pta::all();
-        
-    return view('settings/pta/index', ['data' => $data]);
+    $back = Helper::back_button();    
+    $tombol = Helper::rekam('Tambah PTA');    
+    return view('settings/referensi/pta/index', compact('data','back','tombol'));
   }
    
   public function store(Request $request)
   {
-    $messages = [
-                'nama_pta.required' => 'Nama PTA Wajib diisi',
-                'alamat.required' => 'Alamat Wajib diisi'
-                ];
-    $request->validate([
-    	'nama_pta' => 'required',
-      'alamat' => 'required'
-    ], $messages);
+    $insert = Pta::create($this->validateRequest('create'));
+		Response::json($insert);
+    
+		Log::create([
+			'user_id' => Auth::user()->id,
+			'pesan_Log' => 'Menginput Data PTA'
+		]);
 
-    Pta::create([
-    	'nama_pta' => $request->nama_pta,
-      'alamat' => $request->alamat
-    ]);
-
-    return redirect('/settings/pta/index')->with('message', 'Input PTA berhasil');
+    return Redirect::back()->with('message', 'Input Data PTA berhasil');
   }
 
-  public function update(Request $request, Pta $pta)
+  public function update($id)
   {
-        //
+    $pta = Pta::findOrFail($id)->update($this->validateRequest('update'));
+		Response::json($pta);
+
+		Log::create([
+			'user_id' => Auth::user()->id,
+			'pesan_Log' => 'Mengedit Data PTA'
+		]);
+
+		return Redirect::back()->with('message', 'Data PTA Berhasil dirubah');
   }
 
-  public function destroy(Pta $pta)
+  public function destroy(Pta $pta,$id)
   {
-       //
+    Pta::destroy($id);
+		Log::create([
+			'user_id' => Auth::user()->id,
+			'pesan_Log' => 'Menghapus Data PTA'
+		]);
+		return Redirect::back()->with('message', 'Data PTA Berhasil dihapus');
   }
+
+	public function get_data($id)
+	{
+		$data = Pta::findOrFail($id);
+		return $data;
+	}
+
+  private function validateRequest($type)
+	{
+		$messages = [
+			'required' => 'Kolom :attribute Wajib Diisi!',
+			'unique' => 'Data :attribute Sudah Ada Dalam Database'
+		];
+
+		if ($type == 'create') {
+			$rule = 'required|unique:tb_pta';
+		} else {
+			$rule = 'required';
+		}
+
+		return request()->validate([
+			'nama_pta' => $rule,
+      'alamat' => 'required',
+      'ketua' => 'required',
+      'nip' => 'required'
+		], $messages);
+	}
 }

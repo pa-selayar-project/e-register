@@ -3,23 +3,14 @@
 @section('title','Daftar Pegawai')
 
 @section('breadcumb')
-<a href="{{url('settings/pegawai/create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
-  <span class="icon text-white">
-    <i class="fas fa-plus"></i>
-  </span>
-  <span class="text">Rekam Pegawai</span>
-</a>
-<a href="{{url('settings/pegawai/trash')}}" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-warning btn-icon-split rounded">
-  <span class="icon text-white">
-    <i class="fas fa-trash"></i>
-  </span>
-  <span class="text">Pegawai Pindah/Pensiun</span>
-</a>
-<a href="#" onclick="javascript:history.back();" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-danger rounded">
-  <span class="icon text-white">
-    <i class="fas fa-arrow-alt-circle-left"></i>
-  </span>
-</a>
+  {!!$back!!}
+  {!!$tombol!!}
+  <a href="{{url('settings/pegawai/trash')}}" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-warning btn-icon-split rounded">
+    <span class="icon text-white">
+      <i class="fas fa-trash"></i>
+    </span>
+    <span class="text">Pegawai Pindah/Pensiun</span>
+  </a>
 @endsection
 
 @section('stylesheet')

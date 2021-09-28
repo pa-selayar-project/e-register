@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Setting;
-use Validator;
+use App\Helpers\Helper;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -11,60 +12,73 @@ use Response, Redirect;
 
 class SettingController extends Controller
 {
-    public function index()
-    {
-        $data = Setting::findOrFail(1);
-        return view('settings/setting/index', compact('data'));
-    }
+	public function index()
+	{
+		$data = Setting::findOrFail(1);
+		$back = Helper::back_button();
+		return view('settings/setting/index', compact('data','back'));
+	}
 
-    public function edit($id)
-    {
-        $data = Setting::findOrFail($id);
-        return view('settings/setting/edit', compact('data'));
-    }
+	public function edit(Setting $setting)
+	{
+		$data = $setting;
+		$back = Helper::back_button();
+		return view('settings/setting/edit', compact('data','back'));
+	}
 
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'nama_aplikasi' => 'required',
-            'versi' => 'required',
-            'author'=> 'required',
-            'logo_besar' => 'file|max:1000|mimes:jpg,jpeg,png',
-            'logo_kecil' => 'file|max:1000|mimes:jpg,jpeg,png'
-        ]);
+	public function update(Request $request, Setting $setting)
+	{
+		$setting->update($this->validateRequest());
 
-        if ($validator->fails()) {
-        return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        }
+		if($request->hasFile('logo_besar')){
+			$file     = $request->file('logo_besar');
+			$ext      = $file->getClientOriginalExtension();
+			$image    = 'logo_'.uniqid().'.'.$ext;
+			$file->storeAs('images/logo', $image);
+			Storage::delete('images/logo'.$setting->logo_besar);
+			
+			$setting->update(['logo_besar'=> $image]);
+		}
 
-        $update = Setting::findOrFail($id);
+		if($request->hasFile('bgimage')){
+			$file     = $request->file('bgimage');
+			$ext      = $file->getClientOriginalExtension();
+			$image    = 'logo_'.uniqid().'.'.$ext;
+			$file->storeAs('images/logo', $image);
+			Storage::delete('images/logo'.$setting->bgimage);
+			
+			$setting->update(['bgimage'=> $image]);
+		}
 
-        $update->update([
-            'nama_aplikasi' => $request->nama_aplikasi,
-            'versi' => $request->versi,
-            'author' => $request->author
-        ]);
+		if($request->hasFile('logo_kecil')){
+			$file     = $request->file('logo_kecil');
+			$ext      = $file->getClientOriginalExtension();
+			$image    = 'logo_'.uniqid().'.'.$ext;
+			$file->storeAs('images/logo', $image);
+			Storage::delete('images/logo'.$setting->logo_kecil);
+			
+			$setting->update(['logo_kecil'=> $image]);
+		}
 
-        if($request->hasFile('logo_besar')){
-            $file     = $request->file('logo_besar');
-            $ext      = $file->getClientOriginalExtension();
-            $image    = 'logo_'.uniqid().'.'.$ext;
-            $file->storeAs('images/logo', $image);
-            Storage::delete('images/logo'.$update->logo_besar);
-            
-            $update->update(['logo_besar'=> $image]);
-        }
+		return Redirect::back()->with('message','Data berhasil diubah');
+	}
 
-        if($request->hasFile('logo_kecil')){
-            $file     = $request->file('logo_kecil');
-            $ext      = $file->getClientOriginalExtension();
-            $image    = 'logo_'.uniqid().'.'.$ext;
-            $file->storeAs('images/logo', $image);
-            Storage::delete('images/logo'.$update->logo_kecil);
-            
-            $update->update(['logo_kecil'=> $image]);
-        }
+	private function validateRequest()
+	{
+		$messages = [
+			'required' => 'Kolom Wajib Diisi!',
+			'max'=>'Ukuran file terlalu besar (max 1Mb)',
+			'mimes'=>'Tipe File harus jpg,bmp atau png',
+			'image'=>'Tipe file harus gambar'
+		];
 
-        return redirect('settings/setting')->withToastSuccess('Data berhasil diubah');
-    }
+		return request()->validate([
+			'nama_aplikasi' => 'required',
+      'versi' => 'required',
+      'bgimage' => 'image|mimes:jpeg,jpg,bmp,png|max:1024',
+      'author' => 'required',
+      'logo_besar' => 'image|mimes:jpeg,jpg,bmp,png|max:1024',
+      'logo_kecil' => 'image|mimes:jpeg,jpg,bmp,png|max:1024'
+		], $messages);
+	}
 }

@@ -39,7 +39,7 @@ class RegskController extends Controller
 		]);
 
 		if ($validator->fails()) {
-			return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+			return back()->with('error', $validator->messages()->all()[0])->withInput();
 		}
 
 		Regsk::create([
@@ -58,7 +58,7 @@ class RegskController extends Controller
 			'pesan_Log' => 'Mengiput SK'
 		]);
 
-		return redirect('/register/regsk')->withToastSuccess('Input data berhasil');
+		return redirect('/register/regsk')->withSuccess('Input data berhasil');
 	}
 
 	public function show(Regsk $regsk)
@@ -118,7 +118,7 @@ class RegskController extends Controller
 			'pesan_Log' => 'Mengedit SK'
 		]);
 
-		return redirect('/register/regsk')->with('toast_success', 'Data berhasil di edit');
+		return redirect('/register/regsk')->withSuccess('Data berhasil di edit');
 	}
 
 	public function destroy(Regsk $regsk)
@@ -128,7 +128,7 @@ class RegskController extends Controller
 			'user_id' => Auth::user()->id,
 			'pesan_Log' => 'Menghapus SK'
 		]);
-		return back()->with('toast_success', 'Data berhasil dihapus!');
+		return Redirect::back()->withSuccess('Data berhasil dihapus!');
 	}
 	
 	public function import(Request $request)
@@ -140,7 +140,7 @@ class RegskController extends Controller
 			]
 		);
 		Excel::import(new \App\Imports\RegskImport, $request->file('xls'));
-		return back()->with('toast_success', 'Data berhasil diinput ke database!');
+		return Redirect::back()->withSuccess('Data berhasil diinput ke database!');
 	}
 
 	private function validasiRequest()

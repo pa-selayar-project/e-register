@@ -2,7 +2,7 @@
 
 @section('title','Register Kenaikan Gaji Berkala')
 
-@section('breadcumb')
+@section('tombol')
 <a href="{{url('register/kgb/create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split">
   <span class="icon text-white-50">
     <i class="fas fa-plus"></i>
@@ -43,12 +43,12 @@
             <td>{{\App\Helpers\Helper::tanggal_id($d->tmt_yad)}}</td>
             <td class="d-flex">
               @if(Auth::user()->id_level == 2)
-              <form action="/register/kgb/{{$d->id}}" method="post">
+              <form action="/register/kgb/{{$d->id}}" method="post" id="delete{{$d->id}}">
                 @csrf
                 @method('delete')
-                <button class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></button>
               </form>
-              
+              <a href="#" class="btn btn-danger btn-sm btn-circle rounded swalConfirm" data-id="{{$d->id}}"><i class="fa fa-trash"></i></a>
+
               <a href="{{url('register/kgb/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
               @endif
               <a href="{{url('register/kgb/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
@@ -73,7 +73,6 @@
 <script src="{{url('vendors/datatables/pdfmake.min.js')}}"></script>
 <script src="{{url('vendors/datatables/vfs_fonts.js')}}"></script>
 
-
 <script type="text/javascript">
   $(document).ready(function() {
     $('#tabel').DataTable({
@@ -81,7 +80,24 @@
       buttons: [
         'copy', 'excel', 'pdf'
       ]
-    })
+    });
+
+    $('.swalConfirm').on('click',function(){
+      const id=$(this).data('id');
+      Swal.fire({
+        title: 'Yakin mau dihapus?',
+        text: "Hubungi admin untuk mengembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oke!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $('#delete'+id).submit();
+        }
+      })
+    });
   });
 </script>
 @endsection

@@ -6,6 +6,7 @@ use App\Pegawai;
 use App\Jabatan;
 use App\Pangkat;
 use App\Log;
+use App\Helpers\Helper;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -18,7 +19,9 @@ class PegawaiController extends Controller
   public function index()
   {
     $data = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
-    return view('settings/pegawai/index', ['data' => $data]);
+    $back = Helper::back_button();
+    $tombol = Helper::rekam('Tambah Pegawai');
+    return view('settings/pegawai/index', compact('data','back','tombol'));
   }
 
   public function create()
@@ -86,7 +89,7 @@ class PegawaiController extends Controller
       return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
     }
 
-    $update = Pegawai::where('id', $pegawai->id);
+    $update = Pegawai::findOrFail($pegawai->id);
 
     $update->update([
       'nama_pegawai' => $request->nama_pegawai,
@@ -128,6 +131,7 @@ class PegawaiController extends Controller
 	public function trash()
 	{
 		$data = Pegawai::onlyTrashed()->orderBy('jabatan_id')->get();
-		return view('settings/pegawai/trash', ['data' => $data]);
+    $back = Helper::back_button();
+		return view('settings/pegawai/trash', compact('data','back'));
 	}
 }

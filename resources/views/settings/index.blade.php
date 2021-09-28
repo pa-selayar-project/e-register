@@ -37,9 +37,9 @@
         </a>
       </div>
       <div class="mx-5 my-3 p-2">
-        <a href="#">
+        <a href="{{url('settings/referensi')}}">
           <i class="fas fa-clipboard-list fa-8x"></i>
-          <div class="text-center text-primary">Attribut</div>
+          <div class="text-center text-primary">Referensi</div>
         </a>
       </div>
       <div class="mx-5 my-3 p-2">
@@ -59,12 +59,5 @@
 </div>
 @endsection
 
-@section('script')
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('#addData').remove();
-    });
-  </script>
-@endsection
 
 

@@ -57,7 +57,7 @@ class RegstugasController extends Controller
 			'pesan_Log' => 'Membuat Surat Tugas'
 		]);
 
-		return redirect('/register/surat_tugas')->withToastSuccess('Input data berhasil');
+		return redirect('/register/surat_tugas')->withSuccess('Input data berhasil');
 	}
 
 	public function show($id)
@@ -120,7 +120,7 @@ class RegstugasController extends Controller
 			$update->update(['pdf' => $pdfname]);
 		}
 
-		return redirect('/register/surat_tugas')->withToastSuccess('Data berhasil diubah');
+		return redirect('/register/surat_tugas')->withSuccess('Data berhasil diubah');
 	}
 
 	public function destroy($id)
@@ -130,7 +130,7 @@ class RegstugasController extends Controller
 			'user_id' => Auth::user()->id,
 			'pesan_Log' => 'Menghapus Surrat Tugas'
 		]);
-		return back()->with('toast_success', 'Data berhasil dihapus!');
+		return Redirect::back()->withSuccess('Data berhasil dihapus!');
 	}
 
 	public function print($id)

@@ -13,6 +13,18 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
       Route::resource('settings/parent_menu', 'HeadmenuController');
       Route::get('settings/pegawai/trash', 'PegawaiController@trash');
       Route::resource('settings/pegawai', 'PegawaiController');
+      Route::resource('settings/referensi/jabatan', 'JabatanController');
+      Route::resource('settings/referensi/pangkat', 'PangkatController');
+      Route::resource('settings/referensi/ta', 'TaController');
+      Route::resource('settings/referensi/dipa', 'DipaController');
+      Route::resource('settings/referensi/pta', 'PtaController');
+      Route::resource('settings/referensi/kpa', 'KpaController');
+      Route::resource('settings/referensi/ppk', 'PpkController');
+      Route::resource('settings/referensi/level', 'LevelController');
+      Route::resource('settings/referensi', 'ReferensiController');
+      Route::get('settings/referensi/{id}/hasil', 'ReferensiController@get_data');
+      Route::get('settings/referensi/pta/{id}/hasil', 'PtaController@get_data');
+      Route::get('settings/referensi/dipa/{id}/hasil', 'DipaController@get_data');
       Route::resource('settings/pramubhakti', 'HonorerController');
       Route::resource('daftar', 'DaftarController');
       Route::resource('settings/setting', 'SettingController');
@@ -22,6 +34,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
       Route::resource('settings/database', 'DatabaseController');
       Route::get('settings', 'HeadmenuController@settings');
       Route::post('settings/database', 'RegskController@import')->name('import');
+      
     }
   );
 });

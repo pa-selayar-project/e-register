@@ -22,7 +22,7 @@ class RegcutiController extends Controller
 		}else{
 			$data = Regcuti::whereTahun(date('Y'))->get();
 		}
-		return view('register/surat_cuti/index', ['data' => $data]);
+		return view('register/surat_cuti/index', compact('data'));
 	}
 
 	public function create()
@@ -69,7 +69,7 @@ class RegcutiController extends Controller
 			'pesan_Log' => 'Membuat Surat Cuti'
 		]);
 
-		return redirect('/register/surat_cuti')->withToastSuccess('Input data berhasil');
+		return redirect('/register/surat_cuti')->withSuccess('Input data berhasil');
 	}
 
 	public function show($id)
@@ -131,7 +131,7 @@ class RegcutiController extends Controller
 			$update->update(['pdf' => $pdfname]);
 		}
 
-		return redirect('/register/surat_cuti')->withToastSuccess('Data berhasil diubah');
+		return redirect('/register/surat_cuti')->withSuccess('Data berhasil diubah');
 	}
 
 	public function destroy($id)
@@ -150,7 +150,7 @@ class RegcutiController extends Controller
 			'user_id' => Auth::user()->id,
 			'pesan_Log' => 'Menghapus Surat Cuti'
 		]);
-		return back()->with('toast_success', 'Data berhasil dihapus!');
+		return back()->withSuccess('Data berhasil dihapus!');
   }
 
 	public function get_data($id)

@@ -2,17 +2,13 @@
 
 @section('title','Daftar Pramubhakti')
 
-@section('breadcumb')
+@section('tombol')
+{!!$back!!}
 <a href="{{url('settings/pramubhakti/create')}}" class="mr-1 d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
   <span class="icon text-white-50">
     <i class="fas fa-plus"></i>
   </span>
   <span class="text">Rekam Pramubhakti</span>
-</a>
-<a href="{{url('settings')}}" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-danger rounded">
-  <span class="icon text-white">
-    <i class="fas fa-arrow-alt-circle-left"></i>
-  </span>
 </a>
 @endsection
 

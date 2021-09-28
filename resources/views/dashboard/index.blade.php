@@ -4,11 +4,11 @@
 
 
 @section('breadcumb')
-@if(Auth::user()->id_level == 1)
-Admin : {{Auth::user()->name}}
-@else
-User : {{Auth::user()->name}}
-@endif
+	@if(Auth::user()->id_level == 1)
+	Admin : {{Auth::user()->name}}
+	@else
+	User : {{Auth::user()->name}}
+	@endif
 @endsection
 
 @section('content')
@@ -69,7 +69,7 @@ User : {{Auth::user()->name}}
 </div>
 
 <div class="col-md-6">
-	<div class="card" style="height:330px;">
+	<div class="card">
 		<div class="card-header">
 			<strong class="card-title">Pesan Notifikasi
 				@if($hitungnotif > 4)
@@ -84,7 +84,7 @@ User : {{Auth::user()->name}}
 				</small>
 			</strong>
 		</div>
-		<div class="card-body">
+		<div class="card-body" style="height:330px;overflow-y: auto;">
 			@if(!$hitungnotif)
 				<p>Tidak ada Data Notifikasi</p>
 			@endif
@@ -104,7 +104,7 @@ User : {{Auth::user()->name}}
 </div>
 
 <div class="col-md-6">
-	<div class="card" style="height:330px;">
+	<div class="card">
 		<div class="card-header">
 			<strong class="card-title">Log Activity
 				@if($hitunglog > 6)
@@ -115,7 +115,7 @@ User : {{Auth::user()->name}}
 				</small>
 			</strong>
 		</div>
-		<div class="card-body">
+		<div class="card-body" style="height:330px;overflow-y: auto;">
 			<ul class="list-group list-group-flush">
 				@foreach($logs as $log)
 				<li class="list-group-item text-justify">

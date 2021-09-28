@@ -1,14 +1,10 @@
 @extends('layouts.app')
 
-@section('title','Level User')
+@section('title','KPA')
 
-@section('breadcumb')
-<a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
-  <span class="icon text-white-50">
-    <i class="fa fa-plus"></i>
-  </span>
-  <span class="text">Tambah Level</span>
-</a>
+@section('tombol')
+  {!!$back!!}
+  {!!$tombol!!}
 @endsection
 
 @section('stylesheet')
@@ -40,22 +36,14 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Nama Level</th>
-            <th>Action</th>
+            <th>Nama KPA</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($data as $d)
           <tr>
-            <td>{{$loop->iteration}}</td>
-            <td>{{$d->nama_level}}</td>
-            <td>
-              <a href="#" class="btn btn-danger btn-sm btn-circle hapusData"><i class="fa fa-trash"></i></a>
-
-              <a href="{{url('settings/level/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle"><i class="fa fa-edit"></i></a>
-            </td>
+            <td>1</td>
+            <td>{{$data->nama_pegawai}}</td>
           </tr>
-          @endforeach
         </tbody>
       </table>
     </div>
@@ -68,26 +56,25 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Level</h5>
+        <h5 class="modal-title" id="modalTitle">Kuasa Pengguna Anggaran</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{url('settings/level')}}" method="POST" class="form-group">
+      <form action="{{url('settings/referensi/kpa')}}" method="POST" class="form-group">
         <div class="modal-body">
-          <p class="patch"></p>
+          @method('patch')
           @csrf
-          <label>Nama Level</label>
-          <input type="text" class="form-control @error('nama_level') is-invalid @enderror" name="nama_level" id="namaLevel" value="{{old('nama_level')}}">
-          @error('nama_level')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{$message}}</strong>
-          </span>
-          @enderror
+          <label>Nama KPA</label>
+          <select class="form-control" name="kpa" id="kpa">
+            @foreach($select as $s)
+              <option value="{{$s->id}}" @if($data->id == $s->id)selected @endif>{{$s->nama_pegawai}}</option>
+            @endforeach
+          </select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
       </form>
     </div>
@@ -114,6 +101,11 @@
       buttons: [
         'copy', 'excel', 'pdf'
       ]
+    });
+
+    $('#kpa').on('change', function(){
+      const id= $(this).children("option:selected").val();  
+      $('.modal form').attr('action', `{{url('settings/referensi/kpa/`+id+`')}}`);
     });
   });
 </script>

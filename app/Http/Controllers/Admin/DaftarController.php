@@ -6,6 +6,7 @@ use App\Daftar;
 use App\Pegawai;
 use App\Level;
 use App\Log;
+use App\Helpers\Helper;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -20,7 +21,9 @@ class DaftarController extends Controller
 	{
 			$users = Daftar::all();
 			$pgw = Pegawai::whereUser(0)->orderBy('jabatan_id')->get();
-			return view('daftar/index', compact('users','pgw'));
+			$back = Helper::back_button();
+			$tombol= Helper::rekam('Tambah User');
+			return view('daftar/index', compact('users','pgw','tombol','back'));
 	}
 
   public function store(Request $request)
@@ -56,7 +59,18 @@ class DaftarController extends Controller
 
 	public function show(Daftar $daftar)
 	{
-			dd($daftar);
+			$log_act = Log::whereUserId($daftar->id)->get();
+			$data = (object)[
+				'nama'=>$daftar->name,
+				'email'=>$daftar->email,
+				'level'=>$daftar->id_level,
+				'foto'=>$daftar->image,
+				'log'=> count($log_act),
+				'join'=>Helper::tanggal_id(strtotime($daftar->created_at)),
+			];
+			
+			$back = Helper::back_button();
+			return view('daftar/show', compact('data','back')); 
 	}
 
 	public function edit(Daftar $daftar)

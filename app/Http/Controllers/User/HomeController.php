@@ -23,12 +23,12 @@ class HomeController extends Controller
 		$awaltahun = strtotime(date('01-01-Y'));
 		$akhirtahun = strtotime(date('31-12-Y'));
 
-		$notif = Pegawai::whereStatus(1)
+		$notif = Pegawai::whereStatus(1)->whereAktif(1)
 			->where('kgb_yad', '>', $awaltahun)
 			->where('kgb_yad', '<', $akhirtahun)
 			->orWhere('kp_yad', '>', $awaltahun)
 			->where('kp_yad', '<', $akhirtahun)
-			->limit(4)
+			->limit(10)
 			->get();
 		$hitungnotif = $notif->count();
 

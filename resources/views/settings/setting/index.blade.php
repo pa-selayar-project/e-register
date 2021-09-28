@@ -2,24 +2,20 @@
 
 @section('title','Setting Aplikasi')
 
-@section('breadcumb')
-<a href="setting/{{$data->id}}/edit" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
+@section('tombol')
+  {!!$back!!}
+  <a href="setting/{{$data->id}}/edit" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
   <span class="icon text-white-50">
     <i class="fa fa-edit"></i>
   </span>
   <span class="text"> Edit</span>
-</a>
-<a href="{{url('settings')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
-  <span class="icon text-white-50">
-    <i class="fa fa-chevron-circle-left"></i>
-  </span>
 </a>
 @endsection
 
 @section('content')
 <div class="card shadow mb-4">
   <div class="card-body">
-    <div class="col-lg-6 col-md-6">
+    <div class="col-lg-4 col-md-4">
       <div class="card">
         <div class="card-header">
           <strong class="card-title mb-3">Logo Aplikasi</strong>
@@ -31,7 +27,19 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-6 col-md-6">
+    <div class="col-lg-4 col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <strong class="card-title mb-3">Background Login</strong>
+        </div>
+        <div class="card-body">
+          <div class="mx-auto d-block">
+            <img class="rounded mx-auto d-block" src="/assets/images/logo/{{$data->bgimage}}" height="250" width="300">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4">
       <div class="card">
         <div class="card-header">
           <strong class="card-title mb-3">Resume Aplikasi</strong>
@@ -40,25 +48,20 @@
           <table class="table table-striped">
           <tbody>
             <tr>
-              <td>Nama Aplikasi</th>
-              <td>:</td>
-              <td>{{$data->nama_aplikasi}}</td>
+              <td>Aplikasi {{$data->nama_aplikasi}}</td>
             </tr>
             <tr>
-              <td>Versi</th>
-              <td>:</td>
-              <td>{{$data->versi}}</td>
+              <td>Versi {{$data->versi}}</td>
             </tr>
             <tr>
-              <td>Author</th>
-              <td>:</td>
-              <td>{{$data->author}}</td>
+              <td>by {{$data->author}}</td>
             </tr>
             <tr>
-              <td>Small Logo</th>
-              <td>:</td>
-              <td>
-                <img class="rounded-circle mx-auto d-block" src="/assets/images/logo/{{$data->logo_kecil}}" height="80" width="80">
+              <td class="d-flex">
+                <div class="mr-5">Favicon</div>
+                <div>
+                  <img class="rounded-circle mx-0 my-0 d-block" src="/assets/images/logo/{{$data->logo_kecil}}" height="64" width="64">
+                </div>
               </td>
             </tr>
           </tbody>

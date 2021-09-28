@@ -3,12 +3,8 @@
 @section('title','Head Menu')
 
 @section('tombol')
-<a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split">
-  <span class="icon text-white-50">
-    <i class="fas fa-plus"></i>
-  </span>
-  <span class="text">Add Data</span>
-</a>
+  {!!$back!!}
+  {!!$tombol!!}
 @endsection
 
 @section('stylesheet')
@@ -36,8 +32,8 @@
             <td>{{$d->nama_head}}</td>
             <td>{{($d->place==1)?'Navbar':'Sidebar'}}</td>
             <td>
-              <a href="#" class="btn btn-danger btn-sm btn-circle hapusData"><i class="fa fa-trash"></i></a>
-              <a href="#" class="btn btn-success btn-sm btn-circle editData" data-toggle="modal" data-target="#modal" data-id="{{$d->id}}" data-head="{{$d->nama_head}}" data-place="{{$d->place}}"><i class="fa fa-edit"></i></a>
+              <a href="#" class="btn btn-danger btn-sm rounded hapusData"><i class="fa fa-trash"></i></a>
+              <a href="#" class="btn btn-success btn-sm rounded editData" data-toggle="modal" data-target="#modal" data-id="{{$d->id}}" data-head="{{$d->nama_head}}" data-place="{{$d->place}}"><i class="fa fa-edit"></i></a>
             </td>
           </tr>
           @endforeach

@@ -61,7 +61,7 @@ class RegkgbController extends Controller
 			'pesan_Log' => 'Membuat Surat KGB'
 		]);
 
-		return redirect('/register/kgb')->withToastSuccess('Input data berhasil');
+		return redirect('/register/kgb')->withSuccess('Input data berhasil');
 	}
 
 	public function show($id)
@@ -127,7 +127,7 @@ class RegkgbController extends Controller
 			'pesan_Log' => 'Mengedit Surat KGB'
 		]);
 
-		return redirect('/register/kgb')->withToastSuccess('Data berhasil dirubah');
+		return redirect('/register/kgb')->withSuccess('Data berhasil dirubah');
 	}
 
 	public function destroy($id)
@@ -137,7 +137,7 @@ class RegkgbController extends Controller
 			'user_id' => Auth::user()->id,
 			'pesan_Log' => 'Menghapus Surat KGB'
 		]);
-		return back()->with('toast_success', 'Data berhasil dihapus!');
+		return back()->withSuccess('Data berhasil dihapus!');
 	}
 
 	public function get_data($id)

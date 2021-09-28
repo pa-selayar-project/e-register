@@ -24,6 +24,6 @@ class LogController extends Controller
   public function destroy($id)
   {
     Log::destroy($id);
-    return back()->with('toast_success', 'Data berhasil dihapus!');
+    return Redirect::back()->withSuccess('Data berhasil dihapus!');
     }
 }

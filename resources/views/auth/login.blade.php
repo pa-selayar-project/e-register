@@ -13,12 +13,22 @@
   <link rel="stylesheet" href="{{url('vendors/selectFX/css/cs-skin-elastic.css')}}">
 
   <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
+  <?php $data = \App\Setting::findOrFail(1);?>
+  <style>
+  body {
+    background: url('assets/images/logo/{{$data->bgimage}}') no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: 100% 100%;
+    -o-background-size: cover;
+  }
+  </style>
 
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 @endsection
 
 @section('content')
-<?php $data = \App\Setting::where('id',1)->first();?>
+
 <div class="sufee-login d-flex align-content-center flex-wrap">
   <div class="container">
     <div class="login-content">
@@ -26,7 +36,7 @@
         <img class="align-content" src="{{url('assets/images/logo/'.$data->logo_besar)}}" width="150" height="200">
         <div class="text-white"><h2>{{$data->nama_aplikasi}} V {{$data->versi}}</h2></div>
       </div>
-      <div class="login-form">
+      <div class="login-form rounded">
         <form class="user" method="post" action="{{route('login')}}">
           @csrf
           <div class="form-group">
@@ -54,7 +64,7 @@
               <a href="{{route('password.request')}}">Forgotten Password?</a>
             </label>
           </div>
-          <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+          <button type="submit" class="btn btn-primary btn-user btn-block rounded">Login</button>
         </form>
       </div>
     </div>

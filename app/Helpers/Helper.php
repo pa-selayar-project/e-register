@@ -58,6 +58,20 @@ class Helper {
       $thn = substr($nip,0,4);
       return $tgl." ".$bulan[$bln]." ".$thn;
     }
+
+    public static function back_button()
+    {
+      return "<a href='javascript:history.back();' class='d-none d-sm-inline-block btn btn-sm btn-danger btn-icon-split rounded mr-1'><span class='icon text-white-50'><i class='fa fa-chevron-circle-left'></i></span></a>";
+    }
+
+    public static function rekam($nama)
+    {
+      return "<a href='#' id='addData' data-toggle='modal' data-target='#modal' class='d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded'>
+        <span class='icon text-white-50'>
+          <i class='fa fa-plus'></i>
+        </span>
+        <span class='text'>".$nama."</span>
+      </a>";
+    }
 }
- 
 ?>

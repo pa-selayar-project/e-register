@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Headmenu;
 use App\Log;
+use App\Helpers\Helper;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,7 +15,9 @@ class HeadmenuController extends Controller
     public function index()
     {
         $data = Headmenu::all();
-        return view('settings/headmenu/index', ['data' => $data]);
+        $back = Helper::back_button();
+        $tombol = Helper::rekam('Tambah Data');
+        return view('settings/headmenu/index', compact('data','tombol','back'));
     }
 
     public function store(Request $request)

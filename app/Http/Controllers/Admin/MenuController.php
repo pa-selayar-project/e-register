@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Menu;
 use App\Log;
 use App\Headmenu;
+use App\Helpers\Helper;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -16,9 +17,11 @@ class MenuController extends Controller
 
     public function index()
     {
-        $data = Menu::all();
+        $data = Menu::paginate(10);
         $head = Headmenu::all();
-        return view('settings/menu/index', ['data' => $data, 'head' => $head]);
+        $back = Helper::back_button();
+        $tombol = Helper::rekam('Tambah Data');
+        return view('settings/menu/index', compact('data','head','back','tombol'));
     }
 
     public function store(Request $request)
@@ -47,9 +50,14 @@ class MenuController extends Controller
         return Redirect::back()->with('message', 'Data Menu Berhasil dirubah');
     }
 
-    public function destroy(Menu $menu)
+    public function destroy($id)
     {
-        //
+        Menu::destroy($id);
+        Log::create([
+            'user_id' => Auth::user()->id,
+            'pesan_Log' => 'Menghapus Data Menu'
+        ]);
+        return Redirect::back()->with('message', 'Data Menu Berhasil dihapus');
     }
 
     private function validateRequest($type)

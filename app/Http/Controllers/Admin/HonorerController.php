@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Honorer;
 use App\Jabatan;
 use App\Log;
+use App\Helpers\Helper;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class HonorerController extends Controller
     public function index()
     {
         $data = Honorer::whereStatus(2)->get();
-        return view('settings/pramubhakti/index', ['data' => $data]);
+        $back = Helper::back_button();
+        return view('settings/pramubhakti/index', compact('data','back'));
     }
 
     public function create()

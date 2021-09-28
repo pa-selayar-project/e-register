@@ -2,18 +2,9 @@
 
 @section('title','Daftar User')
 
-@section('breadcumb')
-<a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
-  <span class="icon text-white">
-    <i class="fas fa-plus"></i>
-  </span>
-  <span class="text">Rekam User</span>
-</a>
-<a href="javascript:history.back();" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
-  <span class="icon text-white-50">
-    <i class="fa fa-chevron-circle-left"></i>
-  </span>
-</a>
+@section('tombol')
+  {!!$back!!}
+  {!!$tombol!!}
 @endsection
 
 @section('stylesheet')

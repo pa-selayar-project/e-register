@@ -3,12 +3,8 @@
 @section('title','Register SOP')
 
 @section('breadcumb')
-<a href="#" id="addData" data-toggle="modal" data-target="#modal" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded">
-  <span class="icon text-white-50">
-    <i class="fa fa-plus"></i>
-  </span>
-  <span class="text">Tambah</span>
-</a>
+{!!$back!!}
+{!!$tombol!!}
 @endsection
 
 @section('stylesheet')
@@ -46,7 +42,7 @@
                 <button class="btn btn-danger btn-sm btn-circle rounded"><i class="fa fa-trash"></i></button>
               </form>
               
-              <a href="{{url('register/sop/'.$d->id.'/edit')}}" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
+              <a href="{{url('register/sop')}}/{{$d->id}}/edit" class="btn btn-success btn-sm btn-circle rounded mx-1"><i class="fa fa-edit"></i></a>
               
               <a href="{{url('register/sop/'.$d->id)}}" class="btn btn-primary btn-sm btn-circle rounded"><i class="fa fa-folder-open"></i></a>
             </td>
@@ -123,7 +119,7 @@
       buttons: [
         'copy', 'excel', 'pdf'
       ]
-    })
+    });
   });
 </script>
 

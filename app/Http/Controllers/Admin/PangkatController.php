@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Pangkat;
+use App\Log;
+use Auth;
+use App\Helpers\Helper;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,79 +13,66 @@ use Response, Redirect;
 
 class PangkatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+	public function index()
+	{
+		$data = Pangkat::paginate(15);
+		$back = Helper::back_button();
+		$tombol = Helper::rekam('Tambah Data Pangkat');
+		return view('settings/referensi/pangkat/index', compact('data','back','tombol'));
+	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+	public function store(Request $request)
+	{
+		$insert = Pangkat::create($this->validateRequest('create'));
+			Response::json($insert);
+			
+			Log::create([
+				'user_id' => Auth::user()->id,
+				'pesan_Log' => 'Menginput Data Pangkat'
+			]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+			return Redirect::back()->with('success', 'Input Data Pangkat berhasil');
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Pangkat  $pangkat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pangkat $pangkat)
-    {
-        //
-    }
+	public function update(Request $request, Pangkat $pangkat)
+	{
+		$pang = $pangkat->update($this->validateRequest('update'));
+			Response::json($pang);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Pangkat  $pangkat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pangkat $pangkat)
-    {
-        //
-    }
+			Log::create([
+				'user_id' => Auth::user()->id,
+				'pesan_Log' => 'Menginput Data Pangkat'
+			]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Pangkat  $pangkat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pangkat $pangkat)
-    {
-        //
-    }
+			return Redirect::back()->with('success','Data Pangkat berhasil di update');
+	}
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Pangkat  $pangkat
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pangkat $pangkat)
-    {
-        //
-    }
+	public function destroy($id)
+	{
+		Pangkat::destroy($id);
+			Log::create([
+				'user_id' => Auth::user()->id,
+				'pesan_Log' => 'Menghapus Data Pangkat'
+			]);
+			return Redirect::back()->with('success', 'Data Pangkat Berhasil dihapus');
+	}
+
+	private function validateRequest($type)
+		{
+			$messages = [
+			'required' => 'Kolom :attribute Wajib Diisi!',
+			'unique' => 'Data :attribute Sudah Ada Dalam Database'
+			];
+
+			if ($type == 'create') {
+				$rule = 'required|unique:tb_pangkat';
+			} else {
+				$rule = 'required';
+			}
+
+			return request()->validate([
+			'nama_pangkat' => $rule,
+			'golongan' => 'required'
+			], $messages);
+		}
 }

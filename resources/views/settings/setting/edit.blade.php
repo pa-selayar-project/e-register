@@ -2,21 +2,32 @@
 
 @section('title','Edit Setting Aplikasi')
 
-@section('breadcumb')
-<a href="{{url('settings/setting')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary btn-icon-split rounded mr-1">
-  <span class="icon text-white-50">
-    <i class="fa fa-chevron-circle-left"></i>
-  </span>
-</a>
+@section('tombol')
+  {!!$back!!}
 @endsection
 
 @section('content')
 <div class="card shadow mb-4">
   <div class="card-body">
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+
+  @if (session('message'))
+    <div class=" alert alert-success">
+      {{ session('message') }}
+    </div>
+  @endif
     <form method="post" action="/settings/setting/{{$data->id}}" enctype="multipart/form-data">
     @method("patch")
     @csrf
-    <div class="col-lg-6 col-md-6">
+    <div class="col-lg-4 col-md-4">
       <div class="card">
         <div class="card-header">
           <strong class="card-title mb-3">Logo Aplikasi</strong>
@@ -32,14 +43,30 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-6 col-md-6">
+    <div class="col-lg-4 col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <strong class="card-title mb-3">Background Login</strong>
+        </div>
+        <div class="card-body">
+          <div class="mx-auto d-block">
+            <img class="rounded mx-auto d-block mb-2" src="/assets/images/logo/{{$data->bgimage}}" height="245" width="250">
+            <div class="custom-file">
+              <input type="file" name="bgimage" class="custom-file-input file1" id="bgimage">
+              <label class="custom-file-label" for="bgimage">Choose file</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4">
       <div class="card">
         <div class="card-header">
           <strong class="card-title">Resume Aplikasi</strong>
         </div>
         <div class="card-body">
           <div class="form-group row">
-            <label for="nama_aplikasi" class="col-sm-3 col-form-label">Nama Aplikasi</label>
+            <label for="nama_aplikasi" class="col-sm-3 col-form-label">Nama App</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <input type="text" id="nama_aplikasi" name="nama_aplikasi" class="form-control" value="{{$data->nama_aplikasi}}">

@@ -11,7 +11,7 @@
   @yield('stylesheet')
 </head>
 
-<body class="bg-dark">
+<body>
   @yield('content')
   @yield('script')
 </body>

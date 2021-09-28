@@ -3,7 +3,7 @@
 			<div class="col-sm-7 ">
 					<a id="menuToggle" class="menutoggle pull-left float-left"><i class="fa fa-align-justify"></i></a>
 					<div class="header-left text-secondary mt-1">
-					Aplikasi {{\App\Setting::where('id',1)->first()->nama_aplikasi}} Versi {{\App\Setting::where('id',1)->first()->versi}}
+					Aplikasi {{$setting->nama_aplikasi}} Versi {{$setting->versi}}
 					</div>
 			</div>
 
