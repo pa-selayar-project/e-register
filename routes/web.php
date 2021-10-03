@@ -1,7 +1,13 @@
 <?php
 
+
+
 Route::get('login', function () {
   return view('layouts.login');
+});
+
+Route::get('/', function () {
+  return redirect(url('login'));
 });
 
 Auth::routes();
