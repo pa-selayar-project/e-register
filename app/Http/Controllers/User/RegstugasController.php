@@ -21,7 +21,7 @@ class RegstugasController extends Controller
 		if($user->id_level == 3){
 			$data = Regstugas::where('pegawai', 'LIKE', '%'.$pegawai->nip.'%')->whereTahun(date('Y'))->get();
 		}else{
-			$data = Regstugas::whereTahun(date('Y'))->get();
+			$data = Regstugas::with('jabatan')->whereTahun(date('Y'))->get();
 		}
 		
 		$pgw = Pegawai::withTrashed()->orderBy('jabatan_id')->get();
@@ -74,7 +74,7 @@ class RegstugasController extends Controller
 	public function edit($id)
 	{
 		$data = Regstugas::findOrFail($id);
-		$pelaksana = Pegawai::orderBy('jabatan_id')->get();
+		$pelaksana = Pegawai::with('jabatan')->orderBy('jabatan_id')->get();
 		$penandatangan = Pegawai::whereIn('jabatan_id', [1,2,4,5])->orderBy('jabatan_id')->get();
 		$back = Helper::back_button();
 		return view('register/surat_tugas/edit', compact('data', 'penandatangan', 'pelaksana','back'));

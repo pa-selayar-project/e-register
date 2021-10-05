@@ -18,9 +18,9 @@ class PegawaiController extends Controller
 {
   public function index()
   {
-    $data = Pegawai::whereStatus(1)->orderBy('jabatan_id')->get();
+    $data = Pegawai::with('jabatan','pangkat')->whereStatus(1)->orderBy('jabatan_id')->get();
     $back = Helper::back_button();
-    $tombol = Helper::rekam('Tambah Pegawai');
+    $tombol = Helper::link_button(url('settings/pegawai/create'),'Tambah Pegawai');
     return view('settings/pegawai/index', compact('data','back','tombol'));
   }
 

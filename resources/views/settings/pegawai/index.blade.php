@@ -2,7 +2,7 @@
 
 @section('title','Daftar Pegawai')
 
-@section('breadcumb')
+@section('tombol')
   {!!$back!!}
   {!!$tombol!!}
   <a href="{{url('settings/pegawai/trash')}}" class="ml-1 d-none d-sm-inline-block btn btn-sm btn-warning btn-icon-split rounded">
