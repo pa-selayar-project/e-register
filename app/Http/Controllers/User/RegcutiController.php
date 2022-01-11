@@ -7,6 +7,7 @@ use App\Regcuti;
 use App\Pegawai;
 use App\Jeniscuti;
 use App\Log;
+use App\Setting;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,10 +18,11 @@ class RegcutiController extends Controller
 {
 	public function index()
 	{
+		$thn_angg = Setting::first()->thn_anggaran;
 		if(Auth::user()->id_level == 3){
-			$data = Regcuti::wherePegawaiId(Auth::user()->id_pegawai)->whereTahun(date('Y'))->get();
+			$data = Regcuti::wherePegawaiId(Auth::user()->id_pegawai)->whereTahun($thn_angg)->get();
 		}else{
-			$data = Regcuti::whereTahun(date('Y'))->get();
+			$data = Regcuti::whereTahun($thn_angg)->get();
 		}
 		$link = Helper::link_button('surat_cuti/create','Tambah Surat Cuti');
 		return view('register/surat_cuti/index', compact('data','link'));

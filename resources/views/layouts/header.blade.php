@@ -3,7 +3,7 @@
 			<div class="col-sm-7 ">
 					<a id="menuToggle" class="menutoggle pull-left float-left"><i class="fa fa-align-justify"></i></a>
 					<div class="header-left text-secondary mt-1">
-					Aplikasi {{$setting->nama_aplikasi}} Versi {{$setting->versi}}
+					Aplikasi {{$setting->nama_aplikasi}} Versi {{$setting->versi}} (T.A. {{$setting->thn_anggaran}})
 					</div>
 			</div>
 

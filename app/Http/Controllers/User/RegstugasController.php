@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Regstugas;
 use App\Pegawai;
 use App\Log;
+use App\Setting;
 use Auth;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
@@ -18,10 +19,11 @@ class RegstugasController extends Controller
 	{
 		$user = Auth::user();
 		$pegawai = Pegawai::findOrFail($user->id_pegawai);
+		$thn_angg = Setting::first()->thn_anggaran;
 		if($user->id_level == 3){
-			$data = Regstugas::where('pegawai', 'LIKE', '%'.$pegawai->nip.'%')->whereTahun(date('Y'))->get();
+			$data = Regstugas::where('pegawai', 'LIKE', '%'.$pegawai->nip.'%')->whereTahun($thn_angg)->get();
 		}else{
-			$data = Regstugas::with('jabatan')->whereTahun(date('Y'))->get();
+			$data = Regstugas::with('jabatan')->whereTahun($thn_angg)->get();
 		}
 		
 		$pgw = Pegawai::withTrashed()->orderBy('jabatan_id')->get();

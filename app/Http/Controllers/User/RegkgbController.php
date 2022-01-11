@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Regkgb;
 use App\Pegawai;
 use App\Log;
+use App\Setting;
 use Auth;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
@@ -16,10 +17,11 @@ class RegkgbController extends Controller
 {
 	public function index()
 	{
+		$thn_angg = Setting::first()->thn_anggaran;
 		if(Auth::user()->id_level == 3){
-			$data = Regkgb::wherePegawaiId(Auth::user()->id_pegawai)->whereTahun(date('Y'))->get();
+			$data = Regkgb::wherePegawaiId(Auth::user()->id_pegawai)->whereTahun($thn_angg)->get();
 		}else{
-			$data = Regkgb::whereTahun(date('Y'))->get();
+			$data = Regkgb::whereTahun($thn_angg)->get();
 		}
 		$link = Helper::link_button('kgb/create', 'Tambah KGB');
 

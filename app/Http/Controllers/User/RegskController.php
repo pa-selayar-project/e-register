@@ -20,7 +20,7 @@ class RegskController extends Controller
 	public function index()
 	{
 		$user = Auth::user();
-		$thn_angg = Setting::whereId(1)->get();
+		$thn_angg = Setting::first()->thn_anggaran;
 		$pegawai = Pegawai::findOrFail($user->id_pegawai);
 		if($user->id_level == 3){
 			$data = Regsk::where('obyek', 'LIKE', '%'.$pegawai->nip.'%')->whereTahun($thn_angg)->get();
